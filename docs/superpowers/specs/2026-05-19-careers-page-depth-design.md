@@ -90,7 +90,7 @@ Tab label: **Mentors**
 ### "Book a call" flow
 - Button opens a modal (not a new page)
 - Modal form: Name, Email, Brief message (textarea)
-- On submit: sends email to Ankit via a `/api/mentor-inquiry` POST route using **Resend** (default for Vercel/Next.js — confirm if a different email provider is already configured)
+- On submit: sends email to `planbtoz95@gmail.com` via a `/api/mentor-inquiry` POST route using **Resend**
 - Email subject: `[Plan B to Z] Mentor inquiry — {mentor_name} ({career_title})`
 - Success state: "We've received your request. Ankit will connect you within 48 hours."
 - No in-app scheduling, no Calendly dependency
