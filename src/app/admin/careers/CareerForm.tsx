@@ -338,7 +338,7 @@ function LaunchpadTab({ form, set }: { form: FormData; set: (k: keyof FormData, 
       return { ...p, weeks: [...p.weeks, newWeek] }
     })
     set('launchpad_phases', updated)
-    setOpenWeek({ p: pi, w: phases[pi].weeks.length })
+    setOpenWeek({ p: pi, w: updated[pi].weeks.length - 1 })
   }
 
   function updateWeek(pi: number, wi: number, key: keyof LaunchpadPhaseWeek, value: unknown) {
