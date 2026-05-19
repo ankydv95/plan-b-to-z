@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import type { CareerPath, TrajectoryStage, LaunchpadWeek, LaunchpadPhase, LaunchpadPhaseWeek, LaunchpadTask, Course, YoutubeLink, PodcastLink, Resource } from '@/types'
+import type { CareerPath, TrajectoryStage, LaunchpadWeek, LaunchpadPhase, LaunchpadPhaseWeek, LaunchpadTask, Course, YoutubeLink, PodcastLink, Resource, Mentor } from '@/types'
 import { Plus, Trash2, Sparkles, ChevronDown, ChevronUp, Save, Globe, Loader2 } from 'lucide-react'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ const DOMAINS = [
   'Psychology & Counselling', 'Creative Arts', 'Public Health', 'Technology',
 ]
 
-const TABS = ['Basic', 'Trajectory', 'Salary & Perks', 'Impact', 'Skills', 'Launchpad', 'Resources']
+const TABS = ['Basic', 'Trajectory', 'Salary & Perks', 'Impact', 'Skills', 'Launchpad', 'Resources', 'Mentors']
 
 // ─── Helper components ────────────────────────────────────────────────────────
 
@@ -654,10 +654,169 @@ function ResourcesTab({ form, set }: { form: FormData; set: (k: keyof FormData, 
   )
 }
 
+function MentorsTab({ careerId }: { careerId: string }) {
+  const [mentors, setMentors] = useState<Mentor[]>([])
+  const [loading, setLoading] = useState(false)
+  const [openMentor, setOpenMentor] = useState<number | null>(null)
+  const [savingIdx, setSavingIdx] = useState<number | null>(null)
+  const [draft, setDraft] = useState<Partial<Mentor>>({})
+  const [addingNew, setAddingNew] = useState(false)
+
+  useEffect(() => {
+    if (!careerId) return
+    setLoading(true)
+    fetch(`/api/admin/mentors?careerId=${careerId}`)
+      .then(r => r.json())
+      .then(j => setMentors(j.data ?? []))
+      .finally(() => setLoading(false))
+  }, [careerId])
+
+  async function saveMentor() {
+    if (!draft.name?.trim() || !draft.role?.trim()) return
+    setSavingIdx(-1)
+    try {
+      const res = await fetch('/api/admin/mentors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ career_id: careerId, ...draft }),
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error)
+      setMentors(prev => [...prev, json.data])
+      setDraft({})
+      setAddingNew(false)
+    } finally {
+      setSavingIdx(null)
+    }
+  }
+
+  async function toggleActive(mentor: Mentor) {
+    const res = await fetch(`/api/admin/mentors/${mentor.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...mentor, is_active: !mentor.is_active }),
+    })
+    const json = await res.json()
+    if (res.ok) setMentors(prev => prev.map(m => m.id === mentor.id ? json.data : m))
+  }
+
+  async function deleteMentor(id: string) {
+    if (!confirm('Delete this mentor?')) return
+    const res = await fetch(`/api/admin/mentors/${id}`, { method: 'DELETE' })
+    if (res.ok) setMentors(prev => prev.filter(m => m.id !== id))
+  }
+
+  if (!careerId) {
+    return (
+      <div className="text-center py-16 text-[#9A8B78]">
+        <p className="font-semibold mb-1">Save the career first</p>
+        <p className="text-sm">Mentors can be added after the career is saved.</p>
+      </div>
+    )
+  }
+
+  if (loading) return <div className="py-12 text-center text-[#9A8B78] text-sm">Loading mentors…</div>
+
+  return (
+    <div className="space-y-4">
+      <p className="text-xs text-[#9A8B78]">Mentors are added manually. They appear on the career detail page with a &quot;Book a call&quot; button.</p>
+
+      {mentors.map((mentor, i) => (
+        <div key={mentor.id} className="border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-4">
+            <div>
+              <p className="font-semibold">{mentor.name}</p>
+              <p className="text-sm text-[#9A8B78]">{mentor.role}{mentor.company && ` · ${mentor.company}`}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={() => toggleActive(mentor)}
+                className={`text-xs font-semibold px-3 py-1 rounded-full transition-colors ${mentor.is_active ? 'bg-[#DCFCE7] text-[#059669]' : 'bg-[#F5F5F5] text-[#9A8B78]'}`}>
+                {mentor.is_active ? 'Active' : 'Inactive'}
+              </button>
+              <button type="button" onClick={() => setOpenMentor(openMentor === i ? null : i)} className="text-[#9A8B78] hover:text-[#D97706]">
+                {openMentor === i ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </button>
+              <button type="button" onClick={() => deleteMentor(mentor.id)} className="text-[#9A8B78] hover:text-[#E11D48]">
+                <Trash2 size={15} />
+              </button>
+            </div>
+          </div>
+          {openMentor === i && (
+            <div className="px-5 pb-5 border-t border-[#EDDFCC] pt-4 grid md:grid-cols-2 gap-3">
+              <Field label="Name"><Input value={mentor.name} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, name: v } : m))} /></Field>
+              <Field label="Current Role"><Input value={mentor.role} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, role: v } : m))} /></Field>
+              <Field label="Company"><Input value={mentor.company ?? ''} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, company: v } : m))} /></Field>
+              <Field label="UPSC Background"><Input value={mentor.upsc_background ?? ''} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, upsc_background: v } : m))} placeholder="e.g. 3 attempts, Mains cleared" /></Field>
+              <Field label="LinkedIn URL"><Input value={mentor.linkedin_url ?? ''} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, linkedin_url: v } : m))} /></Field>
+              <Field label="Photo URL"><Input value={mentor.photo_url ?? ''} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, photo_url: v } : m))} /></Field>
+              <div className="md:col-span-2">
+                <Field label="Bio" hint="1-2 sentences on how they help.">
+                  <Textarea value={mentor.bio ?? ''} onChange={v => setMentors(prev => prev.map((m, j) => j === i ? { ...m, bio: v } : m))} rows={2} />
+                </Field>
+              </div>
+              <div className="md:col-span-2">
+                <button type="button"
+                  onClick={async () => {
+                    setSavingIdx(i)
+                    const res = await fetch(`/api/admin/mentors/${mentor.id}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(mentors[i]),
+                    })
+                    const json = await res.json()
+                    if (res.ok) setMentors(prev => prev.map((m, j) => j === i ? json.data : m))
+                    setSavingIdx(null)
+                  }}
+                  disabled={savingIdx === i}
+                  className="px-4 py-2 bg-[#D97706] text-white rounded-xl text-sm font-semibold hover:bg-[#B45309] transition-colors disabled:opacity-50">
+                  {savingIdx === i ? 'Saving…' : 'Save Mentor'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+
+      {addingNew ? (
+        <div className="border-2 border-[#D97706] rounded-2xl p-5 space-y-3">
+          <p className="font-semibold text-sm">New Mentor</p>
+          <div className="grid md:grid-cols-2 gap-3">
+            <Field label="Name *"><Input value={draft.name ?? ''} onChange={v => setDraft(d => ({ ...d, name: v }))} placeholder="Full name" /></Field>
+            <Field label="Current Role *"><Input value={draft.role ?? ''} onChange={v => setDraft(d => ({ ...d, role: v }))} placeholder="e.g. Policy Analyst, World Bank" /></Field>
+            <Field label="Company"><Input value={draft.company ?? ''} onChange={v => setDraft(d => ({ ...d, company: v }))} /></Field>
+            <Field label="UPSC Background"><Input value={draft.upsc_background ?? ''} onChange={v => setDraft(d => ({ ...d, upsc_background: v }))} placeholder="e.g. 3 attempts, Mains cleared" /></Field>
+            <Field label="LinkedIn URL"><Input value={draft.linkedin_url ?? ''} onChange={v => setDraft(d => ({ ...d, linkedin_url: v }))} /></Field>
+            <Field label="Photo URL"><Input value={draft.photo_url ?? ''} onChange={v => setDraft(d => ({ ...d, photo_url: v }))} /></Field>
+            <div className="md:col-span-2">
+              <Field label="Bio" hint="1-2 sentences on how they help.">
+                <Textarea value={draft.bio ?? ''} onChange={v => setDraft(d => ({ ...d, bio: v }))} rows={2} />
+              </Field>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button type="button" onClick={saveMentor} disabled={savingIdx === -1}
+              className="px-4 py-2 bg-[#D97706] text-white rounded-xl text-sm font-semibold hover:bg-[#B45309] disabled:opacity-50">
+              {savingIdx === -1 ? 'Saving…' : 'Save Mentor'}
+            </button>
+            <button type="button" onClick={() => { setAddingNew(false); setDraft({}) }}
+              className="px-4 py-2 border-2 border-[#EDDFCC] text-[#5C4E3D] rounded-xl text-sm font-semibold">
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button type="button" onClick={() => setAddingNew(true)} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline">
+          <Plus size={16} /> Add Mentor
+        </button>
+      )}
+    </div>
+  )
+}
+
 // ─── Main Form ────────────────────────────────────────────────────────────────
 
 const TAB_KEYS: Record<number, string> = {
-  1: 'basic', 2: 'trajectory', 3: 'salary', 4: 'impact', 5: 'skills', 6: 'launchpad', 7: 'resources',
+  1: 'trajectory', 2: 'salary', 3: 'impact', 4: 'skills', 5: 'launchpad', 6: 'resources',
 }
 
 function emptyForm(): FormData {
@@ -888,6 +1047,7 @@ export default function CareerForm({ career }: { career: CareerPath | null }) {
         {activeTab === 4 && <SkillsTab {...tabProps} />}
         {activeTab === 5 && <LaunchpadTab {...tabProps} />}
         {activeTab === 6 && <ResourcesTab {...tabProps} />}
+        {activeTab === 7 && <MentorsTab careerId={form.id} />}
       </div>
 
       {/* Bottom actions */}
