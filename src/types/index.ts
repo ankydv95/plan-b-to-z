@@ -38,6 +38,47 @@ export interface LaunchpadWeek {
   tasks: string[]
 }
 
+export interface LaunchpadTask {
+  task: string
+  resource_url?: string
+}
+
+export interface LaunchpadPhaseWeek {
+  week: number
+  title: string
+  tasks: LaunchpadTask[]
+}
+
+export interface LaunchpadPhase {
+  phase: number
+  phase_title: string
+  phase_milestone: string
+  weeks: LaunchpadPhaseWeek[]
+}
+
+export interface Resource {
+  category: string
+  title: string
+  url: string
+  annotation: string
+  stage: string
+  provider?: string
+}
+
+export interface Mentor {
+  id: string
+  career_id: string
+  name: string
+  role: string
+  company: string | null
+  upsc_background: string | null
+  bio: string | null
+  photo_url: string | null
+  linkedin_url: string | null
+  is_active: boolean
+  created_at: string
+}
+
 export interface YoutubeLink {
   title: string
   url: string
@@ -78,6 +119,8 @@ export interface CareerPath {
   certifications: string[] | null
   portfolio_projects: string[] | null
   launchpad_weeks: LaunchpadWeek[] | null
+  launchpad_phases: LaunchpadPhase[] | null
+  resources: Resource[] | null
   estimated_cost: string | null
   how_to_apply: string | null
   youtube_links: YoutubeLink[] | null
