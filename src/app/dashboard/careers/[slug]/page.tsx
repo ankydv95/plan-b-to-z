@@ -44,6 +44,13 @@ export default async function CareerDetailPage({ params }: { params: Promise<{ s
     .eq('is_approved', true)
     .limit(5)
 
+  const { data: mentors } = await supabase
+    .from('career_mentors')
+    .select('*')
+    .eq('career_id', career.id)
+    .eq('is_active', true)
+    .order('created_at', { ascending: true })
+
   const { data: profile } = await supabase
     .from('profiles')
     .select('skills')
@@ -57,6 +64,7 @@ export default async function CareerDetailPage({ params }: { params: Promise<{ s
       jobs={jobs || []}
       stories={stories || []}
       userSkills={profile?.skills || []}
+      mentors={mentors || []}
     />
   )
 }
