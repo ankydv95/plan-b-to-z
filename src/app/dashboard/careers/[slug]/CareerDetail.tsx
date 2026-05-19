@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import type { CareerPath } from '@/types'
+import React, { useState } from 'react'
+import type { CareerPath, LaunchpadPhase, Resource, Mentor } from '@/types'
 import {
   Star,
   TrendingUp,
@@ -16,6 +16,15 @@ import {
   Briefcase,
   BookOpen,
   Users,
+  Target,
+  X,
+  Send,
+  Loader2,
+  Globe,
+  BookMarked,
+  Newspaper,
+  MessageCircle,
+  Building2,
 } from 'lucide-react'
 
 interface JobListing {
@@ -47,12 +56,13 @@ interface Props {
   jobs: JobListing[]
   stories: Story[]
   userSkills: string[]
+  mentors: Mentor[]
 }
 
 const TABS = [
   'Trajectory', 'Salary & Perks', 'Impact & Exposure',
-  'Skills & Eligibility', '90-Day Launchpad', 'Jobs',
-  'Resources', 'Stories',
+  'Skills & Eligibility', '90-Day Launchpad', 'Mentors',
+  'Jobs', 'Resources', 'Stories',
 ]
 
 const domainColors: Record<string, { bg: string; color: string }> = {
@@ -79,9 +89,16 @@ function getDomainColor(domain: string) {
   return key ? domainColors[key] : { bg: '#FEF3C7', color: '#D97706' }
 }
 
-export default function CareerDetail({ career, matchPercentage, jobs, stories, userSkills }: Props) {
+export default function CareerDetail({ career, matchPercentage, jobs, stories, userSkills, mentors }: Props) {
   const [activeTab, setActiveTab] = useState(0)
   const [openWeek, setOpenWeek] = useState<number | null>(0)
+  const [openPhase, setOpenPhase] = useState<number | null>(0)
+  const [openPhaseWeek, setOpenPhaseWeek] = useState<{ p: number; w: number } | null>(null)
+  const [resourceStageFilter, setResourceStageFilter] = useState<string>('All')
+  const [inquiryMentor, setInquiryMentor] = useState<Mentor | null>(null)
+  const [inquiryForm, setInquiryForm] = useState({ name: '', email: '', message: '' })
+  const [inquirySending, setInquirySending] = useState(false)
+  const [inquirySent, setInquirySent] = useState(false)
   const { bg, color } = getDomainColor(career.domain)
   const userSkillsLower = userSkills.map(s => s.toLowerCase())
 
@@ -292,51 +309,116 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               Estimated cost: {career.estimated_cost}
             </div>
           )}
-          {(career.launchpad_weeks || []).map((week, i) => (
-            <div key={i} className="card bg-white rounded-2xl overflow-hidden">
-              <button
-                onClick={() => setOpenWeek(openWeek === i ? null : i)}
-                className="w-full flex items-center justify-between p-5 hover:bg-[#FDF6EC] transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <span
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-                    style={{ background: '#D97706' }}
-                  >
-                    {week.week}
-                  </span>
-                  <span className="font-semibold text-left" style={{ fontFamily: 'var(--font-lora)' }}>
-                    {week.title}
-                  </span>
+
+          {career.launchpad_phases && career.launchpad_phases.length > 0 ? (
+            <div className="space-y-4">
+              {(career.launchpad_phases as LaunchpadPhase[]).map((phase, pi) => (
+                <div key={pi} className="card bg-white rounded-2xl overflow-hidden">
+                  <button onClick={() => setOpenPhase(openPhase === pi ? null : pi)}
+                    className="w-full flex items-center justify-between p-5 hover:bg-[#FDF6EC] transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="w-9 h-9 rounded-full bg-[#D97706] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
+                        {phase.phase}
+                      </span>
+                      <div className="text-left">
+                        <div className="font-bold" style={{ fontFamily: 'var(--font-lora)' }}>Phase {phase.phase}: {phase.phase_title}</div>
+                        <div className="text-xs text-[#9A8B78]">{phase.weeks.length} weeks</div>
+                      </div>
+                    </div>
+                    {openPhase === pi ? <ChevronUp size={18} className="text-[#9A8B78]" /> : <ChevronDown size={18} className="text-[#9A8B78]" />}
+                  </button>
+
+                  {openPhase === pi && (
+                    <div className="border-t border-[#EDDFCC]">
+                      {phase.phase_milestone && (
+                        <div className="flex items-start gap-3 px-5 py-4 bg-[#FEF3C7]">
+                          <Target size={16} className="text-[#D97706] flex-shrink-0 mt-0.5" />
+                          <div>
+                            <div className="text-xs font-bold text-[#D97706] mb-0.5 uppercase tracking-wide">Phase milestone</div>
+                            <div className="text-sm text-[#5C4E3D] font-semibold">{phase.phase_milestone}</div>
+                          </div>
+                        </div>
+                      )}
+                      <div className="p-4 space-y-2">
+                        {phase.weeks.map((week, wi) => (
+                          <div key={wi} className="border border-[#EDDFCC] rounded-xl overflow-hidden">
+                            <button
+                              onClick={() => setOpenPhaseWeek(openPhaseWeek?.p === pi && openPhaseWeek?.w === wi ? null : { p: pi, w: wi })}
+                              className="w-full flex items-center justify-between px-4 py-3 hover:bg-[#FEF9F0] transition-colors">
+                              <div className="flex items-center gap-3">
+                                <span className="w-7 h-7 rounded-full bg-[#FEF3C7] text-[#D97706] text-xs font-bold flex items-center justify-center">
+                                  W{week.week}
+                                </span>
+                                <span className="font-semibold text-sm">{week.title}</span>
+                                <span className="text-xs text-[#9A8B78]">{week.tasks.length} tasks</span>
+                              </div>
+                              {openPhaseWeek?.p === pi && openPhaseWeek?.w === wi
+                                ? <ChevronUp size={14} className="text-[#9A8B78]" />
+                                : <ChevronDown size={14} className="text-[#9A8B78]" />}
+                            </button>
+                            {openPhaseWeek?.p === pi && openPhaseWeek?.w === wi && (
+                              <div className="px-4 pb-4 border-t border-[#EDDFCC]">
+                                <ul className="space-y-2 mt-3">
+                                  {week.tasks.map((task, ti) => (
+                                    <li key={ti} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                                      <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
+                                      <span>
+                                        {task.resource_url ? (
+                                          <a href={task.resource_url} target="_blank" rel="noopener noreferrer"
+                                            className="hover:text-[#D97706] underline underline-offset-2">{task.task}</a>
+                                        ) : task.task}
+                                      </span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                {openWeek === i ? <ChevronUp size={18} className="text-[#9A8B78]" /> : <ChevronDown size={18} className="text-[#9A8B78]" />}
-              </button>
-              {openWeek === i && (
-                <div className="px-5 pb-5 border-t border-[#EDDFCC]">
-                  <ul className="space-y-2 mt-4">
-                    {(week.tasks || []).map((task, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
-                        <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
-                        {task}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="space-y-4">
+              {(career.launchpad_weeks || []).map((week, i) => (
+                <div key={i} className="card bg-white rounded-2xl overflow-hidden">
+                  <button onClick={() => setOpenWeek(openWeek === i ? null : i)}
+                    className="w-full flex items-center justify-between p-5 hover:bg-[#FDF6EC] transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ background: '#D97706' }}>
+                        {week.week}
+                      </span>
+                      <span className="font-semibold text-left" style={{ fontFamily: 'var(--font-lora)' }}>{week.title}</span>
+                    </div>
+                    {openWeek === i ? <ChevronUp size={18} className="text-[#9A8B78]" /> : <ChevronDown size={18} className="text-[#9A8B78]" />}
+                  </button>
+                  {openWeek === i && (
+                    <div className="px-5 pb-5 border-t border-[#EDDFCC]">
+                      <ul className="space-y-2 mt-4">
+                        {(week.tasks || []).map((task, j) => (
+                          <li key={j} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                            <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
+                            {task}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
           {career.courses && career.courses.length > 0 && (
             <div className="card bg-white p-6 rounded-2xl mt-6">
               <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Recommended Courses</h3>
               <div className="space-y-3">
                 {career.courses.map((course, i) => (
-                  <a
-                    key={i}
-                    href={course.url || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 rounded-xl border-2 border-[#EDDFCC] hover:border-[#D97706] transition-colors group"
-                  >
+                  <a key={i} href={course.url || '#'} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center justify-between p-4 rounded-xl border-2 border-[#EDDFCC] hover:border-[#D97706] transition-colors group">
                     <div>
                       <div className="font-semibold group-hover:text-[#D97706] transition-colors">{course.name}</div>
                       <div className="text-xs text-[#9A8B78] mt-0.5">{course.provider} · {course.duration} · {course.cost}</div>
@@ -347,6 +429,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               </div>
             </div>
           )}
+
           {career.certifications && career.certifications.length > 0 && (
             <div className="card bg-white p-6 rounded-2xl">
               <h3 className="font-bold text-xl mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Key Certifications</h3>
@@ -357,6 +440,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               </div>
             </div>
           )}
+
           {career.portfolio_projects && career.portfolio_projects.length > 0 && (
             <div className="card bg-white p-6 rounded-2xl">
               <h3 className="font-bold text-xl mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Portfolio Projects</h3>
@@ -373,8 +457,64 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         </div>
       )}
 
-      {/* Tab 5: Jobs */}
+      {/* Tab 5: Mentors */}
       {activeTab === 5 && (
+        <div>
+          {mentors.length === 0 ? (
+            <div className="text-center py-16 card bg-white rounded-2xl">
+              <Users size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+              <p className="font-semibold text-lg mb-2">Mentors coming soon</p>
+              <p className="text-[#9A8B78] text-sm">We&apos;re building a mentor network for this path. Check back soon.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-sm text-[#9A8B78] mb-6">These mentors have walked this path. Reach out — they&apos;ve agreed to help.</p>
+              {mentors.map((mentor) => (
+                <div key={mentor.id} className="card bg-white p-6 rounded-2xl flex flex-col md:flex-row gap-5">
+                  <div className="flex-shrink-0">
+                    {mentor.photo_url ? (
+                      <img src={mentor.photo_url} alt={mentor.name} className="w-16 h-16 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-16 h-16 rounded-full bg-[#FEF3C7] flex items-center justify-center text-[#D97706] text-2xl font-bold">
+                        {mentor.name[0]}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
+                      <div>
+                        <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-lora)' }}>{mentor.name}</h3>
+                        <p className="text-[#5C4E3D]">{mentor.role}{mentor.company && ` · ${mentor.company}`}</p>
+                      </div>
+                      {mentor.linkedin_url && (
+                        <a href={mentor.linkedin_url} target="_blank" rel="noopener noreferrer"
+                          className="text-xs flex items-center gap-1 text-[#0284C7] hover:underline">
+                          <Globe size={12} /> LinkedIn
+                        </a>
+                      )}
+                    </div>
+                    {mentor.upsc_background && (
+                      <span className="tag bg-[#FEF3C7] text-[#D97706] text-xs mb-3 inline-block">
+                        UPSC: {mentor.upsc_background}
+                      </span>
+                    )}
+                    {mentor.bio && <p className="text-sm text-[#5C4E3D] mb-4 leading-relaxed">{mentor.bio}</p>}
+                    <button
+                      onClick={() => { setInquiryMentor(mentor); setInquirySent(false); setInquiryForm({ name: '', email: '', message: '' }) }}
+                      className="btn-primary text-sm py-2 px-5 inline-flex items-center gap-2"
+                    >
+                      <MessageCircle size={14} /> Book a call
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tab 6: Jobs */}
+      {activeTab === 6 && (
         <div>
           {jobs.length === 0 ? (
             <div className="text-center py-16 card bg-white rounded-2xl">
@@ -413,62 +553,128 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         </div>
       )}
 
-      {/* Tab 6: Resources */}
-      {activeTab === 6 && (
-        <div className="space-y-6">
-          {career.youtube_links && career.youtube_links.length > 0 && (
-            <div>
-              <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>YouTube Resources</h3>
-              <div className="grid md:grid-cols-2 gap-3">
-                {career.youtube_links.map((yt, i) => (
-                  <a key={i} href={yt.url} target="_blank" rel="noopener noreferrer"
-                    className="card bg-white p-4 rounded-xl flex items-start gap-3 group">
-                    <div className="w-10 h-10 rounded-xl bg-[#FEE2E2] flex items-center justify-center flex-shrink-0">
-                      <Play size={18} className="text-[#E11D48]" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{yt.title}</div>
-                      <div className="text-xs text-[#9A8B78] mt-0.5">{yt.channel}</div>
-                    </div>
-                  </a>
+      {/* Tab 7: Resources */}
+      {activeTab === 7 && (
+        <div className="space-y-8">
+          {career.resources && career.resources.length > 0 ? (
+            <>
+              <div className="flex gap-2 flex-wrap">
+                {['All', 'Beginner', 'Intermediate', 'Advanced'].map(stage => (
+                  <button key={stage} onClick={() => setResourceStageFilter(stage)}
+                    className={`tag px-4 py-2 cursor-pointer transition-all text-sm font-semibold ${
+                      resourceStageFilter === stage
+                        ? 'bg-[#D97706] text-white'
+                        : 'bg-[#FEF3C7] text-[#D97706] hover:bg-[#D97706] hover:text-white'
+                    }`}>
+                    {stage}
+                  </button>
                 ))}
               </div>
-            </div>
-          )}
-          {career.podcast_links && career.podcast_links.length > 0 && (
-            <div>
-              <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Podcasts</h3>
-              <div className="space-y-3">
-                {career.podcast_links.map((pod, i) => (
-                  <a key={i} href={pod.url} target="_blank" rel="noopener noreferrer"
-                    className="card bg-white p-4 rounded-xl flex items-center gap-3 group">
-                    <div className="w-10 h-10 rounded-xl bg-[#EDE9FE] flex items-center justify-center flex-shrink-0">
-                      🎙️
+
+              {(['YouTube Channels', 'Podcasts', 'Free Courses', 'Books', 'Newsletters', 'Communities', 'Government Portals'] as const).map(category => {
+                const stageBadgeStyle: Record<string, { bg: string; color: string }> = {
+                  'Beginner': { bg: '#DCFCE7', color: '#059669' },
+                  'Intermediate': { bg: '#FEF3C7', color: '#D97706' },
+                  'Advanced': { bg: '#EDE9FE', color: '#7C3AED' },
+                }
+                const categoryResources = (career.resources as Resource[]).filter(r =>
+                  r.category === category &&
+                  (resourceStageFilter === 'All' || r.stage === resourceStageFilter)
+                )
+                if (categoryResources.length === 0) return null
+
+                const categoryIcons: Record<string, React.ReactNode> = {
+                  'YouTube Channels': <Play size={16} className="text-[#E11D48]" />,
+                  'Podcasts': <span className="text-base">🎙️</span>,
+                  'Free Courses': <BookOpen size={16} className="text-[#7C3AED]" />,
+                  'Books': <BookMarked size={16} className="text-[#0284C7]" />,
+                  'Newsletters': <Newspaper size={16} className="text-[#059669]" />,
+                  'Communities': <Users size={16} className="text-[#D97706]" />,
+                  'Government Portals': <Building2 size={16} className="text-[#5C4E3D]" />,
+                }
+
+                return (
+                  <div key={category}>
+                    <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>{category}</h3>
+                    <div className="grid md:grid-cols-2 gap-3">
+                      {categoryResources.map((resource, i) => (
+                        <a key={i} href={resource.url || '#'} target={resource.url ? '_blank' : undefined}
+                          rel="noopener noreferrer"
+                          className={`card bg-white p-4 rounded-xl flex gap-3 group border-2 border-[#EDDFCC] transition-colors ${resource.url ? 'hover:border-[#D97706]' : 'cursor-default'}`}>
+                          <div className="w-9 h-9 rounded-xl bg-[#FDF6EC] flex items-center justify-center flex-shrink-0">
+                            {categoryIcons[category]}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2 mb-1">
+                              <span className="font-semibold text-sm group-hover:text-[#D97706] transition-colors leading-snug">
+                                {resource.title}
+                              </span>
+                              <span className="text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                                style={{
+                                  backgroundColor: stageBadgeStyle[resource.stage]?.bg ?? '#FEF3C7',
+                                  color: stageBadgeStyle[resource.stage]?.color ?? '#D97706',
+                                }}>
+                                {resource.stage}
+                              </span>
+                            </div>
+                            {resource.provider && (
+                              <div className="text-xs text-[#9A8B78] mb-1">{resource.provider}</div>
+                            )}
+                            <p className="text-xs text-[#5C4E3D] leading-relaxed">{resource.annotation}</p>
+                          </div>
+                          {resource.url && <ExternalLink size={14} className="text-[#9A8B78] flex-shrink-0 mt-0.5" />}
+                        </a>
+                      ))}
                     </div>
-                    <div>
-                      <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{pod.title}</div>
-                      <div className="text-xs text-[#9A8B78]">{pod.host}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-          {career.professional_associations && career.professional_associations.length > 0 && (
-            <div>
-              <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Professional Associations</h3>
-              <div className="flex flex-wrap gap-2">
-                {career.professional_associations.map((assoc, i) => (
-                  <span key={i} className="tag bg-[#E0F2FE] text-[#0284C7] px-3 py-2">{assoc}</span>
-                ))}
-              </div>
+                  </div>
+                )
+              })}
+            </>
+          ) : (
+            <div className="space-y-6">
+              {career.youtube_links && career.youtube_links.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>YouTube Resources</h3>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {career.youtube_links.map((yt, i) => (
+                      <a key={i} href={yt.url} target="_blank" rel="noopener noreferrer"
+                        className="card bg-white p-4 rounded-xl flex items-start gap-3 group">
+                        <div className="w-10 h-10 rounded-xl bg-[#FEE2E2] flex items-center justify-center flex-shrink-0">
+                          <Play size={18} className="text-[#E11D48]" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{yt.title}</div>
+                          <div className="text-xs text-[#9A8B78] mt-0.5">{yt.channel}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {career.podcast_links && career.podcast_links.length > 0 && (
+                <div>
+                  <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Podcasts</h3>
+                  <div className="space-y-3">
+                    {career.podcast_links.map((pod, i) => (
+                      <a key={i} href={pod.url} target="_blank" rel="noopener noreferrer"
+                        className="card bg-white p-4 rounded-xl flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-xl bg-[#EDE9FE] flex items-center justify-center flex-shrink-0">🎙️</div>
+                        <div>
+                          <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{pod.title}</div>
+                          <div className="text-xs text-[#9A8B78]">{pod.host}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>
       )}
 
-      {/* Tab 7: Stories */}
-      {activeTab === 7 && (
+      {/* Tab 8: Stories */}
+      {activeTab === 8 && (
         <div>
           {stories.length === 0 ? (
             <div className="text-center py-16 card bg-white rounded-2xl">
@@ -502,6 +708,96 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Mentor Inquiry Modal */}
+      {inquiryMentor && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <h3 className="font-bold text-xl" style={{ fontFamily: 'var(--font-lora)' }}>
+                  Book a call with {inquiryMentor.name}
+                </h3>
+                <p className="text-sm text-[#9A8B78] mt-0.5">{inquiryMentor.role}</p>
+              </div>
+              <button onClick={() => setInquiryMentor(null)} className="text-[#9A8B78] hover:text-[#2A1F14]">
+                <X size={20} />
+              </button>
+            </div>
+
+            {inquirySent ? (
+              <div className="text-center py-8">
+                <CheckCircle2 size={40} className="text-[#059669] mx-auto mb-3" />
+                <p className="font-bold text-lg mb-1">Request sent!</p>
+                <p className="text-sm text-[#9A8B78]">We&apos;ve received your request. Ankit will connect you within 48 hours.</p>
+                <button onClick={() => setInquiryMentor(null)} className="btn-primary mt-5 text-sm py-2 px-6">
+                  Close
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={async e => {
+                e.preventDefault()
+                setInquirySending(true)
+                try {
+                  const res = await fetch('/api/mentor-inquiry', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      mentorName: inquiryMentor.name,
+                      careerTitle: career.title,
+                      senderName: inquiryForm.name,
+                      senderEmail: inquiryForm.email,
+                      message: inquiryForm.message,
+                    }),
+                  })
+                  if (!res.ok) throw new Error()
+                  setInquirySent(true)
+                } finally {
+                  setInquirySending(false)
+                }
+              }} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">Your name</label>
+                  <input
+                    required
+                    value={inquiryForm.name}
+                    onChange={e => setInquiryForm(f => ({ ...f, name: e.target.value }))}
+                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                    placeholder="Your full name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">Your email</label>
+                  <input
+                    required
+                    type="email"
+                    value={inquiryForm.email}
+                    onChange={e => setInquiryForm(f => ({ ...f, email: e.target.value }))}
+                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">What would you like to discuss?</label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={inquiryForm.message}
+                    onChange={e => setInquiryForm(f => ({ ...f, message: e.target.value }))}
+                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] resize-none"
+                    placeholder="Brief intro about your background and what guidance you&apos;re looking for..."
+                  />
+                </div>
+                <button type="submit" disabled={inquirySending}
+                  className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50">
+                  {inquirySending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                  {inquirySending ? 'Sending…' : 'Send Request'}
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       )}
     </div>
