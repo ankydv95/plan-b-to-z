@@ -559,68 +559,97 @@ function LaunchpadTab({ form, set }: { form: FormData; set: (k: keyof FormData, 
   )
 }
 
-function ResourcesTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: unknown) => void }) {
-  const ytLinks = form.youtube_links ?? []
-  const podcasts = form.podcast_links ?? []
+const RESOURCE_CATEGORIES = [
+  'YouTube Channels', 'Podcasts', 'Free Courses', 'Books',
+  'Newsletters', 'Communities', 'Government Portals',
+] as const
 
-  function addYT() { set('youtube_links', [...ytLinks, { title: '', url: '', channel: '' }]) }
-  function updateYT(i: number, key: keyof YoutubeLink, v: string) {
-    set('youtube_links', ytLinks.map((l, j) => j === i ? { ...l, [key]: v } : l))
+const RESOURCE_STAGES = ['Beginner', 'Intermediate', 'Advanced'] as const
+
+function ResourcesTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: unknown) => void }) {
+  const resources = (form.resources ?? []) as Resource[]
+  const [openResource, setOpenResource] = useState<number | null>(null)
+
+  function addResource() {
+    const newResource: Resource = {
+      category: 'YouTube Channels',
+      title: '',
+      url: '',
+      annotation: '',
+      stage: 'Beginner',
+      provider: '',
+    }
+    set('resources', [...resources, newResource])
+    setOpenResource(resources.length)
   }
 
-  function addPodcast() { set('podcast_links', [...podcasts, { title: '', url: '', host: '' }]) }
-  function updatePodcast(i: number, key: keyof PodcastLink, v: string) {
-    set('podcast_links', podcasts.map((l, j) => j === i ? { ...l, [key]: v } : l))
+  function updateResource(i: number, key: keyof Resource, value: string) {
+    set('resources', resources.map((r, j) => j === i ? { ...r, [key]: value } : r))
+  }
+
+  function removeResource(i: number) {
+    set('resources', resources.filter((_, j) => j !== i))
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="font-bold text-base mb-3" style={{ fontFamily: 'var(--font-lora)' }}>YouTube Resources</h3>
-        <div className="space-y-3">
-          {ytLinks.map((yt, i) => (
-            <div key={i} className="grid md:grid-cols-3 gap-3 items-end">
-              <Field label="Title"><Input value={yt.title} onChange={v => updateYT(i, 'title', v)} placeholder="Video title" /></Field>
-              <Field label="Channel"><Input value={yt.channel} onChange={v => updateYT(i, 'channel', v)} placeholder="Channel name" /></Field>
-              <div className="flex gap-2 items-end">
-                <Field label="URL"><Input value={yt.url} onChange={v => updateYT(i, 'url', v)} placeholder="https://youtube.com/…" /></Field>
-                <button type="button" onClick={() => set('youtube_links', ytLinks.filter((_, j) => j !== i))} className="mb-0.5 p-2.5 text-[#9A8B78] hover:text-[#E11D48] border-2 border-[#EDDFCC] rounded-xl">
+    <div className="space-y-4">
+      <p className="text-xs text-[#9A8B78]">
+        Every resource needs an annotation explaining why it is useful for this career. Use AI Fill to generate a starting set.
+      </p>
+      <div className="space-y-2">
+        {resources.map((resource, i) => (
+          <div key={i} className="border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
+            <button type="button" onClick={() => setOpenResource(openResource === i ? null : i)}
+              className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#FDF6EC] transition-colors">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#FEF3C7] text-[#D97706] flex-shrink-0">{resource.category.split(' ')[0]}</span>
+                <span className="font-semibold text-sm truncate">{resource.title || 'Untitled Resource'}</span>
+                <span className="text-xs text-[#9A8B78] flex-shrink-0">{resource.stage}</span>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <button type="button" onClick={e => { e.stopPropagation(); removeResource(i) }} className="text-[#9A8B78] hover:text-[#E11D48] p-1">
                   <Trash2 size={14} />
                 </button>
+                {openResource === i ? <ChevronUp size={16} className="text-[#9A8B78]" /> : <ChevronDown size={16} className="text-[#9A8B78]" />}
               </div>
-            </div>
-          ))}
-        </div>
-        <button type="button" onClick={addYT} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline mt-2">
-          <Plus size={16} /> Add YouTube Link
-        </button>
-      </div>
-
-      <div>
-        <h3 className="font-bold text-base mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Podcasts</h3>
-        <div className="space-y-3">
-          {podcasts.map((pod, i) => (
-            <div key={i} className="grid md:grid-cols-3 gap-3 items-end">
-              <Field label="Title"><Input value={pod.title} onChange={v => updatePodcast(i, 'title', v)} placeholder="Episode title" /></Field>
-              <Field label="Host"><Input value={pod.host} onChange={v => updatePodcast(i, 'host', v)} placeholder="Host name" /></Field>
-              <div className="flex gap-2 items-end">
-                <Field label="URL"><Input value={pod.url} onChange={v => updatePodcast(i, 'url', v)} placeholder="https://…" /></Field>
-                <button type="button" onClick={() => set('podcast_links', podcasts.filter((_, j) => j !== i))} className="mb-0.5 p-2.5 text-[#9A8B78] hover:text-[#E11D48] border-2 border-[#EDDFCC] rounded-xl">
-                  <Trash2 size={14} />
-                </button>
+            </button>
+            {openResource === i && (
+              <div className="px-5 pb-4 border-t border-[#EDDFCC] pt-4 space-y-3">
+                <div className="grid md:grid-cols-2 gap-3">
+                  <Field label="Category">
+                    <select value={resource.category} onChange={e => updateResource(i, 'category', e.target.value)}
+                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm text-[#2A1F14] bg-white focus:outline-none focus:border-[#D97706]">
+                      {RESOURCE_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="Stage">
+                    <select value={resource.stage} onChange={e => updateResource(i, 'stage', e.target.value)}
+                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm text-[#2A1F14] bg-white focus:outline-none focus:border-[#D97706]">
+                      {RESOURCE_STAGES.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </Field>
+                </div>
+                <Field label="Title">
+                  <Input value={resource.title} onChange={v => updateResource(i, 'title', v)} placeholder="Resource name" />
+                </Field>
+                <Field label="Provider / Channel" hint="Optional — e.g. PRS India, SWAYAM, Nitin Pai">
+                  <Input value={resource.provider ?? ''} onChange={v => updateResource(i, 'provider', v)} placeholder="Organization or author" />
+                </Field>
+                <Field label="URL">
+                  <Input value={resource.url} onChange={v => updateResource(i, 'url', v)} placeholder="https://…" />
+                </Field>
+                <Field label="Annotation *" hint="Why is this useful? What should the user do with it?">
+                  <Textarea value={resource.annotation} onChange={v => updateResource(i, 'annotation', v)}
+                    placeholder="e.g. Start here — best plain-language breakdown of Indian policy analysis. Watch the 'Policy 101' playlist first." rows={2} />
+                </Field>
               </div>
-            </div>
-          ))}
-        </div>
-        <button type="button" onClick={addPodcast} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline mt-2">
-          <Plus size={16} /> Add Podcast
-        </button>
+            )}
+          </div>
+        ))}
       </div>
-
-      <div>
-        <h3 className="font-bold text-base mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Professional Associations</h3>
-        <StringList values={form.professional_associations} onChange={v => set('professional_associations', v)} placeholder="Add an association" />
-      </div>
+      <button type="button" onClick={addResource} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline">
+        <Plus size={16} /> Add Resource
+      </button>
     </div>
   )
 }
