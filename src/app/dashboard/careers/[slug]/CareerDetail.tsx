@@ -99,6 +99,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
   const [inquiryForm, setInquiryForm] = useState({ name: '', email: '', message: '' })
   const [inquirySending, setInquirySending] = useState(false)
   const [inquirySent, setInquirySent] = useState(false)
+  const [inquiryError, setInquiryError] = useState<string | null>(null)
   const { bg, color } = getDomainColor(career.domain)
   const userSkillsLower = userSkills.map(s => s.toLowerCase())
 
@@ -500,7 +501,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                     )}
                     {mentor.bio && <p className="text-sm text-[#5C4E3D] mb-4 leading-relaxed">{mentor.bio}</p>}
                     <button
-                      onClick={() => { setInquiryMentor(mentor); setInquirySent(false); setInquiryForm({ name: '', email: '', message: '' }) }}
+                      onClick={() => { setInquiryMentor(mentor); setInquirySent(false); setInquiryForm({ name: '', email: '', message: '' }); setInquiryError(null) }}
                       className="btn-primary text-sm py-2 px-5 inline-flex items-center gap-2"
                     >
                       <MessageCircle size={14} /> Book a call
@@ -722,7 +723,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 </h3>
                 <p className="text-sm text-[#9A8B78] mt-0.5">{inquiryMentor.role}</p>
               </div>
-              <button onClick={() => setInquiryMentor(null)} className="text-[#9A8B78] hover:text-[#2A1F14]">
+              <button aria-label="Close" onClick={() => setInquiryMentor(null)} className="text-[#9A8B78] hover:text-[#2A1F14]">
                 <X size={20} />
               </button>
             </div>
@@ -739,6 +740,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
             ) : (
               <form onSubmit={async e => {
                 e.preventDefault()
+                setInquiryError(null)
                 setInquirySending(true)
                 try {
                   const res = await fetch('/api/mentor-inquiry', {
@@ -754,6 +756,8 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                   })
                   if (!res.ok) throw new Error()
                   setInquirySent(true)
+                } catch {
+                  setInquiryError('Something went wrong. Please try again.')
                 } finally {
                   setInquirySending(false)
                 }
@@ -787,9 +791,12 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                     value={inquiryForm.message}
                     onChange={e => setInquiryForm(f => ({ ...f, message: e.target.value }))}
                     className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] resize-none"
-                    placeholder="Brief intro about your background and what guidance you&apos;re looking for..."
+                    placeholder="Brief intro about your background and what guidance you're looking for..."
                   />
                 </div>
+                {inquiryError && (
+                  <p className="text-sm text-red-600">{inquiryError}</p>
+                )}
                 <button type="submit" disabled={inquirySending}
                   className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50">
                   {inquirySending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
