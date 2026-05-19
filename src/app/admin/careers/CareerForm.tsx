@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import type { CareerPath, TrajectoryStage, LaunchpadWeek, Course, YoutubeLink, PodcastLink } from '@/types'
+import type { CareerPath, TrajectoryStage, LaunchpadWeek, LaunchpadPhase, LaunchpadPhaseWeek, LaunchpadTask, Course, YoutubeLink, PodcastLink, Resource } from '@/types'
 import { Plus, Trash2, Sparkles, ChevronDown, ChevronUp, Save, Globe, Loader2 } from 'lucide-react'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -307,25 +307,96 @@ function SkillsTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: 
 }
 
 function LaunchpadTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: unknown) => void }) {
-  const weeks = form.launchpad_weeks ?? []
+  const phases = (form.launchpad_phases ?? []) as LaunchpadPhase[]
   const courses = form.courses ?? []
-  const [openWeek, setOpenWeek] = useState<number | null>(0)
+  const [openPhase, setOpenPhase] = useState<number | null>(0)
+  const [openWeek, setOpenWeek] = useState<{ p: number; w: number } | null>(null)
+
+  function addPhase() {
+    const newPhase: LaunchpadPhase = {
+      phase: phases.length + 1,
+      phase_title: ['Foundation', 'Build', 'Apply'][phases.length] ?? `Phase ${phases.length + 1}`,
+      phase_milestone: '',
+      weeks: [],
+    }
+    set('launchpad_phases', [...phases, newPhase])
+    setOpenPhase(phases.length)
+  }
+
+  function updatePhase(pi: number, key: keyof LaunchpadPhase, value: unknown) {
+    set('launchpad_phases', phases.map((p, i) => i === pi ? { ...p, [key]: value } : p))
+  }
+
+  function removePhase(pi: number) {
+    set('launchpad_phases', phases.filter((_, i) => i !== pi))
+  }
+
+  function addWeek(pi: number) {
+    const updated = phases.map((p, i) => {
+      if (i !== pi) return p
+      const newWeek: LaunchpadPhaseWeek = { week: p.weeks.length + 1, title: '', tasks: [] }
+      return { ...p, weeks: [...p.weeks, newWeek] }
+    })
+    set('launchpad_phases', updated)
+    setOpenWeek({ p: pi, w: phases[pi].weeks.length })
+  }
+
+  function updateWeek(pi: number, wi: number, key: keyof LaunchpadPhaseWeek, value: unknown) {
+    set('launchpad_phases', phases.map((p, i) => {
+      if (i !== pi) return p
+      return { ...p, weeks: p.weeks.map((w, j) => j === wi ? { ...w, [key]: value } : w) }
+    }))
+  }
+
+  function removeWeek(pi: number, wi: number) {
+    set('launchpad_phases', phases.map((p, i) => {
+      if (i !== pi) return p
+      return { ...p, weeks: p.weeks.filter((_, j) => j !== wi) }
+    }))
+  }
+
+  function addTask(pi: number, wi: number) {
+    set('launchpad_phases', phases.map((p, i) => {
+      if (i !== pi) return p
+      return {
+        ...p, weeks: p.weeks.map((w, j) => {
+          if (j !== wi) return w
+          return { ...w, tasks: [...w.tasks, { task: '', resource_url: '' }] }
+        }),
+      }
+    }))
+  }
+
+  function updateTask(pi: number, wi: number, ti: number, key: keyof LaunchpadTask, value: string) {
+    set('launchpad_phases', phases.map((p, i) => {
+      if (i !== pi) return p
+      return {
+        ...p, weeks: p.weeks.map((w, j) => {
+          if (j !== wi) return w
+          return { ...w, tasks: w.tasks.map((t, k) => k === ti ? { ...t, [key]: value } : t) }
+        }),
+      }
+    }))
+  }
+
+  function removeTask(pi: number, wi: number, ti: number) {
+    set('launchpad_phases', phases.map((p, i) => {
+      if (i !== pi) return p
+      return {
+        ...p, weeks: p.weeks.map((w, j) => {
+          if (j !== wi) return w
+          return { ...w, tasks: w.tasks.filter((_, k) => k !== ti) }
+        }),
+      }
+    }))
+  }
+
+  // Course handlers (unchanged from original)
   const [openCourse, setOpenCourse] = useState<number | null>(null)
-
-  function addWeek() {
-    set('launchpad_weeks', [...weeks, { week: weeks.length + 1, title: '', tasks: [] }])
-    setOpenWeek(weeks.length)
-  }
-
-  function updateWeek(i: number, key: keyof LaunchpadWeek, value: unknown) {
-    set('launchpad_weeks', weeks.map((w, j) => j === i ? { ...w, [key]: value } : w))
-  }
-
   function addCourse() {
     set('courses', [...courses, { name: '', provider: '', url: '', cost: '', duration: '' }])
     setOpenCourse(courses.length)
   }
-
   function updateCourse(i: number, key: keyof Course, value: string) {
     set('courses', courses.map((c, j) => j === i ? { ...c, [key]: value } : c))
   }
@@ -333,59 +404,131 @@ function LaunchpadTab({ form, set }: { form: FormData; set: (k: keyof FormData, 
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-bold text-base mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Weekly Milestones</h3>
-        <div className="space-y-2">
-          {weeks.map((week, i) => (
-            <div key={i} className="border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setOpenWeek(openWeek === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#FDF6EC] transition-colors"
-              >
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="font-bold text-base" style={{ fontFamily: 'var(--font-lora)' }}>90-Day Phases</h3>
+          <span className="text-xs text-[#9A8B78]">Recommended: 3 phases — Foundation, Build, Apply</span>
+        </div>
+        <div className="space-y-3">
+          {phases.map((phase, pi) => (
+            <div key={pi} className="border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
+              {/* Phase header */}
+              <button type="button" onClick={() => setOpenPhase(openPhase === pi ? null : pi)}
+                className="w-full flex items-center justify-between px-5 py-4 hover:bg-[#FDF6EC] transition-colors">
                 <div className="flex items-center gap-3">
-                  <span className="w-7 h-7 rounded-full bg-[#D97706] text-white text-xs font-bold flex items-center justify-center">{week.week}</span>
-                  <span className="font-semibold text-sm">{week.title || 'Untitled Week'}</span>
+                  <span className="w-7 h-7 rounded-full bg-[#D97706] text-white text-xs font-bold flex items-center justify-center">{phase.phase}</span>
+                  <span className="font-bold text-sm">{phase.phase_title || `Phase ${phase.phase}`}</span>
+                  <span className="text-xs text-[#9A8B78]">{phase.weeks.length} week{phase.weeks.length !== 1 ? 's' : ''}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button type="button" onClick={e => { e.stopPropagation(); set('launchpad_weeks', weeks.filter((_, j) => j !== i)) }} className="text-[#9A8B78] hover:text-[#E11D48] p-1">
+                  <button type="button" onClick={e => { e.stopPropagation(); removePhase(pi) }} className="text-[#9A8B78] hover:text-[#E11D48] p-1">
                     <Trash2 size={14} />
                   </button>
-                  {openWeek === i ? <ChevronUp size={16} className="text-[#9A8B78]" /> : <ChevronDown size={16} className="text-[#9A8B78]" />}
+                  {openPhase === pi ? <ChevronUp size={16} className="text-[#9A8B78]" /> : <ChevronDown size={16} className="text-[#9A8B78]" />}
                 </div>
               </button>
-              {openWeek === i && (
-                <div className="px-5 pb-4 border-t border-[#EDDFCC] space-y-3 pt-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <Field label="Week #">
-                      <Input type="number" value={String(week.week)} onChange={v => updateWeek(i, 'week', Number(v))} />
+
+              {openPhase === pi && (
+                <div className="px-5 pb-5 border-t border-[#EDDFCC] pt-4 space-y-4">
+                  <div className="grid md:grid-cols-2 gap-3">
+                    <Field label="Phase Title">
+                      <Input value={phase.phase_title} onChange={v => updatePhase(pi, 'phase_title', v)} placeholder="e.g. Foundation" />
                     </Field>
-                    <Field label="Theme/Title">
-                      <Input value={week.title} onChange={v => updateWeek(i, 'title', v)} placeholder="e.g. Foundation Building" />
+                    <Field label="Phase Milestone" hint="What concrete outcome marks this phase complete?">
+                      <Input value={phase.phase_milestone} onChange={v => updatePhase(pi, 'phase_milestone', v)} placeholder="e.g. Applied to 3 jobs, resume reviewed..." />
                     </Field>
                   </div>
-                  <Field label="Tasks">
-                    <StringList values={week.tasks} onChange={v => updateWeek(i, 'tasks', v)} placeholder="Add a task" />
-                  </Field>
+
+                  {/* Weeks */}
+                  <div>
+                    <p className="text-xs font-semibold text-[#9A8B78] mb-2 uppercase tracking-wide">Weeks</p>
+                    <div className="space-y-2">
+                      {phase.weeks.map((week, wi) => (
+                        <div key={wi} className="border border-[#EDDFCC] rounded-xl overflow-hidden">
+                          <button type="button"
+                            onClick={() => setOpenWeek(openWeek?.p === pi && openWeek?.w === wi ? null : { p: pi, w: wi })}
+                            className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-[#FEF9F0] transition-colors">
+                            <div className="flex items-center gap-2">
+                              <span className="w-6 h-6 rounded-full bg-[#FEF3C7] text-[#D97706] text-xs font-bold flex items-center justify-center">{week.week}</span>
+                              <span className="text-sm font-semibold">{week.title || 'Untitled Week'}</span>
+                              <span className="text-xs text-[#9A8B78]">{week.tasks.length} task{week.tasks.length !== 1 ? 's' : ''}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <button type="button" onClick={e => { e.stopPropagation(); removeWeek(pi, wi) }} className="text-[#9A8B78] hover:text-[#E11D48] p-1">
+                                <Trash2 size={13} />
+                              </button>
+                              {openWeek?.p === pi && openWeek?.w === wi
+                                ? <ChevronUp size={14} className="text-[#9A8B78]" />
+                                : <ChevronDown size={14} className="text-[#9A8B78]" />}
+                            </div>
+                          </button>
+
+                          {openWeek?.p === pi && openWeek?.w === wi && (
+                            <div className="px-4 pb-4 border-t border-[#EDDFCC] pt-3 space-y-3">
+                              <div className="grid grid-cols-2 gap-3">
+                                <Field label="Week #">
+                                  <Input type="number" value={String(week.week)} onChange={v => updateWeek(pi, wi, 'week', Number(v))} />
+                                </Field>
+                                <Field label="Week Theme">
+                                  <Input value={week.title} onChange={v => updateWeek(pi, wi, 'title', v)} placeholder="e.g. Build Your Network" />
+                                </Field>
+                              </div>
+
+                              <div>
+                                <p className="text-xs font-semibold text-[#9A8B78] mb-2">Tasks (be specific — no vague tasks)</p>
+                                <div className="space-y-2">
+                                  {week.tasks.map((task, ti) => (
+                                    <div key={ti} className="flex gap-2">
+                                      <div className="flex-1 space-y-1.5">
+                                        <input
+                                          value={task.task}
+                                          onChange={e => updateTask(pi, wi, ti, 'task', e.target.value)}
+                                          placeholder="Specific actionable task..."
+                                          className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#D97706]"
+                                        />
+                                        <input
+                                          value={task.resource_url ?? ''}
+                                          onChange={e => updateTask(pi, wi, ti, 'resource_url', e.target.value)}
+                                          placeholder="Resource URL (optional)"
+                                          className="w-full border border-[#EDDFCC] rounded-lg px-3 py-1.5 text-xs text-[#9A8B78] focus:outline-none focus:border-[#D97706]"
+                                        />
+                                      </div>
+                                      <button type="button" onClick={() => removeTask(pi, wi, ti)} className="text-[#9A8B78] hover:text-[#E11D48] p-1 flex-shrink-0 mt-1">
+                                        <Trash2 size={13} />
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                                <button type="button" onClick={() => addTask(pi, wi)} className="flex items-center gap-1 text-xs text-[#D97706] font-semibold hover:underline mt-2">
+                                  <Plus size={12} /> Add Task
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <button type="button" onClick={() => addWeek(pi)} className="flex items-center gap-1 text-xs text-[#D97706] font-semibold hover:underline mt-2">
+                      <Plus size={12} /> Add Week
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           ))}
         </div>
-        <button type="button" onClick={addWeek} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline mt-2">
-          <Plus size={16} /> Add Week
+        <button type="button" onClick={addPhase} className="flex items-center gap-2 text-sm text-[#D97706] font-semibold hover:underline mt-3">
+          <Plus size={16} /> Add Phase
         </button>
       </div>
 
+      {/* Courses — unchanged from original */}
       <div>
         <h3 className="font-bold text-base mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Recommended Courses</h3>
         <div className="space-y-2">
           {courses.map((course, i) => (
             <div key={i} className="border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setOpenCourse(openCourse === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#FDF6EC] transition-colors"
-              >
+              <button type="button" onClick={() => setOpenCourse(openCourse === i ? null : i)}
+                className="w-full flex items-center justify-between px-5 py-3 hover:bg-[#FDF6EC] transition-colors">
                 <span className="font-semibold text-sm">{course.name || 'Untitled Course'}</span>
                 <div className="flex items-center gap-2">
                   <button type="button" onClick={e => { e.stopPropagation(); set('courses', courses.filter((_, j) => j !== i)) }} className="text-[#9A8B78] hover:text-[#E11D48] p-1">
@@ -512,6 +655,8 @@ function emptyForm(): FormData {
     certifications: [],
     portfolio_projects: [],
     launchpad_weeks: [],
+    launchpad_phases: [],
+    resources: [],
     estimated_cost: null,
     how_to_apply: null,
     youtube_links: [],
