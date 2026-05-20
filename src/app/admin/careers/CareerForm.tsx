@@ -153,10 +153,10 @@ function BasicTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: u
 
       <div className="grid md:grid-cols-2 gap-5">
         <Field label="Growth Rate">
-          <Input value={form.growth_rate} onChange={v => set('growth_rate', v)} placeholder="e.g. 15% annually or High" />
+          <Input value={form.growth_rate ?? ''} onChange={v => set('growth_rate', v)} placeholder="e.g. 15% annually or High" />
         </Field>
         <Field label="How to Apply" hint="Optional — entry path notes.">
-          <Input value={form.how_to_apply} onChange={v => set('how_to_apply', v)} placeholder="e.g. Apply via UPSC CSE, NGO portals..." />
+          <Input value={form.how_to_apply ?? ''} onChange={v => set('how_to_apply', v)} placeholder="e.g. Apply via UPSC CSE, NGO portals..." />
         </Field>
       </div>
     </div>
@@ -250,17 +250,17 @@ function SalaryTab({ form, set }: { form: FormData; set: (k: keyof FormData, v: 
     <div className="space-y-6">
       <div className="grid md:grid-cols-3 gap-5">
         <Field label="Entry Salary (0-2 yrs)">
-          <Input value={form.salary_entry} onChange={v => set('salary_entry', v)} placeholder="₹6-10 LPA" />
+          <Input value={form.salary_entry ?? ''} onChange={v => set('salary_entry', v)} placeholder="₹6-10 LPA" />
         </Field>
         <Field label="Mid Salary (3-7 yrs)">
-          <Input value={form.salary_mid} onChange={v => set('salary_mid', v)} placeholder="₹12-20 LPA" />
+          <Input value={form.salary_mid ?? ''} onChange={v => set('salary_mid', v)} placeholder="₹12-20 LPA" />
         </Field>
         <Field label="Senior Salary (8+ yrs)">
-          <Input value={form.salary_senior} onChange={v => set('salary_senior', v)} placeholder="₹25-50 LPA" />
+          <Input value={form.salary_senior ?? ''} onChange={v => set('salary_senior', v)} placeholder="₹25-50 LPA" />
         </Field>
       </div>
       <Field label="Estimated Transition Cost">
-        <Input value={form.estimated_cost} onChange={v => set('estimated_cost', v)} placeholder="e.g. ₹10,000–50,000 for certifications" />
+        <Input value={form.estimated_cost ?? ''} onChange={v => set('estimated_cost', v)} placeholder="e.g. ₹10,000–50,000 for certifications" />
       </Field>
       <Field label="Common Perks">
         <StringList values={form.perks} onChange={v => set('perks', v)} placeholder="Add a perk" />

@@ -202,7 +202,7 @@ export default async function DashboardHome() {
                       {String(cp?.title ?? '')}
                     </h3>
                     <p className="text-xs text-[#9A8B78] line-clamp-1 mb-2">{String(cp?.description ?? '')}</p>
-                    {cp?.salary_entry && (
+                    {!!cp?.salary_entry && (
                       <p className="text-xs font-semibold text-[#5C4E3D]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>
                         From {String(cp.salary_entry)}
                       </p>
