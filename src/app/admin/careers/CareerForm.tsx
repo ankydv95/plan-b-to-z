@@ -33,7 +33,7 @@ function Field({ label, children, hint }: { label: string; children: React.React
   )
 }
 
-function Input({ value, onChange, placeholder, type = 'text', ...rest }: React.InputHTMLAttributes<HTMLInputElement> & { onChange: (v: string) => void }) {
+function Input({ value, onChange, placeholder, type = 'text', ...rest }: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & { onChange: (v: string) => void }) {
   return (
     <input
       type={type}
