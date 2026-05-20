@@ -232,8 +232,7 @@ export async function POST(request: Request) {
     const data = JSON.parse(jsonStr)
 
     return NextResponse.json({ data })
-  } catch (error) {
-    console.error('AI generate error:', error)
+  } catch {
     return NextResponse.json({ error: 'Generation failed' }, { status: 500 })
   }
 }
