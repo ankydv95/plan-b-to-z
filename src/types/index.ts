@@ -184,3 +184,49 @@ export interface AssessmentUserData {
   priorities: string[]
   constraints: string
 }
+
+export type PostTag =
+  | 'career_doubts'
+  | 'transition_story'
+  | 'skill_building'
+  | 'emotional_support'
+  | 'general'
+
+export interface CommunityGroup {
+  id: string
+  career_path_id: string | null
+  name: string
+  slug: string
+  description: string | null
+  member_count: number
+  created_at: string
+}
+
+export interface CommunityGroupMember {
+  id: string
+  group_id: string
+  user_id: string
+  joined_at: string
+  profiles?: {
+    id: string
+    full_name: string | null
+    stage_reached: string | null
+  } | null
+}
+
+export interface CommunityPost {
+  id: string
+  author_id: string | null
+  group_id: string | null
+  parent_id: string | null
+  content: string
+  is_anonymous: boolean
+  tag: PostTag
+  likes_count: number
+  replies_count: number
+  created_at: string
+  profiles?: {
+    full_name: string | null
+    stage_reached: string | null
+  } | null
+}
