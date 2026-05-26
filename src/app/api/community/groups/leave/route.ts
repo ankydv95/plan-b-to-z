@@ -12,16 +12,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'group_id is required' }, { status: 400 })
     }
 
-    const { error } = await supabase
+    const { error, count } = await supabase
       .from('community_group_members')
-      .delete()
+      .delete({ count: 'exact' })
       .eq('group_id', group_id)
       .eq('user_id', user.id)
 
     if (error) throw error
 
-    // Decrement member_count
-    await supabase.rpc('decrement_group_member_count', { gid: group_id })
+    // Decrement member_count only if row was deleted
+    if ((count ?? 0) > 0) {
+      const { error: rpcError } = await supabase.rpc('decrement_group_member_count', { gid: group_id })
+      if (rpcError) throw rpcError
+    }
 
     return NextResponse.json({ success: true })
   } catch {

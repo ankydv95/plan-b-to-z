@@ -34,7 +34,8 @@ export async function POST(request: Request) {
     }
 
     // Increment member_count
-    await supabase.rpc('increment_group_member_count', { gid: group_id })
+    const { error: rpcError } = await supabase.rpc('increment_group_member_count', { gid: group_id })
+    if (rpcError) throw rpcError
 
     return NextResponse.json({ success: true })
   } catch {
