@@ -99,7 +99,7 @@ export default function JobsPage() {
         <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Job Board
         </h1>
-        <p className="text-[#9A8B78] max-w-xl">
+        <p className="text-[#64748b] max-w-xl">
           Roles from organisations that actively value the UPSC background — discipline, analytical depth, and integrity.
         </p>
       </div>
@@ -111,7 +111,7 @@ export default function JobsPage() {
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Search roles, companies, locations..."
-          className="w-full max-w-xl border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] transition-colors"
+          className="w-full max-w-xl border-2 border-[#e2e8f0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] transition-colors"
         />
         <div className="flex flex-wrap gap-2">
           {savedIds.size > 0 && (
@@ -119,8 +119,8 @@ export default function JobsPage() {
               onClick={() => setActiveFilter('Saved')}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
                 activeFilter === 'Saved'
-                  ? 'bg-[#2A1F14] text-white'
-                  : 'bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706]'
+                  ? 'bg-[#1e293b] text-white'
+                  : 'bg-white border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706]'
               }`}
             >
               <BookmarkCheck size={13} /> Saved ({savedIds.size})
@@ -132,8 +132,8 @@ export default function JobsPage() {
               onClick={() => setActiveFilter(f)}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
                 activeFilter === f
-                  ? 'bg-[#2A1F14] text-white'
-                  : 'bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706]'
+                  ? 'bg-[#1e293b] text-white'
+                  : 'bg-white border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706]'
               }`}
             >
               {f}
@@ -144,7 +144,7 @@ export default function JobsPage() {
         {/* Career type filter */}
         {domains.length > 1 && (
           <div>
-            <p className="text-xs font-semibold text-[#9A8B78] uppercase tracking-widest mb-2">Career Type</p>
+            <p className="text-xs font-semibold text-[#64748b] uppercase tracking-widest mb-2">Career Type</p>
             <div className="flex flex-wrap gap-2">
               {domains.map(d => (
                 <button
@@ -153,7 +153,7 @@ export default function JobsPage() {
                   className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
                     activeDomain === d
                       ? 'bg-[#D97706] text-white'
-                      : 'bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706]'
+                      : 'bg-white border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706]'
                   }`}
                 >
                   {d}
@@ -164,7 +164,7 @@ export default function JobsPage() {
         )}
       </div>
 
-      <p className="text-sm text-[#9A8B78] mb-5">
+      <p className="text-sm text-[#64748b] mb-5">
         Showing {filtered.length} of {jobs.length} listings
       </p>
 
@@ -172,16 +172,16 @@ export default function JobsPage() {
       {loading ? (
         <div className="space-y-4">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="h-32 bg-[#EDDFCC] rounded-2xl animate-pulse" />
+            <div key={i} className="h-32 bg-[#e2e8f0] rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-16 bg-white border-2 border-[#EDDFCC] rounded-2xl">
-          <Briefcase size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+        <div className="text-center py-16 bg-white border-2 border-[#e2e8f0] rounded-2xl">
+          <Briefcase size={40} className="text-[#e2e8f0] mx-auto mb-4" />
           <p className="font-semibold text-lg mb-1">
             {activeFilter === 'Saved' ? 'No saved jobs yet' : 'No listings found'}
           </p>
-          <p className="text-sm text-[#9A8B78]">
+          <p className="text-sm text-[#64748b]">
             {activeFilter === 'Saved' ? 'Bookmark jobs to save them here.' : 'Try adjusting your search or filters.'}
           </p>
         </div>
@@ -190,7 +190,7 @@ export default function JobsPage() {
           {filtered.map(job => (
             <div
               key={job.id}
-              className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-6 hover:border-[#D97706] transition-colors"
+              className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-6 hover:border-[#D97706] transition-colors"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
@@ -214,13 +214,13 @@ export default function JobsPage() {
                   </div>
 
                   {/* Title + company */}
-                  <h3 className="font-bold text-lg text-[#2A1F14] leading-snug mb-0.5" style={{ fontFamily: 'var(--font-lora)' }}>
+                  <h3 className="font-bold text-lg text-[#1e293b] leading-snug mb-0.5" style={{ fontFamily: 'var(--font-lora)' }}>
                     {job.role_title}
                   </h3>
-                  <p className="text-[#5C4E3D] font-semibold text-sm mb-3">{job.company_name}</p>
+                  <p className="text-[#475569] font-semibold text-sm mb-3">{job.company_name}</p>
 
                   {/* Meta */}
-                  <div className="flex flex-wrap gap-4 text-xs text-[#9A8B78]">
+                  <div className="flex flex-wrap gap-4 text-xs text-[#64748b]">
                     {job.location && (
                       <span className="flex items-center gap-1">
                         <MapPin size={12} /> {job.location}
@@ -243,8 +243,8 @@ export default function JobsPage() {
                     title={savedIds.has(job.id) ? 'Unsave job' : 'Save job'}
                     className={`p-2.5 rounded-xl border-2 transition-colors ${
                       savedIds.has(job.id)
-                        ? 'bg-[#2A1F14] border-[#2A1F14] text-white'
-                        : 'border-[#EDDFCC] text-[#9A8B78] hover:border-[#2A1F14] hover:text-[#2A1F14]'
+                        ? 'bg-[#1e293b] border-[#1e293b] text-white'
+                        : 'border-[#e2e8f0] text-[#64748b] hover:border-[#1e293b] hover:text-[#1e293b]'
                     }`}
                   >
                     {savedIds.has(job.id) ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
@@ -275,7 +275,7 @@ export default function JobsPage() {
         <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Are you an employer?
         </h3>
-        <p className="text-[#5C4E3D] mb-5 text-sm max-w-md mx-auto">
+        <p className="text-[#475569] mb-5 text-sm max-w-md mx-auto">
           Post a role and reach thousands of ex-UPSC aspirants — disciplined, analytical, and mission-driven professionals.
         </p>
         <button className="bg-[#D97706] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#B45309] transition-colors">

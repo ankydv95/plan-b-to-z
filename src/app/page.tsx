@@ -16,9 +16,9 @@ import {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#FEFDFB]">
+    <div className="min-h-screen bg-[#ffffff]">
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-[#FEFDFB]/90 backdrop-blur-md border-b border-[#EDDFCC]">
+      <nav className="sticky top-0 z-50 bg-[#ffffff]/90 backdrop-blur-md border-b border-[#e2e8f0]">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-1">
             <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-lora)' }}>
@@ -27,7 +27,7 @@ export default function LandingPage() {
               {' '}to Z
             </span>
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-[#5C4E3D] font-semibold text-sm">
+          <div className="hidden md:flex items-center gap-8 text-[#475569] font-semibold text-sm">
             <Link href="#features" className="hover:text-[#D97706] transition-colors">Features</Link>
             <Link href="#how-it-works" className="hover:text-[#D97706] transition-colors">How It Works</Link>
             <Link href="#partners" className="hover:text-[#D97706] transition-colors">Partners</Link>
@@ -60,14 +60,14 @@ export default function LandingPage() {
             It was a launchpad.
           </em>
         </h1>
-        <p className="animate-fade-up-delay-2 text-xl text-[#5C4E3D] max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="animate-fade-up-delay-2 text-xl text-[#475569] max-w-2xl mx-auto mb-10 leading-relaxed">
           Discover 75+ fulfilling career paths that value exactly what you&apos;ve built — your analytical
           mind, your discipline, your depth of knowledge.
         </p>
         <div className="animate-fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <Link
             href="/signup"
-            className="btn-primary text-base px-8 py-3 !bg-[#2A1F14] hover:!bg-[#3d2d1a]"
+            className="btn-primary text-base px-8 py-3 !bg-[#1e293b] hover:!bg-[#3d2d1a]"
           >
             Start Free Assessment
             <ArrowRight size={18} />
@@ -76,7 +76,7 @@ export default function LandingPage() {
             See How It Works
           </Link>
         </div>
-        <div className="animate-fade-up-delay-4 flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-[#EDDFCC]">
+        <div className="animate-fade-up-delay-4 flex flex-col sm:flex-row items-center justify-center gap-8 pt-8 border-t border-[#e2e8f0]">
           {[
             { stat: '75+', label: 'Career Paths Mapped' },
             { stat: 'Free', label: '10 Min AI Assessment' },
@@ -87,14 +87,14 @@ export default function LandingPage() {
               <div className="text-4xl font-bold text-[#D97706]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>
                 {stat}
               </div>
-              <div className="text-sm text-[#9A8B78] mt-1 font-semibold">{label}</div>
+              <div className="text-sm text-[#64748b] mt-1 font-semibold">{label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* Problem */}
-      <section className="bg-[#FDF6EC] py-20">
+      <section className="bg-[#f8fafc] py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="tag bg-[#FEE2E2] text-[#E11D48] mb-4 inline-block">The Reality</span>
@@ -126,7 +126,7 @@ export default function LandingPage() {
               <div key={title} className="card bg-white p-6 rounded-2xl border-t-4" style={{ borderTopColor: color }}>
                 <div className="text-3xl mb-4">{icon}</div>
                 <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--font-lora)' }}>{title}</h3>
-                <p className="text-[#5C4E3D] leading-relaxed">{body}</p>
+                <p className="text-[#475569] leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -143,7 +143,7 @@ export default function LandingPage() {
             </h2>
           </div>
           <div className="relative">
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-[#EDDFCC] hidden md:block" />
+            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-[#e2e8f0] hidden md:block" />
             {[
               {
                 n: '01',
@@ -167,12 +167,12 @@ export default function LandingPage() {
               },
             ].map(({ n, title, body }) => (
               <div key={n} className="relative flex gap-8 mb-10 pl-20">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#2A1F14] text-white flex items-center justify-center font-bold z-10 absolute left-0">
+                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-[#1e293b] text-white flex items-center justify-center font-bold z-10 absolute left-0">
                   <span style={{ fontFamily: 'var(--font-jetbrains-mono)', fontSize: '0.7rem' }}>{n}</span>
                 </div>
                 <div className="card bg-white p-6 rounded-2xl flex-1">
                   <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>{title}</h3>
-                  <p className="text-[#5C4E3D] leading-relaxed">{body}</p>
+                  <p className="text-[#475569] leading-relaxed">{body}</p>
                 </div>
               </div>
             ))}
@@ -181,7 +181,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="bg-[#FDF6EC] py-20">
+      <section id="features" className="bg-[#f8fafc] py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="tag bg-[#EDE9FE] text-[#7C3AED] mb-4 inline-block">Everything You Need</span>
@@ -196,14 +196,14 @@ export default function LandingPage() {
               <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
                 Personalized Career Assessment
               </h3>
-              <p className="text-[#5C4E3D] mb-6 leading-relaxed">
+              <p className="text-[#475569] mb-6 leading-relaxed">
                 Not a quiz. A real conversation. Our AI counselor understands your UPSC journey and maps it
                 to careers where your skills actually shine.
               </p>
-              <div className="bg-[#FDF6EC] rounded-xl p-4 space-y-3">
+              <div className="bg-[#f8fafc] rounded-xl p-4 space-y-3">
                 <div className="flex gap-3 items-start">
                   <div className="w-7 h-7 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AI</div>
-                  <div className="bg-white rounded-xl rounded-tl-none px-4 py-2.5 text-sm text-[#2A1F14] border border-[#EDDFCC] max-w-xs">
+                  <div className="bg-white rounded-xl rounded-tl-none px-4 py-2.5 text-sm text-[#1e293b] border border-[#e2e8f0] max-w-xs">
                     What subject did you choose as your optional for UPSC?
                   </div>
                 </div>
@@ -214,16 +214,16 @@ export default function LandingPage() {
                 </div>
                 <div className="flex gap-3 items-start">
                   <div className="w-7 h-7 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AI</div>
-                  <div className="bg-white rounded-xl rounded-tl-none px-4 py-2.5 text-sm text-[#2A1F14] border border-[#EDDFCC] max-w-xs">
+                  <div className="bg-white rounded-xl rounded-tl-none px-4 py-2.5 text-sm text-[#1e293b] border border-[#e2e8f0] max-w-xs">
                     That&apos;s a powerful background! Policy research and international organizations would love your depth. What excites you most about work?
                   </div>
                 </div>
                 <div className="flex gap-3 items-end">
                   <div className="w-7 h-7 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">AI</div>
                   <div className="flex gap-1 pb-1">
-                    <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
-                    <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
-                    <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
+                    <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
+                    <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
+                    <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
                   </div>
                 </div>
               </div>
@@ -244,7 +244,7 @@ export default function LandingPage() {
                   <Icon size={20} style={{ color }} />
                 </div>
                 <h3 className="font-bold text-lg mb-1.5" style={{ fontFamily: 'var(--font-lora)' }}>{title}</h3>
-                <p className="text-[#5C4E3D] text-sm leading-relaxed">{body}</p>
+                <p className="text-[#475569] text-sm leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -272,7 +272,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>{title}</h3>
                 <p className="text-sm font-semibold mb-3" style={{ color }}>{subtitle}</p>
-                <p className="text-[#5C4E3D] text-sm leading-relaxed">{body}</p>
+                <p className="text-[#475569] text-sm leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
@@ -280,7 +280,7 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="bg-[#2A1F14] py-24">
+      <section className="bg-[#1e293b] py-24">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <Globe className="text-[#D97706] mx-auto mb-6" size={48} />
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'var(--font-lora)' }}>
@@ -288,7 +288,7 @@ export default function LandingPage() {
             <br />
             <span className="text-[#D97706]">hasn&apos;t been written yet.</span>
           </h2>
-          <p className="text-[#9A8B78] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[#64748b] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
             Your discipline, your depth, your drive — they belong somewhere remarkable.
             Let&apos;s find exactly where.
           </p>
@@ -300,17 +300,17 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#FEFDFB] border-t border-[#EDDFCC] py-10">
+      <footer className="bg-[#ffffff] border-t border-[#e2e8f0] py-10">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="text-xl font-bold" style={{ fontFamily: 'var(--font-lora)' }}>
             Plan <em className="text-[#D97706] not-italic">B</em> to Z
           </span>
-          <div className="flex items-center gap-6 text-sm text-[#9A8B78]">
+          <div className="flex items-center gap-6 text-sm text-[#64748b]">
             <Link href="/login" className="hover:text-[#D97706] transition-colors">Log In</Link>
             <Link href="/signup" className="hover:text-[#D97706] transition-colors">Sign Up</Link>
             <Link href="#features" className="hover:text-[#D97706] transition-colors">Features</Link>
           </div>
-          <p className="text-sm text-[#9A8B78]">© 2026 Plan B to Z. Made with ❤️ for India&apos;s aspirants.</p>
+          <p className="text-sm text-[#64748b]">© 2026 Plan B to Z. Made with ❤️ for India&apos;s aspirants.</p>
         </div>
       </footer>
     </div>

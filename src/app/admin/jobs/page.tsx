@@ -18,7 +18,7 @@ export default async function AdminJobsPage() {
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>Job Listings</h1>
-          <p className="text-[#9A8B78]">
+          <p className="text-[#64748b]">
             {jobs?.length ?? 0} total
             {pending > 0 && <> · <span className="text-[#D97706] font-semibold">{pending} pending review</span></>}
           </p>
@@ -34,35 +34,35 @@ export default async function AdminJobsPage() {
       {/* Scraper notice */}
       <div className="bg-[#FEF3C7] border-2 border-[#D97706]/30 rounded-2xl p-5 mb-8">
         <p className="font-semibold text-[#D97706] mb-1">Job Scraper — Coming Soon</p>
-        <p className="text-sm text-[#5C4E3D]">
+        <p className="text-sm text-[#475569]">
           Automated scraping from LinkedIn, Naukri, government portals, and company sites will be configured here.
           Scraped jobs will appear with status &ldquo;pending&rdquo; for your review before going live.
         </p>
       </div>
 
-      <div className="bg-white border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
+      <div className="bg-white border-2 border-[#e2e8f0] rounded-2xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#EDDFCC] text-left">
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Role</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider hidden md:table-cell">Company</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider hidden lg:table-cell">Career Path</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Actions</th>
+            <tr className="border-b border-[#e2e8f0] text-left">
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Role</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider hidden md:table-cell">Company</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider hidden lg:table-cell">Career Path</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Status</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody>
             {(jobs ?? []).map((job, i) => (
-              <tr key={job.id} className={`border-b border-[#EDDFCC] last:border-0 hover:bg-[#FEFDFB] transition-colors ${i % 2 === 0 ? '' : 'bg-[#FEFDFB]'}`}>
+              <tr key={job.id} className={`border-b border-[#e2e8f0] last:border-0 hover:bg-[#ffffff] transition-colors ${i % 2 === 0 ? '' : 'bg-[#ffffff]'}`}>
                 <td className="px-6 py-4">
-                  <span className="font-semibold text-sm text-[#2A1F14]">{job.role_title}</span>
-                  {job.location && <div className="text-xs text-[#9A8B78] mt-0.5">{job.location}</div>}
+                  <span className="font-semibold text-sm text-[#1e293b]">{job.role_title}</span>
+                  {job.location && <div className="text-xs text-[#64748b] mt-0.5">{job.location}</div>}
                 </td>
                 <td className="px-6 py-4 hidden md:table-cell">
-                  <span className="text-sm text-[#5C4E3D]">{job.company_name}</span>
+                  <span className="text-sm text-[#475569]">{job.company_name}</span>
                 </td>
                 <td className="px-6 py-4 hidden lg:table-cell">
-                  <span className="text-xs text-[#9A8B78]">
+                  <span className="text-xs text-[#64748b]">
                     {(job as { career_paths?: { title?: string } }).career_paths?.title ?? '—'}
                   </span>
                 </td>
@@ -83,7 +83,7 @@ export default async function AdminJobsPage() {
                       Edit
                     </Link>
                     {job.apply_url && (
-                      <a href={job.apply_url} target="_blank" rel="noopener noreferrer" className="text-[#9A8B78] hover:text-[#2A1F14]">
+                      <a href={job.apply_url} target="_blank" rel="noopener noreferrer" className="text-[#64748b] hover:text-[#1e293b]">
                         <ExternalLink size={14} />
                       </a>
                     )}
@@ -94,7 +94,7 @@ export default async function AdminJobsPage() {
           </tbody>
         </table>
         {(!jobs || jobs.length === 0) && (
-          <div className="text-center py-16 text-[#9A8B78]">
+          <div className="text-center py-16 text-[#64748b]">
             No job listings yet.{' '}
             <Link href="/admin/jobs/new" className="text-[#D97706] font-semibold hover:underline">Add the first one.</Link>
           </div>

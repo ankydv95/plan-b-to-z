@@ -57,7 +57,7 @@ export default function PostCard({ post, initialLiked }: Props) {
   const initials = post.is_anonymous ? '?' : (post.profiles?.full_name?.[0]?.toUpperCase() ?? 'M')
 
   return (
-    <div className="bg-white border border-[#EDDFCC] rounded-2xl p-5 shadow-sm hover:border-[#D97706]/50 transition-colors">
+    <div className="bg-white border border-[#e2e8f0] rounded-2xl p-5 shadow-sm hover:border-[#D97706]/50 transition-colors">
       <div className="flex gap-3 mb-3">
         <div
           className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-sm text-white"
@@ -70,8 +70,8 @@ export default function PostCard({ post, initialLiked }: Props) {
           {initials}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-[#2A1F14] text-sm">{displayName}</div>
-          <div className="text-xs text-[#9A8B78]">
+          <div className="font-bold text-[#1e293b] text-sm">{displayName}</div>
+          <div className="text-xs text-[#64748b]">
             {post.profiles?.stage_reached && !post.is_anonymous
               ? `${post.profiles.stage_reached} · `
               : ''}
@@ -92,17 +92,17 @@ export default function PostCard({ post, initialLiked }: Props) {
         <button
           onClick={toggleLike}
           className={`flex items-center gap-1.5 text-xs font-semibold transition-colors ${
-            liked ? 'text-[#E11D48]' : 'text-[#9A8B78] hover:text-[#E11D48]'
+            liked ? 'text-[#E11D48]' : 'text-[#64748b] hover:text-[#E11D48]'
           }`}
         >
           <Heart size={15} fill={liked ? '#E11D48' : 'none'} strokeWidth={2} />
           {likesCount}
         </button>
-        <button className="flex items-center gap-1.5 text-xs font-semibold text-[#9A8B78]">
+        <button className="flex items-center gap-1.5 text-xs font-semibold text-[#64748b]">
           <MessageCircle size={15} />
           {post.replies_count}
         </button>
-        <button className="flex items-center gap-1.5 text-xs font-semibold text-[#9A8B78] hover:text-[#D97706] ml-auto transition-colors">
+        <button className="flex items-center gap-1.5 text-xs font-semibold text-[#64748b] hover:text-[#D97706] ml-auto transition-colors">
           <Share2 size={13} />
           Share
         </button>

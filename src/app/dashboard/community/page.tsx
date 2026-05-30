@@ -81,12 +81,12 @@ export default async function CommunityPage() {
     <div className="p-6 md:p-8 max-w-6xl mx-auto">
       <div className="mb-6">
         <h1
-          className="text-3xl font-bold text-[#2A1F14]"
+          className="text-3xl font-bold text-[#1e293b]"
           style={{ fontFamily: 'var(--font-lora)' }}
         >
           Community
         </h1>
-        <p className="text-[#9A8B78] mt-1">
+        <p className="text-[#64748b] mt-1">
           Ask anything. Share anything. Only people who get it.
         </p>
       </div>
@@ -109,8 +109,8 @@ export default async function CommunityPage() {
         {/* Right sidebar — xl screens only */}
         <aside className="hidden xl:flex flex-col gap-4">
           {suggestedGroups.length > 0 && (
-            <div className="bg-white border border-[#EDDFCC] rounded-2xl p-5">
-              <h3 className="font-bold text-[#2A1F14] text-sm mb-4">Suggested Groups</h3>
+            <div className="bg-white border border-[#e2e8f0] rounded-2xl p-5">
+              <h3 className="font-bold text-[#1e293b] text-sm mb-4">Suggested Groups</h3>
               <div className="space-y-3">
                 {suggestedGroups.map(group => (
                   <Link
@@ -122,8 +122,8 @@ export default async function CommunityPage() {
                       {group.name.charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-[#2A1F14] truncate">{group.name}</div>
-                      <div className="text-xs text-[#9A8B78]">{group.member_count} members</div>
+                      <div className="text-sm font-semibold text-[#1e293b] truncate">{group.name}</div>
+                      <div className="text-xs text-[#64748b]">{group.member_count} members</div>
                     </div>
                     <span className="text-xs text-[#D97706] font-bold flex-shrink-0">+ Join</span>
                   </Link>
@@ -132,8 +132,8 @@ export default async function CommunityPage() {
             </div>
           )}
 
-          <div className="bg-white border border-[#EDDFCC] rounded-2xl p-5">
-            <h3 className="font-bold text-[#2A1F14] text-sm mb-3">Topics</h3>
+          <div className="bg-white border border-[#e2e8f0] rounded-2xl p-5">
+            <h3 className="font-bold text-[#1e293b] text-sm mb-3">Topics</h3>
             <div className="flex flex-wrap gap-2">
               {['Career Doubts', 'Transitions', 'Skill Building', 'Emotional Support', 'General'].map(t => (
                 <span

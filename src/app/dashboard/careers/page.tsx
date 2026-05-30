@@ -59,16 +59,16 @@ export default function CareersPage() {
   if (loading) {
     return (
       <div className="p-6 md:p-10 max-w-5xl mx-auto animate-pulse">
-        <div className="h-8 bg-[#EDDFCC] rounded-xl w-48 mb-2" />
-        <div className="h-4 bg-[#EDDFCC] rounded-xl w-72 mb-8" />
+        <div className="h-8 bg-[#e2e8f0] rounded-xl w-48 mb-2" />
+        <div className="h-4 bg-[#e2e8f0] rounded-xl w-72 mb-8" />
         <div className="flex gap-2 flex-wrap mb-8">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-8 bg-[#EDDFCC] rounded-full w-24" />
+            <div key={i} className="h-8 bg-[#e2e8f0] rounded-full w-24" />
           ))}
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl p-6 border-2 border-[#EDDFCC] h-48" />
+            <div key={i} className="bg-white rounded-2xl p-6 border-2 border-[#e2e8f0] h-48" />
           ))}
         </div>
       </div>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orange White Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F1F5F9; padding: 32px 16px 48px; }
+
+  .page-title { text-align:center; font-size:20px; font-weight:800; color:#1E293B; margin-bottom:4px; font-family:Georgia,serif; }
+  .page-sub { text-align:center; font-size:13px; color:#64748B; margin-bottom:28px; }
+  .section-label { text-align:center; font-size:11px; font-weight:700; color:#94A3B8; letter-spacing:0.07em; text-transform:uppercase; margin:28px 0 14px; }
+
+  /* ======= DESKTOP ======= */
+  .desktop-frame {
+    max-width: 1060px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    border: 1px solid #E2E8F0;
+  }
+
+  .top-nav {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 24px;
+    background: white;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .logo { font-size: 15px; font-weight: 800; color: #1E293B; flex-shrink: 0; margin-right: 16px; letter-spacing: -0.3px; }
+  .logo span { color: #EA580C; }
+
+  .nav-tabs { display: flex; align-items: flex-end; flex: 1; justify-content: center; height: 100%; gap: 2px; }
+  .nav-tab {
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 14px; height: 100%;
+    font-size: 13px; font-weight: 600; color: #94A3B8;
+    border-bottom: 2px solid transparent; cursor: pointer;
+    white-space: nowrap; padding-bottom: 2px;
+  }
+  .nav-tab.active { color: #EA580C; border-bottom-color: #EA580C; }
+  .nav-tab:hover:not(.active) { color: #475569; }
+  .nav-tab svg { width: 15px; height: 15px; }
+
+  .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: 16px; }
+  .icon-btn { width: 32px; height: 32px; border-radius: 50%; background: #F8FAFC; display: flex; align-items: center; justify-content: center; color: #64748B; border: 1px solid #E2E8F0; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: white; }
+
+  .desktop-body { display: flex; height: 500px; }
+  .page-area { flex: 1; overflow: auto; background: white; }
+
+  .community-layout { display: grid; grid-template-columns: 1fr 240px; height: 100%; }
+  .feed-area { padding: 20px; border-right: 1px solid #E2E8F0; overflow: auto; }
+  .sidebar-area { padding: 16px; overflow: auto; }
+
+  .stories { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 16px; }
+  .story { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+  .story-ring { width: 48px; height: 48px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, #EA580C, #D97706); }
+  .story-inner { width: 100%; height: 100%; border-radius: 50%; background: #FEF3C7; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #EA580C; }
+  .story-name { font-size: 10px; color: #475569; font-weight: 600; width: 52px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .feed-tabs { display: flex; border-bottom: 1px solid #E2E8F0; margin-bottom: 16px; }
+  .feed-tab { padding: 8px 14px; font-size: 12px; font-weight: 600; color: #94A3B8; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; }
+  .feed-tab.active { color: #EA580C; border-bottom-color: #EA580C; }
+
+  .compose { background: white; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px; margin-bottom: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .compose-avatar { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: white; }
+  .compose-input { flex: 1; background: #F8FAFC; border-radius: 10px; padding: 8px 12px; font-size: 12px; color: #94A3B8; border: 1px solid #E2E8F0; }
+
+  .post-card { background: white; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 10px; }
+  .post-header { display: flex; gap: 8px; margin-bottom: 8px; }
+  .post-av { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
+  .post-name { font-size: 12px; font-weight: 700; color: #1E293B; }
+  .post-meta { font-size: 10px; color: #94A3B8; }
+  .post-tag { display: inline-block; font-size: 9px; font-weight: 700; background: #FFF7ED; color: #EA580C; padding: 2px 7px; border-radius: 20px; margin-top: 2px; border: 1px solid #FDBA74; }
+  .post-content { font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 10px; }
+  .post-actions { display: flex; gap: 14px; align-items: center; }
+  .action-btn { font-size: 11px; font-weight: 600; color: #94A3B8; display: flex; align-items: center; gap: 3px; }
+  .action-btn.liked { color: #EA580C; }
+
+  .sidebar-card { background: white; border: 1px solid #E2E8F0; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+  .sidebar-title { font-size: 12px; font-weight: 800; color: #1E293B; margin-bottom: 12px; }
+  .suggestion { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .sug-icon { width: 30px; height: 30px; border-radius: 8px; background: #FFF7ED; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+  .sug-name { font-size: 11px; font-weight: 700; color: #1E293B; flex: 1; }
+  .sug-count { font-size: 10px; color: #94A3B8; }
+  .sug-join { font-size: 10px; font-weight: 700; color: #EA580C; }
+  .topic-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 10px; font-weight: 600; background: #FFF7ED; color: #EA580C; border: 1px solid #FDBA74; padding: 3px 8px; border-radius: 20px; }
+
+  /* ======= MOBILE ======= */
+  .mobile-row { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; padding: 0 16px; }
+
+  .mobile-frame { width: 305px; background: white; border-radius: 36px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.14); border: 6px solid #1E293B; }
+  .notch { width: 88px; height: 20px; background: #1E293B; border-radius: 0 0 14px 14px; margin: 0 auto; }
+
+  .m-topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-bottom: 1px solid #E2E8F0; }
+  .m-logo { font-size: 13px; font-weight: 800; color: #1E293B; }
+  .m-logo span { color: #EA580C; }
+  .m-right { display: flex; gap: 7px; align-items: center; }
+  .m-icon { width: 26px; height: 26px; border-radius: 50%; background: #F8FAFC; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; }
+  .m-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; }
+
+  .m-content { background: white; min-height: 420px; padding: 14px; overflow: auto; }
+
+  .m-stories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; }
+  .m-story { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+  .m-story-ring { width: 40px; height: 40px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg, #EA580C, #D97706); }
+  .m-story-inner { width: 100%; height: 100%; border-radius: 50%; background: #FEF3C7; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #EA580C; }
+  .m-story-name { font-size: 9px; color: #475569; font-weight: 600; width: 44px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .m-compose { border: 1px solid #E2E8F0; border-radius: 12px; padding: 10px; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
+  .m-compose-av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: white; flex-shrink: 0; }
+  .m-compose-input { font-size: 11px; color: #94A3B8; flex: 1; }
+
+  .m-post { border: 1px solid #E2E8F0; border-radius: 12px; padding: 10px; margin-bottom: 8px; }
+  .m-post-header { display: flex; gap: 7px; margin-bottom: 6px; }
+  .m-post-av { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #EA580C, #D97706); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: white; flex-shrink: 0; }
+  .m-post-name { font-size: 10px; font-weight: 700; color: #1E293B; }
+  .m-post-meta { font-size: 9px; color: #94A3B8; }
+  .m-post-tag { display: inline-block; font-size: 8px; font-weight: 700; background: #FFF7ED; color: #EA580C; border: 1px solid #FDBA74; padding: 1px 6px; border-radius: 20px; margin-top: 1px; }
+  .m-post-content { font-size: 10px; color: #475569; line-height: 1.5; margin-bottom: 7px; }
+  .m-actions { display: flex; gap: 10px; }
+  .m-action { font-size: 9px; font-weight: 600; color: #94A3B8; }
+  .m-action.liked { color: #EA580C; }
+
+  .bottom-bar { display: flex; background: white; border-top: 1px solid #E2E8F0; padding: 6px 0 10px; }
+  .b-tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .b-tab-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: #CBD5E1; }
+  .b-tab.active .b-tab-icon { color: #EA580C; }
+  .b-tab-label { font-size: 8.5px; font-weight: 600; color: #CBD5E1; }
+  .b-tab.active .b-tab-label { color: #EA580C; }
+  .b-dot { width: 4px; height: 4px; border-radius: 50%; background: #EA580C; margin-top: 1px; }
+
+  .m-job { border: 1px solid #E2E8F0; border-radius: 12px; padding: 10px; margin-bottom: 8px; display: flex; gap: 8px; }
+  .m-job-logo { width: 32px; height: 32px; border-radius: 8px; background: #FFF7ED; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .m-job-title { font-size: 11px; font-weight: 700; color: #1E293B; }
+  .m-job-company { font-size: 10px; color: #64748B; }
+  .m-job-tag { display: inline-block; font-size: 8px; font-weight: 700; background: #FFF7ED; color: #EA580C; border: 1px solid #FDBA74; padding: 1px 6px; border-radius: 20px; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="page-title">Plan B to Z — Orange + White</div>
+<div class="page-sub">Orange accent · Pure white background · Top tabs desktop · Bottom tabs mobile</div>
+
+<!-- DESKTOP -->
+<div class="section-label">Desktop — Community page active</div>
+<div class="desktop-frame">
+  <div class="top-nav">
+    <div class="logo">Plan <span>B</span> to Z</div>
+    <div class="nav-tabs">
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Careers
+      </div>
+      <div class="nav-tab active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Jobs
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Wellbeing
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Stories
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="icon-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div class="avatar">A</div>
+    </div>
+  </div>
+  <div class="desktop-body">
+    <div class="page-area">
+      <div class="community-layout">
+        <div class="feed-area">
+          <div class="stories">
+            <div class="story"><div class="story-ring"><div class="story-inner">P</div></div><div class="story-name">Product</div></div>
+            <div class="story"><div class="story-ring"><div class="story-inner">C</div></div><div class="story-name">Consulting</div></div>
+            <div class="story"><div class="story-ring"><div class="story-inner">L</div></div><div class="story-name">Law</div></div>
+            <div class="story"><div class="story-ring"><div class="story-inner">D</div></div><div class="story-name">Data</div></div>
+          </div>
+          <div class="feed-tabs">
+            <div class="feed-tab active">Feed</div>
+            <div class="feed-tab">My Groups</div>
+            <div class="feed-tab">Explore</div>
+          </div>
+          <div class="compose">
+            <div class="compose-avatar">A</div>
+            <div class="compose-input">Share something with the community...</div>
+          </div>
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-av">R</div>
+              <div>
+                <div class="post-name">Rahul M.</div>
+                <div class="post-meta">Mains 2023 · 2h ago</div>
+                <div class="post-tag">🎯 Career Doubts</div>
+              </div>
+            </div>
+            <div class="post-content">Has anyone here successfully moved into product management from UPSC prep? Looking for honest advice on where to start.</div>
+            <div class="post-actions">
+              <span class="action-btn liked">♥ 24</span>
+              <span class="action-btn">💬 8 replies</span>
+              <span class="action-btn" style="margin-left:auto">↗ Share</span>
+            </div>
+          </div>
+          <div class="post-card">
+            <div class="post-header">
+              <div class="post-av" style="background:#94A3B8">?</div>
+              <div>
+                <div class="post-name">Anonymous</div>
+                <div class="post-meta">5h ago</div>
+                <div class="post-tag">💙 Emotional Support</div>
+              </div>
+            </div>
+            <div class="post-content">Failed prelims for the 4th time. I know I need to pivot but it still hurts. Anyone else been here?</div>
+            <div class="post-actions">
+              <span class="action-btn liked">♥ 91</span>
+              <span class="action-btn">💬 32 replies</span>
+              <span class="action-btn" style="margin-left:auto">↗ Share</span>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar-area">
+          <div class="sidebar-card">
+            <div class="sidebar-title">Suggested Groups</div>
+            <div class="suggestion"><div class="sug-icon">💼</div><div style="flex:1"><div class="sug-name">Product Management</div><div class="sug-count">142 members</div></div><div class="sug-join">+ Join</div></div>
+            <div class="suggestion"><div class="sug-icon">⚖️</div><div style="flex:1"><div class="sug-name">Law & Judiciary</div><div class="sug-count">98 members</div></div><div class="sug-join">+ Join</div></div>
+            <div class="suggestion" style="margin-bottom:0"><div class="sug-icon">📊</div><div style="flex:1"><div class="sug-name">Data & Analytics</div><div class="sug-count">74 members</div></div><div class="sug-join">+ Join</div></div>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-title">Topics</div>
+            <div class="topic-chips">
+              <div class="chip">Career Doubts</div>
+              <div class="chip">Transitions</div>
+              <div class="chip">Skill Building</div>
+              <div class="chip">Emotional Support</div>
+              <div class="chip">General</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE -->
+<div class="section-label" style="margin-top:36px">Mobile</div>
+<div class="mobile-row">
+
+  <div>
+    <div style="text-align:center;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">Community</div>
+    <div class="mobile-frame">
+      <div class="notch"></div>
+      <div class="m-topbar">
+        <div class="m-logo">Plan <span>B</span> to Z</div>
+        <div class="m-right">
+          <div class="m-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="m-avatar">A</div>
+        </div>
+      </div>
+      <div class="m-content">
+        <div class="m-stories">
+          <div class="m-story"><div class="m-story-ring"><div class="m-story-inner">P</div></div><div class="m-story-name">Product</div></div>
+          <div class="m-story"><div class="m-story-ring"><div class="m-story-inner">C</div></div><div class="m-story-name">Consult</div></div>
+          <div class="m-story"><div class="m-story-ring"><div class="m-story-inner">L</div></div><div class="m-story-name">Law</div></div>
+        </div>
+        <div class="m-compose"><div class="m-compose-av">A</div><div class="m-compose-input">Share something...</div></div>
+        <div class="m-post">
+          <div class="m-post-header"><div class="m-post-av">R</div><div><div class="m-post-name">Rahul M.</div><div class="m-post-meta">Mains 2023 · 2h ago</div><div class="m-post-tag">🎯 Career Doubts</div></div></div>
+          <div class="m-post-content">Has anyone moved into product management from UPSC? Looking for honest advice.</div>
+          <div class="m-actions"><span class="m-action liked">♥ 24</span><span class="m-action">💬 8</span></div>
+        </div>
+        <div class="m-post">
+          <div class="m-post-header"><div class="m-post-av" style="background:#94A3B8">?</div><div><div class="m-post-name">Anonymous</div><div class="m-post-meta">5h ago</div><div class="m-post-tag">💙 Emotional Support</div></div></div>
+          <div class="m-post-content">Failed prelims 4th time. Still hurts. Anyone been here?</div>
+          <div class="m-actions"><span class="m-action liked">♥ 91</span><span class="m-action">💬 32</span></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="b-tab-label">Home</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="b-tab-label">Careers</div></div>
+        <div class="b-tab active"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="b-tab-label">Community</div><div class="b-dot"></div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><div class="b-tab-label">Jobs</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="b-tab-label">Wellbeing</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="b-tab-label">Stories</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div style="text-align:center;font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px">Jobs tab</div>
+    <div class="mobile-frame">
+      <div class="notch"></div>
+      <div class="m-topbar">
+        <div class="m-logo">Plan <span>B</span> to Z</div>
+        <div class="m-right">
+          <div class="m-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div class="m-avatar">A</div>
+        </div>
+      </div>
+      <div class="m-content">
+        <div style="font-size:14px;font-weight:800;color:#1E293B;margin-bottom:4px;font-family:Georgia,serif">Job Board</div>
+        <div style="font-size:11px;color:#64748B;margin-bottom:14px">Roles suited for your background</div>
+        <div class="m-job"><div class="m-job-logo">🏢</div><div><div class="m-job-title">Associate Product Manager</div><div class="m-job-company">Razorpay · Bangalore</div><div class="m-job-tag">Full-time</div></div></div>
+        <div class="m-job"><div class="m-job-logo">⚖️</div><div><div class="m-job-title">Legal Analyst</div><div class="m-job-company">Niti Aayog · Delhi</div><div class="m-job-tag">Government</div></div></div>
+        <div class="m-job"><div class="m-job-logo">📊</div><div><div class="m-job-title">Policy Consultant</div><div class="m-job-company">EY · Mumbai</div><div class="m-job-tag">Consulting</div></div></div>
+        <div class="m-job"><div class="m-job-logo">🎓</div><div><div class="m-job-title">Curriculum Designer</div><div class="m-job-company">BYJU'S · Remote</div><div class="m-job-tag">Ed-Tech</div></div></div>
+      </div>
+      <div class="bottom-bar">
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="b-tab-label">Home</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="b-tab-label">Careers</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="b-tab-label">Community</div></div>
+        <div class="b-tab active"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div><div class="b-tab-label">Jobs</div><div class="b-dot"></div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="b-tab-label">Wellbeing</div></div>
+        <div class="b-tab"><div class="b-tab-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="b-tab-label">Stories</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;margin-top:32px;font-size:13px;color:#64748B">
+  Orange accent · Pure white background · Which do you prefer — this or sky blue?
+</div>
+
+</body>
+</html>

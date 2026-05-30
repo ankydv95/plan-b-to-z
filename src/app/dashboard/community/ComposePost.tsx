@@ -59,7 +59,7 @@ export default function ComposePost({ groupId, userInitial, onPost }: Props) {
   }
 
   return (
-    <div className="bg-white border border-[#EDDFCC] rounded-2xl p-4 shadow-sm">
+    <div className="bg-white border border-[#e2e8f0] rounded-2xl p-4 shadow-sm">
       <div className="flex gap-3 items-start">
         <div className="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-sm text-white bg-gradient-to-br from-[#D97706] to-[#EA580C]">
           {userInitial}
@@ -72,7 +72,7 @@ export default function ComposePost({ groupId, userInitial, onPost }: Props) {
             placeholder="Share something with the community..."
             rows={expanded ? 3 : 1}
             maxLength={2000}
-            className="w-full resize-none bg-[#F9F6F2] rounded-xl px-4 py-2.5 text-sm text-[#2A1F14] placeholder-[#9A8B78] outline-none border border-transparent focus:border-[#D97706] transition-colors"
+            className="w-full resize-none bg-[#f8fafc] rounded-xl px-4 py-2.5 text-sm text-[#1e293b] placeholder-[#64748b] outline-none border border-transparent focus:border-[#D97706] transition-colors"
           />
           {expanded && (
             <div className="mt-3">
@@ -96,8 +96,8 @@ export default function ComposePost({ groupId, userInitial, onPost }: Props) {
                   onClick={() => setIsAnonymous(prev => !prev)}
                   className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors ${
                     isAnonymous
-                      ? 'bg-[#2A1F14] text-white'
-                      : 'bg-[#F5F5F5] text-[#9A8B78] hover:bg-[#2A1F14] hover:text-white'
+                      ? 'bg-[#1e293b] text-white'
+                      : 'bg-[#F5F5F5] text-[#64748b] hover:bg-[#1e293b] hover:text-white'
                   }`}
                 >
                   <Lock size={11} />

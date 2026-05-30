@@ -20,7 +20,7 @@ export default function SettingsClient({ profile }: { profile: Profile | null })
     <div className="p-6 md:p-10 max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>Settings</h1>
-        <p className="text-[#9A8B78]">Manage your account</p>
+        <p className="text-[#64748b]">Manage your account</p>
       </div>
 
       {/* Profile Info */}
@@ -36,12 +36,12 @@ export default function SettingsClient({ profile }: { profile: Profile | null })
             { icon: BookOpen, label: 'Education', value: profile?.education ?? 'Not set' },
             { icon: Settings, label: 'Optional Subject', value: profile?.optional_subject ?? 'Not set' },
           ].map(({ icon: Icon, label, value }) => (
-            <div key={label} className="flex items-center gap-4 p-4 bg-[#FDF6EC] rounded-xl">
-              <div className="w-9 h-9 rounded-xl bg-white border-2 border-[#EDDFCC] flex items-center justify-center flex-shrink-0">
+            <div key={label} className="flex items-center gap-4 p-4 bg-[#f8fafc] rounded-xl">
+              <div className="w-9 h-9 rounded-xl bg-white border-2 border-[#e2e8f0] flex items-center justify-center flex-shrink-0">
                 <Icon size={16} className="text-[#D97706]" />
               </div>
               <div>
-                <div className="text-xs text-[#9A8B78] font-semibold">{label}</div>
+                <div className="text-xs text-[#64748b] font-semibold">{label}</div>
                 <div className="font-semibold text-sm mt-0.5">{value}</div>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function SettingsClient({ profile }: { profile: Profile | null })
           <div className="flex items-center justify-between">
             <div>
               <p className="font-semibold text-[#059669]">Assessment completed</p>
-              <p className="text-sm text-[#9A8B78] mt-0.5">Your career matches are ready</p>
+              <p className="text-sm text-[#64748b] mt-0.5">Your career matches are ready</p>
             </div>
             <Link
               href="/dashboard/assessment"
@@ -69,8 +69,8 @@ export default function SettingsClient({ profile }: { profile: Profile | null })
         ) : (
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-semibold text-[#9A8B78]">Not started</p>
-              <p className="text-sm text-[#9A8B78] mt-0.5">Complete assessment to get career matches</p>
+              <p className="font-semibold text-[#64748b]">Not started</p>
+              <p className="text-sm text-[#64748b] mt-0.5">Complete assessment to get career matches</p>
             </div>
             <Link href="/dashboard/assessment" className="btn-primary text-sm py-2 px-4">
               Start Now

@@ -23,7 +23,7 @@ export default function GroupResources({ resources, launchpadPhases }: Props) {
 
   if (!hasResources && !hasLaunchpad) {
     return (
-      <div className="text-center py-16 text-[#9A8B78] text-sm">
+      <div className="text-center py-16 text-[#64748b] text-sm">
         No resources added to this group yet.
       </div>
     )
@@ -39,7 +39,7 @@ export default function GroupResources({ resources, launchpadPhases }: Props) {
     <div className="space-y-6">
       {hasLaunchpad && (
         <div>
-          <h3 className="font-bold text-[#2A1F14] mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
+          <h3 className="font-bold text-[#1e293b] mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
             90-Day Launchpad
           </h3>
           <div className="space-y-3">
@@ -52,15 +52,15 @@ export default function GroupResources({ resources, launchpadPhases }: Props) {
                   <span className="w-6 h-6 rounded-full bg-[#D97706] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
                     {phase.phase}
                   </span>
-                  <span className="font-bold text-[#2A1F14] text-sm">{phase.phase_title}</span>
+                  <span className="font-bold text-[#1e293b] text-sm">{phase.phase_title}</span>
                 </div>
-                <p className="text-xs text-[#5C4E3D] mb-3 leading-relaxed">
+                <p className="text-xs text-[#475569] mb-3 leading-relaxed">
                   Milestone: {phase.phase_milestone}
                 </p>
                 <div className="space-y-1.5">
                   {phase.weeks.map(week => (
-                    <div key={week.week} className="text-xs text-[#9A8B78]">
-                      <span className="font-semibold text-[#5C4E3D]">Week {week.week}:</span>{' '}
+                    <div key={week.week} className="text-xs text-[#64748b]">
+                      <span className="font-semibold text-[#475569]">Week {week.week}:</span>{' '}
                       {week.title}
                     </div>
                   ))}
@@ -73,23 +73,23 @@ export default function GroupResources({ resources, launchpadPhases }: Props) {
 
       {Object.entries(byCategory).map(([category, items]) => (
         <div key={category}>
-          <h3 className="font-bold text-[#2A1F14] mb-3 flex items-center gap-2 text-sm">
+          <h3 className="font-bold text-[#1e293b] mb-3 flex items-center gap-2 text-sm">
             <span className="text-[#D97706]">{CATEGORY_ICONS[category] ?? <BookOpen size={14} />}</span>
             {category}
           </h3>
           <div className="space-y-2">
             {items.map((resource, i) => (
-              <div key={i} className="bg-white border border-[#EDDFCC] rounded-xl p-4">
+              <div key={i} className="bg-white border border-[#e2e8f0] rounded-xl p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-[#2A1F14] text-sm mb-0.5">
+                    <div className="font-semibold text-[#1e293b] text-sm mb-0.5">
                       {resource.title}
                     </div>
                     {resource.provider && (
-                      <div className="text-xs text-[#9A8B78] mb-1">{resource.provider}</div>
+                      <div className="text-xs text-[#64748b] mb-1">{resource.provider}</div>
                     )}
                     {resource.annotation && (
-                      <p className="text-xs text-[#5C4E3D] leading-relaxed">{resource.annotation}</p>
+                      <p className="text-xs text-[#475569] leading-relaxed">{resource.annotation}</p>
                     )}
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
@@ -107,7 +107,7 @@ export default function GroupResources({ resources, launchpadPhases }: Props) {
                         href={resource.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#9A8B78] hover:text-[#D97706] transition-colors"
+                        className="text-[#64748b] hover:text-[#D97706] transition-colors"
                       >
                         <ExternalLink size={14} />
                       </a>

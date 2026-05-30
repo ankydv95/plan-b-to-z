@@ -50,7 +50,7 @@ export default async function DashboardHome() {
           <h1 className="text-3xl md:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>
             Good to see you, {firstName}. 👋
           </h1>
-          <p className="text-[#9A8B78]">
+          <p className="text-[#64748b]">
             {profile?.assessment_completed
               ? 'Your personalised career roadmap is ready.'
               : 'Your next chapter starts here.'}
@@ -59,7 +59,7 @@ export default async function DashboardHome() {
         {profile?.assessment_completed && (
           <Link
             href="/dashboard/assessment"
-            className="flex-shrink-0 flex items-center gap-1.5 text-xs font-semibold text-[#9A8B78] border border-[#EDDFCC] rounded-xl px-3 py-2 hover:border-[#D97706] hover:text-[#D97706] transition-colors"
+            className="flex-shrink-0 flex items-center gap-1.5 text-xs font-semibold text-[#64748b] border border-[#e2e8f0] rounded-xl px-3 py-2 hover:border-[#D97706] hover:text-[#D97706] transition-colors"
           >
             <Brain size={13} /> Retake Assessment
           </Link>
@@ -78,10 +78,10 @@ export default async function DashboardHome() {
                 </div>
                 <span className="text-[#D97706] font-bold text-xs uppercase tracking-widest">AI Assessment</span>
               </div>
-              <h2 className="text-2xl font-bold text-[#2A1F14] mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
+              <h2 className="text-2xl font-bold text-[#1e293b] mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
                 Discover your perfect career match
               </h2>
-              <p className="text-[#5C4E3D] max-w-lg leading-relaxed">
+              <p className="text-[#475569] max-w-lg leading-relaxed">
                 Take a 10-minute conversation with our AI counselor to get matched with careers
                 that value exactly what you&apos;ve built.
               </p>
@@ -121,25 +121,25 @@ export default async function DashboardHome() {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm">
             {profile.optional_subject && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-1.5">Optional Subject</p>
-                <p className="font-semibold text-[#2A1F14]">{profile.optional_subject}</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-1.5">Optional Subject</p>
+                <p className="font-semibold text-[#1e293b]">{profile.optional_subject}</p>
               </div>
             )}
             {profile.stage_reached && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-1.5">Highest Stage</p>
-                <p className="font-semibold text-[#2A1F14]">{profile.stage_reached}</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-1.5">Highest Stage</p>
+                <p className="font-semibold text-[#1e293b]">{profile.stage_reached}</p>
               </div>
             )}
             {profile.attempts && (
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-1.5">Attempts</p>
-                <p className="font-semibold text-[#2A1F14]">{profile.attempts} attempt{Number(profile.attempts) > 1 ? 's' : ''}</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-1.5">Attempts</p>
+                <p className="font-semibold text-[#1e293b]">{profile.attempts} attempt{Number(profile.attempts) > 1 ? 's' : ''}</p>
               </div>
             )}
             {interests?.length ? (
               <div className="sm:col-span-2 md:col-span-2">
-                <p className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-1.5">Interests</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-1.5">Interests</p>
                 <div className="flex flex-wrap gap-1.5">
                   {interests.map(i => (
                     <span key={i} className="text-xs bg-white border border-[#D97706]/30 text-[#D97706] font-semibold px-2.5 py-1 rounded-full">{i}</span>
@@ -149,10 +149,10 @@ export default async function DashboardHome() {
             ) : null}
             {priorities?.length ? (
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-1.5">Career Priority</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-1.5">Career Priority</p>
                 <div className="flex flex-wrap gap-1.5">
                   {priorities.slice(0, 2).map(p => (
-                    <span key={p} className="text-xs bg-white border border-[#EDDFCC] text-[#5C4E3D] font-semibold px-2.5 py-1 rounded-full">{p}</span>
+                    <span key={p} className="text-xs bg-white border border-[#e2e8f0] text-[#475569] font-semibold px-2.5 py-1 rounded-full">{p}</span>
                   ))}
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default async function DashboardHome() {
                 <Link
                   key={match.id}
                   href={`/dashboard/careers/${cp?.slug}`}
-                  className="bg-white border-2 border-[#EDDFCC] p-5 rounded-2xl flex gap-4 group hover:border-[#D97706] transition-colors"
+                  className="bg-white border-2 border-[#e2e8f0] p-5 rounded-2xl flex gap-4 group hover:border-[#D97706] transition-colors"
                 >
                   {/* Match % circle */}
                   <div className="flex-shrink-0 w-14 h-14 rounded-2xl flex flex-col items-center justify-center"
@@ -201,9 +201,9 @@ export default async function DashboardHome() {
                     <h3 className="font-bold text-base group-hover:text-[#D97706] transition-colors leading-snug mb-1" style={{ fontFamily: 'var(--font-lora)' }}>
                       {String(cp?.title ?? '')}
                     </h3>
-                    <p className="text-xs text-[#9A8B78] line-clamp-1 mb-2">{String(cp?.description ?? '')}</p>
+                    <p className="text-xs text-[#64748b] line-clamp-1 mb-2">{String(cp?.description ?? '')}</p>
                     {!!cp?.salary_entry && (
-                      <p className="text-xs font-semibold text-[#5C4E3D]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>
+                      <p className="text-xs font-semibold text-[#475569]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>
                         From {String(cp.salary_entry)}
                       </p>
                     )}
@@ -224,12 +224,12 @@ export default async function DashboardHome() {
             <Link
               key={href}
               href={href}
-              className="flex flex-col items-center gap-2.5 p-4 bg-white border-2 border-[#EDDFCC] rounded-2xl hover:border-[#D97706] transition-colors group"
+              className="flex flex-col items-center gap-2.5 p-4 bg-white border-2 border-[#e2e8f0] rounded-2xl hover:border-[#D97706] transition-colors group"
             >
               <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: bg }}>
                 <Icon size={22} style={{ color }} />
               </div>
-              <span className="text-xs font-semibold text-[#5C4E3D] text-center group-hover:text-[#D97706] transition-colors leading-tight">
+              <span className="text-xs font-semibold text-[#475569] text-center group-hover:text-[#D97706] transition-colors leading-tight">
                 {label}
               </span>
             </Link>
@@ -253,7 +253,7 @@ export default async function DashboardHome() {
               <Link
                 key={story.id}
                 href="/dashboard/stories"
-                className="bg-white border-2 border-[#EDDFCC] rounded-2xl overflow-hidden group hover:border-[#D97706] transition-colors"
+                className="bg-white border-2 border-[#e2e8f0] rounded-2xl overflow-hidden group hover:border-[#D97706] transition-colors"
               >
                 {story.photo_url ? (
                   <div className="h-44 overflow-hidden">
@@ -276,13 +276,13 @@ export default async function DashboardHome() {
                       {(story as { career_paths?: { title?: string } }).career_paths?.title}
                     </p>
                   )}
-                  <h3 className="font-bold text-[#2A1F14] mb-0.5">
+                  <h3 className="font-bold text-[#1e293b] mb-0.5">
                     {story.is_anonymous ? 'Anonymous' : story.person_name}
                   </h3>
-                  <p className="text-xs text-[#9A8B78] mb-2">
+                  <p className="text-xs text-[#64748b] mb-2">
                     {story.current_role}{story.company && ` at ${story.company}`}
                   </p>
-                  <p className="text-sm text-[#5C4E3D] line-clamp-2 leading-relaxed">{story.story_text}</p>
+                  <p className="text-sm text-[#475569] line-clamp-2 leading-relaxed">{story.story_text}</p>
                   <p className="text-xs text-[#D97706] font-semibold mt-3">Read story →</p>
                 </div>
               </Link>

@@ -37,7 +37,7 @@ export default function RootLayout({
       lang="en"
       className={`${lora.variable} ${nunito.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FEFDFB] text-[#2A1F14]">
+      <body className="min-h-full flex flex-col bg-[#ffffff] text-[#1e293b]">
         <DevErrorSuppressor />
         {children}
       </body>

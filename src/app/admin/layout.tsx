@@ -32,10 +32,10 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#FEFDFB]">
+    <div className="flex h-screen overflow-hidden bg-[#ffffff]">
       {/* Sidebar */}
-      <aside className="hidden lg:flex flex-col flex-shrink-0 bg-white border-r border-[#EDDFCC] w-64">
-        <div className="px-5 py-5 border-b border-[#EDDFCC]">
+      <aside className="hidden lg:flex flex-col flex-shrink-0 bg-white border-r border-[#e2e8f0] w-64">
+        <div className="px-5 py-5 border-b border-[#e2e8f0]">
           <span className="text-xl font-bold" style={{ fontFamily: 'var(--font-lora)' }}>
             Plan <em className="text-[#D97706] not-italic">B</em> to Z
           </span>
@@ -44,9 +44,9 @@ export default async function AdminLayout({
           </span>
         </div>
 
-        <div className="px-5 py-3 border-b border-[#EDDFCC]">
-          <p className="text-xs text-[#9A8B78] font-semibold uppercase tracking-widest">Logged in as</p>
-          <p className="text-sm font-bold text-[#2A1F14] truncate">{profile.full_name ?? user.email}</p>
+        <div className="px-5 py-3 border-b border-[#e2e8f0]">
+          <p className="text-xs text-[#64748b] font-semibold uppercase tracking-widest">Logged in as</p>
+          <p className="text-sm font-bold text-[#1e293b] truncate">{profile.full_name ?? user.email}</p>
           <span className="text-xs bg-[#FEF3C7] text-[#D97706] font-semibold px-2 py-0.5 rounded-full capitalize">
             {profile.role}
           </span>
@@ -57,7 +57,7 @@ export default async function AdminLayout({
             <Link
               key={href}
               href={href}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl mb-0.5 font-semibold text-sm text-[#5C4E3D] hover:bg-[#FDF6EC] hover:text-[#2A1F14] transition-all"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl mb-0.5 font-semibold text-sm text-[#475569] hover:bg-[#f8fafc] hover:text-[#1e293b] transition-all"
             >
               <Icon size={17} className="flex-shrink-0" />
               {label}
@@ -65,10 +65,10 @@ export default async function AdminLayout({
           ))}
         </nav>
 
-        <div className="px-3 py-3 border-t border-[#EDDFCC]">
+        <div className="px-3 py-3 border-t border-[#e2e8f0]">
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-[#9A8B78] hover:bg-[#FDF6EC] hover:text-[#2A1F14] font-semibold text-sm transition-all"
+            className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-[#64748b] hover:bg-[#f8fafc] hover:text-[#1e293b] font-semibold text-sm transition-all"
           >
             <ArrowLeft size={17} />
             Back to App
@@ -79,12 +79,12 @@ export default async function AdminLayout({
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile header */}
-        <header className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[#EDDFCC] bg-white flex-shrink-0">
+        <header className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[#e2e8f0] bg-white flex-shrink-0">
           <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-lora)' }}>
             Plan <em className="text-[#D97706] not-italic">B</em> to Z
           </span>
           <span className="text-xs bg-[#FEE2E2] text-[#E11D48] font-bold px-2 py-0.5 rounded-full">ADMIN</span>
-          <Link href="/dashboard" className="ml-auto text-sm text-[#9A8B78] font-semibold">
+          <Link href="/dashboard" className="ml-auto text-sm text-[#64748b] font-semibold">
             Back to App
           </Link>
         </header>

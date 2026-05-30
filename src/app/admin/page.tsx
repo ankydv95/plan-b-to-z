@@ -57,7 +57,7 @@ export default async function AdminDashboard() {
         <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>
           Admin Dashboard
         </h1>
-        <p className="text-[#9A8B78]">Manage all content for Plan B to Z.</p>
+        <p className="text-[#64748b]">Manage all content for Plan B to Z.</p>
       </div>
 
       {/* Stats */}
@@ -66,7 +66,7 @@ export default async function AdminDashboard() {
           <Link
             key={label}
             href={href}
-            className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-6 hover:border-[#D97706] transition-colors group"
+            className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-6 hover:border-[#D97706] transition-colors group"
           >
             <div className="flex items-center justify-between mb-4">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: bg }}>
@@ -76,8 +76,8 @@ export default async function AdminDashboard() {
                 {value}
               </span>
             </div>
-            <p className="font-bold text-[#2A1F14] mb-1">{label}</p>
-            <p className="text-xs text-[#9A8B78]">{sub}</p>
+            <p className="font-bold text-[#1e293b] mb-1">{label}</p>
+            <p className="text-xs text-[#64748b]">{sub}</p>
           </Link>
         ))}
       </div>
@@ -94,7 +94,7 @@ export default async function AdminDashboard() {
           </Link>
           <Link
             href="/admin/jobs/new"
-            className="flex items-center gap-2 bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] px-5 py-2.5 rounded-xl font-semibold text-sm hover:border-[#D97706] transition-colors"
+            className="flex items-center gap-2 bg-white border-2 border-[#e2e8f0] text-[#475569] px-5 py-2.5 rounded-xl font-semibold text-sm hover:border-[#D97706] transition-colors"
           >
             <Plus size={16} /> Add Job Listing
           </Link>

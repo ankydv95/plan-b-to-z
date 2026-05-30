@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #FEFDFB;
-  --bg-alt: #FDF6EC;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
   --card: #FFFFFF;
-  --border: #EDDFCC;
-  --text-primary: #2A1F14;
-  --text-secondary: #5C4E3D;
-  --text-muted: #9A8B78;
+  --border: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   --amber: #D97706;
   --emerald: #059669;
   --sky: #0284C7;
@@ -72,7 +72,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(42, 31, 20, 0.08);
+  box-shadow: 0 12px 40px rgba(30, 41, 59, 0.08);
 }
 
 /* Button base */

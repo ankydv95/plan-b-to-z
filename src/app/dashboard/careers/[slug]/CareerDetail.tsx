@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { CareerPath, LaunchpadPhase, Resource, Mentor } from '@/types'
 import {
   Star,
@@ -128,10 +128,10 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-lora)' }}>
           {career.title}
         </h1>
-        <p className="text-lg text-[#5C4E3D] leading-relaxed max-w-3xl mb-6">{career.overview}</p>
+        <p className="text-lg text-[#475569] leading-relaxed max-w-3xl mb-6">{career.overview}</p>
 
         {/* Stats bar */}
-        <div className="flex flex-wrap gap-6 py-5 px-6 bg-white border-2 border-[#EDDFCC] rounded-2xl">
+        <div className="flex flex-wrap gap-6 py-5 px-6 bg-white border-2 border-[#e2e8f0] rounded-2xl">
           {[
             { icon: DollarSign, label: 'Entry Salary', value: career.salary_entry ?? 'N/A' },
             { icon: TrendingUp, label: 'Growth Rate', value: career.growth_rate ?? 'High' },
@@ -143,13 +143,13 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 <Icon size={16} className="text-[#D97706]" />
               </div>
               <div>
-                <div className="text-xs text-[#9A8B78] font-semibold">{label}</div>
+                <div className="text-xs text-[#64748b] font-semibold">{label}</div>
                 {label === 'Difficulty' ? (
                   <div className="flex gap-0.5 mt-0.5">
                     {Array.from({ length: 5 }).map((_, j) => (
                       <Star key={j} size={12}
                         fill={j < (career.difficulty_rating ?? 3) ? '#D97706' : 'none'}
-                        stroke={j < (career.difficulty_rating ?? 3) ? '#D97706' : '#EDDFCC'}
+                        stroke={j < (career.difficulty_rating ?? 3) ? '#D97706' : '#e2e8f0'}
                       />
                     ))}
                   </div>
@@ -163,7 +163,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-[#EDDFCC] mb-8 overflow-x-auto">
+      <div className="border-b border-[#e2e8f0] mb-8 overflow-x-auto">
         <div className="flex gap-1 min-w-max">
           {TABS.map((tab, i) => (
             <button
@@ -172,7 +172,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               className={`px-4 py-3 text-sm font-semibold transition-all whitespace-nowrap border-b-2 ${
                 activeTab === i
                   ? 'border-[#D97706] text-[#D97706]'
-                  : 'border-transparent text-[#9A8B78] hover:text-[#5C4E3D]'
+                  : 'border-transparent text-[#64748b] hover:text-[#475569]'
               }`}
             >
               {tab}
@@ -186,7 +186,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
       {/* Tab 0: Trajectory */}
       {activeTab === 0 && (
         <div className="relative pl-8">
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-[#EDDFCC]" />
+          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-[#e2e8f0]" />
           {(career.trajectory || []).map((stage, i) => (
             <div key={i} className="relative mb-8">
               <div className="absolute -left-4 w-8 h-8 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold z-10">
@@ -196,12 +196,12 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <span className="font-bold text-lg" style={{ fontFamily: 'var(--font-lora)' }}>{stage.title}</span>
                   <span className="tag bg-[#FEF3C7] text-[#D97706]">{stage.stage}</span>
-                  <span className="text-sm text-[#9A8B78]">{stage.years} years</span>
+                  <span className="text-sm text-[#64748b]">{stage.years} years</span>
                   <span className="font-bold text-sm text-[#059669]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>{stage.salary}</span>
                 </div>
                 <ul className="space-y-1.5">
                   {(stage.responsibilities || []).map((r, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                    <li key={j} className="flex items-start gap-2 text-sm text-[#475569]">
                       <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
                       {r}
                     </li>
@@ -218,14 +218,14 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div>
           <div className="grid md:grid-cols-3 gap-4 mb-8">
             {[
-              { label: 'Entry Level', value: career.salary_entry, sub: '0–2 years', color: '#9A8B78' },
+              { label: 'Entry Level', value: career.salary_entry, sub: '0–2 years', color: '#64748b' },
               { label: 'Mid Level', value: career.salary_mid, sub: '3–7 years', color: '#D97706' },
               { label: 'Senior Level', value: career.salary_senior, sub: '8+ years', color: '#059669' },
             ].map(({ label, value, sub, color }) => (
               <div key={label} className="card bg-white p-6 rounded-2xl text-center">
-                <div className="text-sm text-[#9A8B78] font-semibold mb-2">{label}</div>
+                <div className="text-sm text-[#64748b] font-semibold mb-2">{label}</div>
                 <div className="text-3xl font-bold mb-1" style={{ color, fontFamily: 'var(--font-jetbrains-mono)' }}>{value ?? 'N/A'}</div>
-                <div className="text-xs text-[#9A8B78]">{sub}</div>
+                <div className="text-xs text-[#64748b]">{sub}</div>
               </div>
             ))}
           </div>
@@ -247,11 +247,11 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div className="grid md:grid-cols-2 gap-6">
           <div className="card bg-white p-6 rounded-2xl">
             <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Impact You Can Create</h3>
-            <p className="text-[#5C4E3D] leading-relaxed">{career.impact}</p>
+            <p className="text-[#475569] leading-relaxed">{career.impact}</p>
           </div>
           <div className="card bg-white p-6 rounded-2xl">
             <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Exposure You Get</h3>
-            <p className="text-[#5C4E3D] leading-relaxed">{career.exposure}</p>
+            <p className="text-[#475569] leading-relaxed">{career.exposure}</p>
           </div>
         </div>
       )}
@@ -261,7 +261,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div className="space-y-6">
           <div className="card bg-white p-6 rounded-2xl">
             <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Eligibility</h3>
-            <p className="text-[#5C4E3D] leading-relaxed">{career.eligibility}</p>
+            <p className="text-[#475569] leading-relaxed">{career.eligibility}</p>
           </div>
           <div className="card bg-white p-6 rounded-2xl">
             <h3 className="font-bold text-xl mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Skills Needed</h3>
@@ -284,7 +284,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               })}
             </div>
             {userSkills.length > 0 && (
-              <p className="text-xs text-[#9A8B78]">
+              <p className="text-xs text-[#64748b]">
                 <span className="text-[#059669] font-semibold">✓ You have this</span> ·{' '}
                 <span className="text-[#D97706] font-semibold">⚡ Build this</span>
               </p>
@@ -295,7 +295,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               <h3 className="font-bold text-xl mb-3" style={{ fontFamily: 'var(--font-lora)' }}>
                 How Your UPSC Prep Maps Here
               </h3>
-              <p className="text-[#5C4E3D] leading-relaxed">{career.upsc_skill_mapping}</p>
+              <p className="text-[#475569] leading-relaxed">{career.upsc_skill_mapping}</p>
             </div>
           )}
         </div>
@@ -316,33 +316,33 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               {(career.launchpad_phases as LaunchpadPhase[]).map((phase, pi) => (
                 <div key={pi} className="card bg-white rounded-2xl overflow-hidden">
                   <button onClick={() => setOpenPhase(openPhase === pi ? null : pi)}
-                    className="w-full flex items-center justify-between p-5 hover:bg-[#FDF6EC] transition-colors">
+                    className="w-full flex items-center justify-between p-5 hover:bg-[#f8fafc] transition-colors">
                     <div className="flex items-center gap-3">
                       <span className="w-9 h-9 rounded-full bg-[#D97706] text-white text-sm font-bold flex items-center justify-center flex-shrink-0">
                         {phase.phase}
                       </span>
                       <div className="text-left">
                         <div className="font-bold" style={{ fontFamily: 'var(--font-lora)' }}>Phase {phase.phase}: {phase.phase_title}</div>
-                        <div className="text-xs text-[#9A8B78]">{phase.weeks.length} weeks</div>
+                        <div className="text-xs text-[#64748b]">{phase.weeks.length} weeks</div>
                       </div>
                     </div>
-                    {openPhase === pi ? <ChevronUp size={18} className="text-[#9A8B78]" /> : <ChevronDown size={18} className="text-[#9A8B78]" />}
+                    {openPhase === pi ? <ChevronUp size={18} className="text-[#64748b]" /> : <ChevronDown size={18} className="text-[#64748b]" />}
                   </button>
 
                   {openPhase === pi && (
-                    <div className="border-t border-[#EDDFCC]">
+                    <div className="border-t border-[#e2e8f0]">
                       {phase.phase_milestone && (
                         <div className="flex items-start gap-3 px-5 py-4 bg-[#FEF3C7]">
                           <Target size={16} className="text-[#D97706] flex-shrink-0 mt-0.5" />
                           <div>
                             <div className="text-xs font-bold text-[#D97706] mb-0.5 uppercase tracking-wide">Phase milestone</div>
-                            <div className="text-sm text-[#5C4E3D] font-semibold">{phase.phase_milestone}</div>
+                            <div className="text-sm text-[#475569] font-semibold">{phase.phase_milestone}</div>
                           </div>
                         </div>
                       )}
                       <div className="p-4 space-y-2">
                         {phase.weeks.map((week, wi) => (
-                          <div key={wi} className="border border-[#EDDFCC] rounded-xl overflow-hidden">
+                          <div key={wi} className="border border-[#e2e8f0] rounded-xl overflow-hidden">
                             <button
                               onClick={() => setOpenPhaseWeek(openPhaseWeek?.p === pi && openPhaseWeek?.w === wi ? null : { p: pi, w: wi })}
                               className="w-full flex items-center justify-between px-4 py-3 hover:bg-[#FEF9F0] transition-colors">
@@ -351,17 +351,17 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                                   W{week.week}
                                 </span>
                                 <span className="font-semibold text-sm">{week.title}</span>
-                                <span className="text-xs text-[#9A8B78]">{week.tasks.length} tasks</span>
+                                <span className="text-xs text-[#64748b]">{week.tasks.length} tasks</span>
                               </div>
                               {openPhaseWeek?.p === pi && openPhaseWeek?.w === wi
-                                ? <ChevronUp size={14} className="text-[#9A8B78]" />
-                                : <ChevronDown size={14} className="text-[#9A8B78]" />}
+                                ? <ChevronUp size={14} className="text-[#64748b]" />
+                                : <ChevronDown size={14} className="text-[#64748b]" />}
                             </button>
                             {openPhaseWeek?.p === pi && openPhaseWeek?.w === wi && (
-                              <div className="px-4 pb-4 border-t border-[#EDDFCC]">
+                              <div className="px-4 pb-4 border-t border-[#e2e8f0]">
                                 <ul className="space-y-2 mt-3">
                                   {week.tasks.map((task, ti) => (
-                                    <li key={ti} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                                    <li key={ti} className="flex items-start gap-2 text-sm text-[#475569]">
                                       <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
                                       <span>
                                         {task.resource_url ? (
@@ -387,20 +387,20 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               {(career.launchpad_weeks || []).map((week, i) => (
                 <div key={i} className="card bg-white rounded-2xl overflow-hidden">
                   <button onClick={() => setOpenWeek(openWeek === i ? null : i)}
-                    className="w-full flex items-center justify-between p-5 hover:bg-[#FDF6EC] transition-colors">
+                    className="w-full flex items-center justify-between p-5 hover:bg-[#f8fafc] transition-colors">
                     <div className="flex items-center gap-3">
                       <span className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ background: '#D97706' }}>
                         {week.week}
                       </span>
                       <span className="font-semibold text-left" style={{ fontFamily: 'var(--font-lora)' }}>{week.title}</span>
                     </div>
-                    {openWeek === i ? <ChevronUp size={18} className="text-[#9A8B78]" /> : <ChevronDown size={18} className="text-[#9A8B78]" />}
+                    {openWeek === i ? <ChevronUp size={18} className="text-[#64748b]" /> : <ChevronDown size={18} className="text-[#64748b]" />}
                   </button>
                   {openWeek === i && (
-                    <div className="px-5 pb-5 border-t border-[#EDDFCC]">
+                    <div className="px-5 pb-5 border-t border-[#e2e8f0]">
                       <ul className="space-y-2 mt-4">
                         {(week.tasks || []).map((task, j) => (
-                          <li key={j} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                          <li key={j} className="flex items-start gap-2 text-sm text-[#475569]">
                             <CheckCircle2 size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
                             {task}
                           </li>
@@ -419,12 +419,12 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               <div className="space-y-3">
                 {career.courses.map((course, i) => (
                   <a key={i} href={course.url || '#'} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 rounded-xl border-2 border-[#EDDFCC] hover:border-[#D97706] transition-colors group">
+                    className="flex items-center justify-between p-4 rounded-xl border-2 border-[#e2e8f0] hover:border-[#D97706] transition-colors group">
                     <div>
                       <div className="font-semibold group-hover:text-[#D97706] transition-colors">{course.name}</div>
-                      <div className="text-xs text-[#9A8B78] mt-0.5">{course.provider} · {course.duration} · {course.cost}</div>
+                      <div className="text-xs text-[#64748b] mt-0.5">{course.provider} · {course.duration} · {course.cost}</div>
                     </div>
-                    <ExternalLink size={16} className="text-[#9A8B78] flex-shrink-0" />
+                    <ExternalLink size={16} className="text-[#64748b] flex-shrink-0" />
                   </a>
                 ))}
               </div>
@@ -447,7 +447,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               <h3 className="font-bold text-xl mb-3" style={{ fontFamily: 'var(--font-lora)' }}>Portfolio Projects</h3>
               <ul className="space-y-2">
                 {career.portfolio_projects.map((proj, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-[#5C4E3D]">
+                  <li key={i} className="flex items-start gap-2 text-sm text-[#475569]">
                     <Zap size={14} className="text-[#D97706] flex-shrink-0 mt-0.5" />
                     {proj}
                   </li>
@@ -463,13 +463,13 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div>
           {mentors.length === 0 ? (
             <div className="text-center py-16 card bg-white rounded-2xl">
-              <Users size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+              <Users size={40} className="text-[#e2e8f0] mx-auto mb-4" />
               <p className="font-semibold text-lg mb-2">Mentors coming soon</p>
-              <p className="text-[#9A8B78] text-sm">We&apos;re building a mentor network for this path. Check back soon.</p>
+              <p className="text-[#64748b] text-sm">We&apos;re building a mentor network for this path. Check back soon.</p>
             </div>
           ) : (
             <div className="space-y-4">
-              <p className="text-sm text-[#9A8B78] mb-6">These mentors have walked this path. Reach out — they&apos;ve agreed to help.</p>
+              <p className="text-sm text-[#64748b] mb-6">These mentors have walked this path. Reach out — they&apos;ve agreed to help.</p>
               {mentors.map((mentor) => (
                 <div key={mentor.id} className="card bg-white p-6 rounded-2xl flex flex-col md:flex-row gap-5">
                   <div className="flex-shrink-0">
@@ -485,7 +485,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                     <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
                       <div>
                         <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-lora)' }}>{mentor.name}</h3>
-                        <p className="text-[#5C4E3D]">{mentor.role}{mentor.company && ` · ${mentor.company}`}</p>
+                        <p className="text-[#475569]">{mentor.role}{mentor.company && ` · ${mentor.company}`}</p>
                       </div>
                       {mentor.linkedin_url && (
                         <a href={mentor.linkedin_url} target="_blank" rel="noopener noreferrer"
@@ -499,7 +499,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                         UPSC: {mentor.upsc_background}
                       </span>
                     )}
-                    {mentor.bio && <p className="text-sm text-[#5C4E3D] mb-4 leading-relaxed">{mentor.bio}</p>}
+                    {mentor.bio && <p className="text-sm text-[#475569] mb-4 leading-relaxed">{mentor.bio}</p>}
                     <button
                       onClick={() => { setInquiryMentor(mentor); setInquirySent(false); setInquiryForm({ name: '', email: '', message: '' }); setInquiryError(null) }}
                       className="btn-primary text-sm py-2 px-5 inline-flex items-center gap-2"
@@ -519,9 +519,9 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div>
           {jobs.length === 0 ? (
             <div className="text-center py-16 card bg-white rounded-2xl">
-              <Briefcase size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+              <Briefcase size={40} className="text-[#e2e8f0] mx-auto mb-4" />
               <p className="font-semibold text-lg mb-2">No listings yet</p>
-              <p className="text-[#9A8B78] text-sm">We&apos;re building partnerships with employers. Check back soon.</p>
+              <p className="text-[#64748b] text-sm">We&apos;re building partnerships with employers. Check back soon.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -530,13 +530,13 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <div>
                       <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-lora)' }}>{job.role_title}</h3>
-                      <p className="text-[#5C4E3D]">{job.company_name}</p>
+                      <p className="text-[#475569]">{job.company_name}</p>
                     </div>
                     {job.is_aspirant_friendly && (
                       <span className="tag bg-[#DCFCE7] text-[#059669] flex-shrink-0">Aspirant Friendly</span>
                     )}
                   </div>
-                  <div className="flex flex-wrap gap-3 text-sm text-[#9A8B78] mb-4">
+                  <div className="flex flex-wrap gap-3 text-sm text-[#64748b] mb-4">
                     {job.location && <span>📍 {job.location}</span>}
                     {job.salary_range && <span>💰 {job.salary_range}</span>}
                     {job.remote_available && <span>🌐 Remote Available</span>}
@@ -584,14 +584,14 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 )
                 if (categoryResources.length === 0) return null
 
-                const categoryIcons: Record<string, React.ReactNode> = {
+                const categoryIcons: Record<string, ReactNode> = {
                   'YouTube Channels': <Play size={16} className="text-[#E11D48]" />,
                   'Podcasts': <span className="text-base">🎙️</span>,
                   'Free Courses': <BookOpen size={16} className="text-[#7C3AED]" />,
                   'Books': <BookMarked size={16} className="text-[#0284C7]" />,
                   'Newsletters': <Newspaper size={16} className="text-[#059669]" />,
                   'Communities': <Users size={16} className="text-[#D97706]" />,
-                  'Government Portals': <Building2 size={16} className="text-[#5C4E3D]" />,
+                  'Government Portals': <Building2 size={16} className="text-[#475569]" />,
                 }
 
                 return (
@@ -601,8 +601,8 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                       {categoryResources.map((resource, i) => (
                         <a key={i} href={resource.url || '#'} target={resource.url ? '_blank' : undefined}
                           rel="noopener noreferrer"
-                          className={`card bg-white p-4 rounded-xl flex gap-3 group border-2 border-[#EDDFCC] transition-colors ${resource.url ? 'hover:border-[#D97706]' : 'cursor-default'}`}>
-                          <div className="w-9 h-9 rounded-xl bg-[#FDF6EC] flex items-center justify-center flex-shrink-0">
+                          className={`card bg-white p-4 rounded-xl flex gap-3 group border-2 border-[#e2e8f0] transition-colors ${resource.url ? 'hover:border-[#D97706]' : 'cursor-default'}`}>
+                          <div className="w-9 h-9 rounded-xl bg-[#f8fafc] flex items-center justify-center flex-shrink-0">
                             {categoryIcons[category]}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -619,11 +619,11 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                               </span>
                             </div>
                             {resource.provider && (
-                              <div className="text-xs text-[#9A8B78] mb-1">{resource.provider}</div>
+                              <div className="text-xs text-[#64748b] mb-1">{resource.provider}</div>
                             )}
-                            <p className="text-xs text-[#5C4E3D] leading-relaxed">{resource.annotation}</p>
+                            <p className="text-xs text-[#475569] leading-relaxed">{resource.annotation}</p>
                           </div>
-                          {resource.url && <ExternalLink size={14} className="text-[#9A8B78] flex-shrink-0 mt-0.5" />}
+                          {resource.url && <ExternalLink size={14} className="text-[#64748b] flex-shrink-0 mt-0.5" />}
                         </a>
                       ))}
                     </div>
@@ -645,7 +645,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                         </div>
                         <div>
                           <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{yt.title}</div>
-                          <div className="text-xs text-[#9A8B78] mt-0.5">{yt.channel}</div>
+                          <div className="text-xs text-[#64748b] mt-0.5">{yt.channel}</div>
                         </div>
                       </a>
                     ))}
@@ -662,7 +662,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                         <div className="w-10 h-10 rounded-xl bg-[#EDE9FE] flex items-center justify-center flex-shrink-0">🎙️</div>
                         <div>
                           <div className="font-semibold text-sm group-hover:text-[#D97706] transition-colors">{pod.title}</div>
-                          <div className="text-xs text-[#9A8B78]">{pod.host}</div>
+                          <div className="text-xs text-[#64748b]">{pod.host}</div>
                         </div>
                       </a>
                     ))}
@@ -679,9 +679,9 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
         <div>
           {stories.length === 0 ? (
             <div className="text-center py-16 card bg-white rounded-2xl">
-              <BookOpen size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+              <BookOpen size={40} className="text-[#e2e8f0] mx-auto mb-4" />
               <p className="font-semibold text-lg mb-2">No stories yet</p>
-              <p className="text-[#9A8B78] text-sm">Be the first to share your transition story for this career path.</p>
+              <p className="text-[#64748b] text-sm">Be the first to share your transition story for this career path.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -693,14 +693,14 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                     </div>
                     <div>
                       <div className="font-bold">{story.is_anonymous ? 'Anonymous' : story.person_name}</div>
-                      <div className="text-sm text-[#9A8B78]">
+                      <div className="text-sm text-[#64748b]">
                         {story.current_role}{story.company && ` at ${story.company}`}
                       </div>
                     </div>
                   </div>
-                  <p className="text-[#5C4E3D] text-sm leading-relaxed">{story.story_text}</p>
+                  <p className="text-[#475569] text-sm leading-relaxed">{story.story_text}</p>
                   {story.optional_subject && (
-                    <div className="mt-3 flex gap-2 text-xs text-[#9A8B78]">
+                    <div className="mt-3 flex gap-2 text-xs text-[#64748b]">
                       <span>Optional: {story.optional_subject}</span>
                       {story.num_attempts && <span>· {story.num_attempts} attempts</span>}
                     </div>
@@ -721,9 +721,9 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 <h3 className="font-bold text-xl" style={{ fontFamily: 'var(--font-lora)' }}>
                   Book a call with {inquiryMentor.name}
                 </h3>
-                <p className="text-sm text-[#9A8B78] mt-0.5">{inquiryMentor.role}</p>
+                <p className="text-sm text-[#64748b] mt-0.5">{inquiryMentor.role}</p>
               </div>
-              <button aria-label="Close" onClick={() => setInquiryMentor(null)} className="text-[#9A8B78] hover:text-[#2A1F14]">
+              <button aria-label="Close" onClick={() => setInquiryMentor(null)} className="text-[#64748b] hover:text-[#1e293b]">
                 <X size={20} />
               </button>
             </div>
@@ -732,7 +732,7 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
               <div className="text-center py-8">
                 <CheckCircle2 size={40} className="text-[#059669] mx-auto mb-3" />
                 <p className="font-bold text-lg mb-1">Request sent!</p>
-                <p className="text-sm text-[#9A8B78]">We&apos;ve received your request. Ankit will connect you within 48 hours.</p>
+                <p className="text-sm text-[#64748b]">We&apos;ve received your request. Ankit will connect you within 48 hours.</p>
                 <button onClick={() => setInquiryMentor(null)} className="btn-primary mt-5 text-sm py-2 px-6">
                   Close
                 </button>
@@ -763,34 +763,34 @@ export default function CareerDetail({ career, matchPercentage, jobs, stories, u
                 }
               }} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">Your name</label>
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-1.5">Your name</label>
                   <input
                     required
                     value={inquiryForm.name}
                     onChange={e => setInquiryForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                    className="w-full border-2 border-[#e2e8f0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                     placeholder="Your full name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">Your email</label>
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-1.5">Your email</label>
                   <input
                     required
                     type="email"
                     value={inquiryForm.email}
                     onChange={e => setInquiryForm(f => ({ ...f, email: e.target.value }))}
-                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                    className="w-full border-2 border-[#e2e8f0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                     placeholder="you@example.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-[#2A1F14] mb-1.5">What would you like to discuss?</label>
+                  <label className="block text-sm font-semibold text-[#1e293b] mb-1.5">What would you like to discuss?</label>
                   <textarea
                     required
                     rows={4}
                     value={inquiryForm.message}
                     onChange={e => setInquiryForm(f => ({ ...f, message: e.target.value }))}
-                    className="w-full border-2 border-[#EDDFCC] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] resize-none"
+                    className="w-full border-2 border-[#e2e8f0] rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#D97706] resize-none"
                     placeholder="Brief intro about your background and what guidance you're looking for..."
                   />
                 </div>

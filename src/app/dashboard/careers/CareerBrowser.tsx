@@ -101,12 +101,12 @@ export default function CareerBrowser({ careers, domains }: Props) {
         <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Browse Career Paths
         </h1>
-        <p className="text-[#9A8B78]">75+ paths built for the UPSC-prepared mind.</p>
+        <p className="text-[#64748b]">75+ paths built for the UPSC-prepared mind.</p>
       </div>
 
       {/* Search */}
       <div className="relative mb-6 max-w-xl">
-        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#9A8B78]" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#64748b]" />
         <input
           type="text"
           value={search}
@@ -135,8 +135,8 @@ export default function CareerBrowser({ careers, domains }: Props) {
             onClick={() => setActiveFilter('Pinned')}
             className={`flex items-center gap-1.5 tag px-4 py-2 cursor-pointer transition-all font-bold ${
               activeFilter === 'Pinned'
-                ? 'bg-[#2A1F14] text-white'
-                : 'bg-[#F5F0EB] text-[#5C4E3D] hover:bg-[#2A1F14] hover:text-white'
+                ? 'bg-[#1e293b] text-white'
+                : 'bg-[#F5F0EB] text-[#475569] hover:bg-[#1e293b] hover:text-white'
             }`}
           >
             <BookmarkCheck size={13} /> Pinned ({pinnedIds.size})
@@ -146,8 +146,8 @@ export default function CareerBrowser({ careers, domains }: Props) {
           onClick={() => setActiveFilter('All')}
           className={`tag px-4 py-2 cursor-pointer transition-all ${
             activeFilter === 'All'
-              ? 'bg-[#2A1F14] text-white'
-              : 'bg-[#EDDFCC] text-[#5C4E3D] hover:bg-[#2A1F14] hover:text-white'
+              ? 'bg-[#1e293b] text-white'
+              : 'bg-[#e2e8f0] text-[#475569] hover:bg-[#1e293b] hover:text-white'
           }`}
         >
           All ({careers.length})
@@ -174,7 +174,7 @@ export default function CareerBrowser({ careers, domains }: Props) {
       </div>
 
       {/* Results count */}
-      <p className="text-sm text-[#9A8B78] mb-5">
+      <p className="text-sm text-[#64748b] mb-5">
         Showing {filtered.length}{activeFilter !== 'All' ? '' : ` of ${careers.length}`} career paths
         {search && ` for "${search}"`}
       </p>
@@ -182,7 +182,7 @@ export default function CareerBrowser({ careers, domains }: Props) {
       {/* Career Grid */}
       {filtered.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-[#9A8B78] text-lg">
+          <p className="text-[#64748b] text-lg">
             {activeFilter === 'Pinned' ? 'No pinned careers yet.' : 'No careers found matching your search.'}
           </p>
           <button
@@ -216,17 +216,17 @@ export default function CareerBrowser({ careers, domains }: Props) {
                 >
                   {career.title}
                 </h3>
-                <p className="text-sm text-[#9A8B78] mb-4 line-clamp-2">{career.description}</p>
+                <p className="text-sm text-[#64748b] mb-4 line-clamp-2">{career.description}</p>
 
                 {/* Footer */}
-                <div className="mt-auto pt-3 border-t border-[#EDDFCC]">
+                <div className="mt-auto pt-3 border-t border-[#e2e8f0]">
                   {/* Salary row */}
-                  <div className="text-xs text-[#5C4E3D] mb-3">
+                  <div className="text-xs text-[#475569] mb-3">
                     <span className="font-semibold" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>
                       {career.salary_entry}
                     </span>
                     {career.salary_senior && (
-                      <span className="text-[#9A8B78]"> → {career.salary_senior}</span>
+                      <span className="text-[#64748b]"> → {career.salary_senior}</span>
                     )}
                   </div>
 
@@ -256,8 +256,8 @@ export default function CareerBrowser({ careers, domains }: Props) {
                         title={isPinned ? 'Unpin career' : 'Pin career'}
                         className={`p-1 rounded-lg transition-colors ${
                           isPinned
-                            ? 'text-[#2A1F14] bg-[#EDDFCC]'
-                            : 'text-[#CDBFA8] hover:text-[#2A1F14] hover:bg-[#EDDFCC]'
+                            ? 'text-[#1e293b] bg-[#e2e8f0]'
+                            : 'text-[#CDBFA8] hover:text-[#1e293b] hover:bg-[#e2e8f0]'
                         }`}
                       >
                         {isPinned

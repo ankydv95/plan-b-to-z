@@ -8,7 +8,7 @@ export default function ContentPage() {
       </div>
       <span className="tag bg-[#CCFBF1] text-[#0D9488] mb-4 inline-block">Coming Soon</span>
       <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Content Library</h1>
-      <p className="text-[#5C4E3D] text-lg max-w-lg leading-relaxed">
+      <p className="text-[#475569] text-lg max-w-lg leading-relaxed">
         Curated podcasts, YouTube channels, newsletters, and the career wiki — all organized by domain
         and handpicked for the UPSC-prepared mind.
       </p>

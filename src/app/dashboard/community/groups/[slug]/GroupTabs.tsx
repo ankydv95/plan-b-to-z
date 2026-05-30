@@ -48,7 +48,7 @@ export default function GroupTabs({
 
   return (
     <div>
-      <div className="flex gap-0 border-b border-[#EDDFCC] mb-5">
+      <div className="flex gap-0 border-b border-[#e2e8f0] mb-5">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -56,7 +56,7 @@ export default function GroupTabs({
             className={`px-4 py-2.5 text-sm font-semibold transition-colors border-b-2 -mb-[2px] ${
               activeTab === tab.id
                 ? 'text-[#D97706] border-[#D97706]'
-                : 'text-[#9A8B78] border-transparent hover:text-[#5C4E3D]'
+                : 'text-[#64748b] border-transparent hover:text-[#475569]'
             }`}
           >
             {tab.label}
@@ -70,8 +70,8 @@ export default function GroupTabs({
             <ComposePost groupId={groupId} userInitial={userInitial} onPost={handleNewPost} />
           )}
           {posts.length === 0 ? (
-            <div className="text-center py-16 bg-white border border-[#EDDFCC] rounded-2xl">
-              <p className="text-[#9A8B78] text-sm">
+            <div className="text-center py-16 bg-white border border-[#e2e8f0] rounded-2xl">
+              <p className="text-[#64748b] text-sm">
                 {isMember
                   ? 'No posts yet. Start the conversation!'
                   : 'Join this group to see and post discussions.'}

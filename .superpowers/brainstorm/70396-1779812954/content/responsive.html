@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — Responsive Layout</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #fff; padding: 24px 20px 60px; }
+
+  h2 { text-align: center; font-size: 22px; font-weight: 800; color: #fff; padding-top: 12px; }
+  .sub { text-align: center; color: #777; font-size: 13px; margin: 6px 0 32px; }
+
+  /* ── DESKTOP MOCKUP ── */
+  .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #666; margin-bottom: 12px; }
+
+  .desktop-shell {
+    background: #f5f5f5;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    max-width: 960px;
+    margin: 0 auto 48px;
+  }
+
+  /* Browser chrome */
+  .browser-bar {
+    background: #e8e8e8;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  .dots { display: flex; gap: 5px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .url-bar { flex: 1; background: #fff; border-radius: 6px; padding: 4px 12px; font-size: 11px; color: #888; border: 1px solid #ddd; }
+
+  /* Top nav */
+  .topnav {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 52px;
+  }
+  .topnav-brand { font-size: 15px; font-weight: 800; color: #d97706; }
+  .topnav-links { display: flex; gap: 4px; flex: 1; }
+  .topnav-link { padding: 6px 12px; font-size: 12px; font-weight: 600; color: #888; border-radius: 8px; cursor: pointer; }
+  .topnav-link.active { color: #d97706; background: #fffbeb; }
+  .topnav-right { display: flex; align-items: center; gap: 10px; }
+  .nav-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#d97706,#ea580c); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; }
+
+  /* 3-column layout */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 260px;
+    gap: 0;
+    background: #f5f5f5;
+    min-height: 480px;
+  }
+
+  /* Left sidebar */
+  .sidebar-left {
+    background: #fff;
+    border-right: 1px solid #eee;
+    padding: 16px 12px;
+  }
+  .sidebar-section { margin-bottom: 20px; }
+  .sidebar-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #bbb; padding: 0 8px; margin-bottom: 8px; }
+  .sidebar-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 10px; cursor: pointer;
+    font-size: 12px; font-weight: 600; color: #444;
+    margin-bottom: 2px;
+  }
+  .sidebar-item:hover { background: #f5f5f5; }
+  .sidebar-item.active { background: #fffbeb; color: #d97706; }
+  .sidebar-item .icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .sidebar-badge { margin-left: auto; font-size: 10px; font-weight: 700; background: #d97706; color: #fff; border-radius: 10px; padding: 1px 7px; }
+
+  /* Main feed */
+  .main-feed { padding: 16px; }
+  .feed-tabs { display: flex; gap: 0; margin-bottom: 14px; background: #fff; border-radius: 12px; padding: 4px; }
+  .feed-tab { flex: 1; text-align: center; padding: 7px; font-size: 12px; font-weight: 600; color: #999; border-radius: 9px; cursor: pointer; }
+  .feed-tab.active { background: #d97706; color: #fff; }
+
+  .compose-card {
+    background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 12px;
+    display: flex; gap: 10px; align-items: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .compose-av { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#d97706,#ea580c); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .compose-input { flex: 1; background: #f5f5f5; border-radius: 20px; padding: 9px 16px; font-size: 12px; color: #999; cursor: pointer; }
+  .anon-toggle { font-size: 11px; font-weight: 600; color: #9a8b78; background: #f5f5f5; padding: 6px 12px; border-radius: 20px; white-space: nowrap; }
+
+  .post-card {
+    background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .post-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+  .post-av { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 14px; }
+  .post-info .name { font-size: 13px; font-weight: 700; color: #111; }
+  .post-info .meta { font-size: 11px; color: #999; }
+  .post-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 8px; margin-top: 3px; }
+  .post-body-text { font-size: 12px; color: #333; line-height: 1.5; margin-bottom: 10px; }
+  .post-footer { display: flex; gap: 16px; }
+  .act { font-size: 11px; color: #888; cursor: pointer; }
+  .act.liked { color: #e11d48; }
+
+  /* Right sidebar */
+  .sidebar-right {
+    background: #fff;
+    border-left: 1px solid #eee;
+    padding: 16px 14px;
+  }
+  .widget { background: #f9f9f9; border-radius: 12px; padding: 12px; margin-bottom: 14px; }
+  .widget-title { font-size: 11px; font-weight: 700; color: #555; margin-bottom: 10px; }
+  .group-mini { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid #eee; }
+  .group-mini:last-child { border-bottom: none; }
+  .group-mini-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .group-mini-name { font-size: 11px; font-weight: 600; color: #222; }
+  .group-mini-meta { font-size: 10px; color: #aaa; }
+  .group-mini-join { margin-left: auto; font-size: 10px; font-weight: 700; color: #d97706; cursor: pointer; }
+  .trending-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; background: #fffbeb; color: #d97706; font-size: 11px; font-weight: 600; margin: 3px; cursor: pointer; border: 1px solid #fde68a; }
+
+  /* ── MOBILE PHONE ── */
+  .phones-row {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .phone-wrap { text-align: center; }
+  .phone-label { font-size: 11px; color: #666; margin-bottom: 8px; font-weight: 600; }
+  .phone {
+    width: 280px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    border: 8px solid #222;
+  }
+  .scroll { max-height: 480px; overflow-y: auto; scrollbar-width: none; }
+  .scroll::-webkit-scrollbar { display: none; }
+
+  /* Reuse desktop styles for phone content */
+  .m-header { background: #fff; padding: 14px 14px 0; border-bottom: 1px solid #f0f0f0; }
+  .m-header-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .m-header-row h1 { font-size: 20px; font-weight: 800; color: #111; }
+  .m-stories { display: flex; gap: 10px; overflow-x: auto; padding: 6px 0 10px; scrollbar-width: none; }
+  .m-stories::-webkit-scrollbar { display: none; }
+  .m-story { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; cursor: pointer; }
+  .m-ring { width: 46px; height: 46px; border-radius: 50%; padding: 2px; background: linear-gradient(135deg,#d97706,#ea580c); }
+  .m-ring.g { background: linear-gradient(135deg,#059669,#0284c7); }
+  .m-ring.new { background: #eee; }
+  .m-av { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .m-story span { font-size: 9px; color: #555; width: 50px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .m-tabs { display: flex; }
+  .m-tab { flex: 1; text-align: center; padding: 8px 4px; font-size: 11px; font-weight: 600; color: #999; border-bottom: 2px solid transparent; }
+  .m-tab.active { color: #d97706; border-bottom-color: #d97706; }
+  .m-compose { display: flex; gap: 8px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #f5f5f5; }
+  .m-compose-av { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg,#d97706,#ea580c); color: #fff; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .m-compose-box { flex: 1; background: #f5f5f5; border-radius: 16px; padding: 7px 12px; font-size: 11px; color: #bbb; }
+  .m-post { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; }
+  .m-post-head { display: flex; gap: 8px; margin-bottom: 7px; }
+  .m-av2 { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 12px; }
+  .m-name { font-size: 12px; font-weight: 700; color: #111; }
+  .m-sub { font-size: 10px; color: #bbb; }
+  .m-tag { display: inline-block; font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 6px; margin-top: 2px; }
+  .m-body { font-size: 11px; color: #333; line-height: 1.4; margin-bottom: 8px; }
+  .m-actions { display: flex; gap: 12px; }
+  .m-act { font-size: 10px; color: #aaa; }
+</style>
+</head>
+<body>
+
+<h2>Community — Responsive Design</h2>
+<p class="sub">Same experience, adapts to desktop and mobile naturally</p>
+
+<!-- DESKTOP -->
+<div style="max-width:960px;margin:0 auto 48px">
+  <p class="section-label" style="text-align:center;margin-bottom:16px">Desktop View — 3-column layout (Reddit / LinkedIn style)</p>
+  <div class="desktop-shell">
+    <div class="browser-bar">
+      <div class="dots"><div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#febc2e"></div><div class="dot" style="background:#28c840"></div></div>
+      <div class="url-bar">planbtoz.com/dashboard/community</div>
+    </div>
+    <div class="topnav">
+      <div class="topnav-brand">Plan B to Z</div>
+      <div class="topnav-links">
+        <div class="topnav-link">Home</div>
+        <div class="topnav-link">Careers</div>
+        <div class="topnav-link active">Community</div>
+        <div class="topnav-link">Jobs</div>
+        <div class="topnav-link">Well-being</div>
+      </div>
+      <div class="topnav-right">
+        <div style="font-size:18px;color:#bbb">🔔</div>
+        <div class="nav-avatar">A</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- Left Sidebar -->
+      <div class="sidebar-left">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Community</div>
+          <div class="sidebar-item active">
+            <div class="icon" style="background:#fffbeb">📰</div> Feed
+          </div>
+          <div class="sidebar-item">
+            <div class="icon" style="background:#f0fdf4">👥</div> My Groups
+            <div class="sidebar-badge">1</div>
+          </div>
+          <div class="sidebar-item">
+            <div class="icon" style="background:#f5f5f5">🔍</div> Explore
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">My Groups</div>
+          <div class="sidebar-item">
+            <div class="icon" style="background:#fef3c7">💼</div> Consulting
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-title">Filter by Tag</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;padding:0 4px">
+            <span style="font-size:10px;padding:3px 8px;background:#fffbeb;color:#d97706;border-radius:8px;cursor:pointer">Career Doubts</span>
+            <span style="font-size:10px;padding:3px 8px;background:#fee2e2;color:#e11d48;border-radius:8px;cursor:pointer">Emotional Support</span>
+            <span style="font-size:10px;padding:3px 8px;background:#ede9fe;color:#7c3aed;border-radius:8px;cursor:pointer">Skill Building</span>
+            <span style="font-size:10px;padding:3px 8px;background:#dcfce7;color:#059669;border-radius:8px;cursor:pointer">Transitions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Feed -->
+      <div class="main-feed">
+        <div class="feed-tabs">
+          <div class="feed-tab active">For You</div>
+          <div class="feed-tab">Latest</div>
+          <div class="feed-tab">My Groups</div>
+        </div>
+
+        <div class="compose-card">
+          <div class="compose-av">A</div>
+          <div class="compose-input">Share something with the community...</div>
+          <div class="anon-toggle">🔒 Post anonymously</div>
+        </div>
+
+        <div class="post-card">
+          <div class="post-head">
+            <div class="post-av" style="background:linear-gradient(135deg,#d97706,#ea580c)">R</div>
+            <div class="post-info" style="flex:1">
+              <div class="name">Rahul Mehta <span style="font-size:10px;color:#aaa;font-weight:400">· Mains 2022 · 2 hours ago</span></div>
+              <div class="meta"></div>
+              <span class="post-tag" style="background:#fef3c7;color:#d97706">🎯 Transition Story</span>
+            </div>
+            <div style="color:#ccc;cursor:pointer">···</div>
+          </div>
+          <div class="post-body-text">Finally got my first PM interview call after 6 months of prep. The UPSC analytical framework actually helped me crack the product case studies. Don't give up 🙏</div>
+          <div class="post-footer">
+            <span class="act liked">❤️ 24</span>
+            <span class="act">💬 8 comments</span>
+            <span class="act">↗️ Share</span>
+          </div>
+        </div>
+
+        <div class="post-card">
+          <div class="post-head">
+            <div class="post-av" style="background:#6b7280">?</div>
+            <div class="post-info" style="flex:1">
+              <div class="name">Anonymous <span style="font-size:10px;color:#aaa;font-weight:400">· 5 hours ago</span></div>
+              <span class="post-tag" style="background:#fee2e2;color:#e11d48">💙 Emotional Support</span>
+            </div>
+          </div>
+          <div class="post-body-text">Does anyone else feel guilty about moving on? Family still expects me to try again next year but I'm completely exhausted and need to decide soon...</div>
+          <div class="post-footer">
+            <span class="act">❤️ 67</span>
+            <span class="act">💬 31 comments</span>
+            <span class="act">↗️ Share</span>
+          </div>
+        </div>
+
+        <div class="post-card">
+          <div class="post-head">
+            <div class="post-av" style="background:linear-gradient(135deg,#7c3aed,#0284c7)">P</div>
+            <div class="post-info" style="flex:1">
+              <div class="name">Priya Singh <span style="font-size:10px;color:#aaa;font-weight:400">· Prelims 2023 · 1 day ago</span></div>
+              <span class="post-tag" style="background:#ede9fe;color:#7c3aed">📚 Skill Building</span>
+            </div>
+          </div>
+          <div class="post-body-text">Completed the Google Project Management certificate. Week 3 of my launchpad — highly recommend for anyone targeting ops or consulting roles.</div>
+          <div class="post-footer">
+            <span class="act">❤️ 41</span>
+            <span class="act">💬 12 comments</span>
+            <span class="act">↗️ Share</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="sidebar-right">
+        <div class="widget">
+          <div class="widget-title">🔥 Suggested Groups</div>
+          <div class="group-mini">
+            <div class="group-mini-icon" style="background:#ede9fe">💡</div>
+            <div><div class="group-mini-name">IAS → PM</div><div class="group-mini-meta">142 members</div></div>
+            <div class="group-mini-join">+ Join</div>
+          </div>
+          <div class="group-mini">
+            <div class="group-mini-icon" style="background:#e0f2fe">⚖️</div>
+            <div><div class="group-mini-name">IAS → Law</div><div class="group-mini-meta">89 members</div></div>
+            <div class="group-mini-join">+ Join</div>
+          </div>
+          <div class="group-mini">
+            <div class="group-mini-icon" style="background:#dcfce7">📊</div>
+            <div><div class="group-mini-name">IAS → Data</div><div class="group-mini-meta">76 members</div></div>
+            <div class="group-mini-join">+ Join</div>
+          </div>
+        </div>
+
+        <div class="widget">
+          <div class="widget-title">🏷️ Trending Topics</div>
+          <div>
+            <span class="trending-tag">Career Doubts</span>
+            <span class="trending-tag">CAT Prep</span>
+            <span class="trending-tag">Prelims 2024</span>
+            <span class="trending-tag">Consulting</span>
+            <span class="trending-tag">Family Pressure</span>
+            <span class="trending-tag">Resume Help</span>
+          </div>
+        </div>
+
+        <div class="widget" style="background:#fffbeb;border:1px solid #fde68a">
+          <div class="widget-title" style="color:#d97706">⚡ Complete your profile</div>
+          <div style="font-size:11px;color:#5c4e3d;line-height:1.5">Take the career assessment to get matched to the right groups automatically.</div>
+          <div style="margin-top:8px;font-size:11px;font-weight:700;color:#d97706;cursor:pointer">Start Assessment →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE -->
+<p class="section-label" style="text-align:center;margin-bottom:20px">Mobile View — same content, single column + IG-style stories</p>
+
+<div class="phones-row">
+  <!-- Mobile Feed -->
+  <div class="phone-wrap">
+    <div class="phone-label">Community Home</div>
+    <div class="phone">
+      <div class="m-header">
+        <div class="m-header-row">
+          <h1>Community</h1>
+          <div style="font-size:20px;color:#ccc">🔔</div>
+        </div>
+        <div class="m-stories">
+          <div class="m-story">
+            <div class="m-ring new"><div class="m-av" style="background:#f5f5f5;font-size:18px">＋</div></div>
+            <span style="color:#d97706">Explore</span>
+          </div>
+          <div class="m-story">
+            <div class="m-ring g"><div class="m-av" style="background:#dcfce7">💼</div></div>
+            <span>Consulting</span>
+          </div>
+          <div class="m-story">
+            <div class="m-ring"><div class="m-av" style="background:#ede9fe">💡</div></div>
+            <span>Product</span>
+          </div>
+          <div class="m-story">
+            <div class="m-ring"><div class="m-av" style="background:#e0f2fe">⚖️</div></div>
+            <span>Law</span>
+          </div>
+        </div>
+        <div class="m-tabs">
+          <div class="m-tab active">Feed</div>
+          <div class="m-tab">My Groups</div>
+          <div class="m-tab">Explore</div>
+        </div>
+      </div>
+      <div class="scroll">
+        <div class="m-compose">
+          <div class="m-compose-av">A</div>
+          <div class="m-compose-box">What's on your mind?</div>
+        </div>
+        <div class="m-post">
+          <div class="m-post-head">
+            <div class="m-av2" style="background:linear-gradient(135deg,#d97706,#ea580c)">R</div>
+            <div><div class="m-name">Rahul Mehta</div><div class="m-sub">Mains 2022 · 2h ago</div><span class="m-tag" style="background:#fef3c7;color:#d97706">🎯 Transition</span></div>
+          </div>
+          <div class="m-body">Finally got my first PM interview call after 6 months of prep. UPSC analytical skills really helped 🙏</div>
+          <div class="m-actions"><span class="m-act">❤️ 24</span><span class="m-act">💬 8</span><span class="m-act">↗️</span></div>
+        </div>
+        <div class="m-post">
+          <div class="m-post-head">
+            <div class="m-av2" style="background:#6b7280">?</div>
+            <div><div class="m-name">Anonymous</div><div class="m-sub">5h ago</div><span class="m-tag" style="background:#fee2e2;color:#e11d48">💙 Support</span></div>
+          </div>
+          <div class="m-body">Does anyone else feel guilty about moving on? Family still expects me to try again...</div>
+          <div class="m-actions"><span class="m-act">❤️ 67</span><span class="m-act">💬 31</span><span class="m-act">↗️</span></div>
+        </div>
+        <div class="m-post">
+          <div class="m-post-head">
+            <div class="m-av2" style="background:linear-gradient(135deg,#7c3aed,#0284c7)">P</div>
+            <div><div class="m-name">Priya Singh</div><div class="m-sub">1 day ago</div><span class="m-tag" style="background:#ede9fe;color:#7c3aed">📚 Skills</span></div>
+          </div>
+          <div class="m-body">Completed the Google PM certificate. Week 3 of my launchpad — highly recommend!</div>
+          <div class="m-actions"><span class="m-act">❤️ 41</span><span class="m-act">💬 12</span><span class="m-act">↗️</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Explore -->
+  <div class="phone-wrap">
+    <div class="phone-label">Explore Groups</div>
+    <div class="phone">
+      <div style="background:#fff;padding:14px 14px 10px;border-bottom:1px solid #f0f0f0">
+        <div style="font-size:20px;font-weight:800;color:#111;margin-bottom:10px">Find Your Group</div>
+        <div style="display:flex;align-items:center;gap:8px;background:#f5f5f5;border-radius:12px;padding:8px 12px">
+          <span style="font-size:14px;color:#bbb">🔍</span>
+          <span style="font-size:12px;color:#bbb">Search cohorts...</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;overflow-x:auto;padding:10px 12px;border-bottom:1px solid #f5f5f5;scrollbar-width:none">
+        <span style="white-space:nowrap;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;background:#d97706;color:#fff">All</span>
+        <span style="white-space:nowrap;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;background:#f5f5f5;color:#555">Tech</span>
+        <span style="white-space:nowrap;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;background:#f5f5f5;color:#555">Law</span>
+        <span style="white-space:nowrap;padding:4px 12px;border-radius:16px;font-size:11px;font-weight:700;background:#f5f5f5;color:#555">Consulting</span>
+      </div>
+      <div style="padding:8px 12px;font-size:11px;color:#d97706;font-weight:600;background:#fffbeb;border-bottom:1px solid #fde68a">📍 Joined 1 of 5 groups</div>
+      <div class="scroll">
+        <div style="margin:10px 12px;background:#fffbeb;border:1.5px solid #d97706;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:18px">💼</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:700;color:#111">IAS → Consulting</div><div style="font-size:10px;color:#9a8b78">203 members · 12 posts today</div></div>
+          <div style="font-size:10px;font-weight:700;color:#059669;background:#dcfce7;padding:3px 8px;border-radius:10px">✓</div>
+        </div>
+        <div style="margin:0 12px 10px;background:#fff;border:1.5px solid #f0f0f0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:10px;background:#ede9fe;display:flex;align-items:center;justify-content:center;font-size:18px">💡</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:700;color:#111">IAS → Product</div><div style="font-size:10px;color:#9a8b78">142 members · 8 posts today</div></div>
+          <div style="font-size:10px;font-weight:700;color:#fff;background:#d97706;padding:3px 10px;border-radius:10px">Join</div>
+        </div>
+        <div style="margin:0 12px 10px;background:#fff;border:1.5px solid #f0f0f0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:10px;background:#e0f2fe;display:flex;align-items:center;justify-content:center;font-size:18px">⚖️</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:700;color:#111">IAS → Law</div><div style="font-size:10px;color:#9a8b78">89 members · 5 posts today</div></div>
+          <div style="font-size:10px;font-weight:700;color:#fff;background:#d97706;padding:3px 10px;border-radius:10px">Join</div>
+        </div>
+        <div style="margin:0 12px 10px;background:#fff;border:1.5px solid #f0f0f0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px">
+          <div style="width:38px;height:38px;border-radius:10px;background:#dcfce7;display:flex;align-items:center;justify-content:center;font-size:18px">📊</div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:700;color:#111">IAS → Data</div><div style="font-size:10px;color:#9a8b78">76 members · 3 posts today</div></div>
+          <div style="font-size:10px;font-weight:700;color:#fff;background:#d97706;padding:3px 10px;border-radius:10px">Join</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

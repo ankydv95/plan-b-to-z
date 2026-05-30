@@ -89,7 +89,7 @@ export default async function GroupDetailPage({ params }: Props) {
     <div className="p-6 md:p-8 max-w-3xl mx-auto">
       <Link
         href="/dashboard/community"
-        className="inline-flex items-center gap-1.5 text-sm text-[#9A8B78] hover:text-[#D97706] transition-colors mb-5 font-semibold"
+        className="inline-flex items-center gap-1.5 text-sm text-[#64748b] hover:text-[#D97706] transition-colors mb-5 font-semibold"
       >
         <ArrowLeft size={15} />
         Community

@@ -69,7 +69,7 @@ export default function PostFeed({
                   {group.name.charAt(0)}
                 </div>
               </div>
-              <span className="text-xs text-[#5C4E3D] text-center w-14 truncate group-hover:text-[#D97706] transition-colors">
+              <span className="text-xs text-[#475569] text-center w-14 truncate group-hover:text-[#D97706] transition-colors">
                 {group.name.split(' → ')[1] ?? group.name}
               </span>
             </Link>
@@ -78,7 +78,7 @@ export default function PostFeed({
       )}
 
       {/* Tabs */}
-      <div className="flex gap-0 border-b border-[#EDDFCC] mb-5">
+      <div className="flex gap-0 border-b border-[#e2e8f0] mb-5">
         {tabs.map(tab => (
           <button
             key={tab.id}
@@ -86,7 +86,7 @@ export default function PostFeed({
             className={`px-4 py-2.5 text-sm font-semibold transition-colors border-b-2 -mb-[2px] ${
               activeTab === tab.id
                 ? 'text-[#D97706] border-[#D97706]'
-                : 'text-[#9A8B78] border-transparent hover:text-[#5C4E3D]'
+                : 'text-[#64748b] border-transparent hover:text-[#475569]'
             }`}
           >
             {tab.label}
@@ -101,8 +101,8 @@ export default function PostFeed({
         <div className="space-y-4">
           <ComposePost userInitial={userInitial} onPost={handleNewPost} />
           {activePosts.length === 0 ? (
-            <div className="text-center py-16 bg-white border border-[#EDDFCC] rounded-2xl">
-              <p className="text-[#9A8B78] text-sm">
+            <div className="text-center py-16 bg-white border border-[#e2e8f0] rounded-2xl">
+              <p className="text-[#64748b] text-sm">
                 {activeTab === 'my_groups'
                   ? 'No posts from your groups yet. Join groups and start the conversation.'
                   : 'No posts yet. Be the first to share something.'}

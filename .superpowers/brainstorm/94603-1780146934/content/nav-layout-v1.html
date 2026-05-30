@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nav Layout Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F0EA; }
+
+  .label {
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #9A8B78;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ===== DESKTOP MOCKUP ===== */
+  .desktop-frame {
+    max-width: 1100px;
+    margin: 24px auto;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    border: 1px solid #E5E0D8;
+  }
+
+  /* Top nav bar */
+  .top-nav {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 24px;
+    background: white;
+    border-bottom: 1px solid #EDDFCC;
+    gap: 0;
+  }
+
+  .logo {
+    font-size: 15px;
+    font-weight: 800;
+    color: #2A1F14;
+    letter-spacing: -0.3px;
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+  .logo span { color: #D97706; }
+
+  .nav-tabs {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+  }
+
+  .nav-tab {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 14px;
+    height: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    color: #9A8B78;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-tab.active {
+    color: #D97706;
+    border-bottom-color: #D97706;
+  }
+
+  .nav-tab:hover:not(.active) {
+    color: #5C4E3D;
+  }
+
+  .nav-tab svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D97706, #EA580C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+  }
+
+  .settings-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #F5F0EA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9A8B78;
+    cursor: pointer;
+  }
+
+  /* Page content area */
+  .page-body {
+    display: flex;
+    height: 480px;
+  }
+
+  .page-content {
+    flex: 1;
+    padding: 28px;
+    overflow: auto;
+  }
+
+  .content-placeholder {
+    background: #F9F6F2;
+    border: 2px dashed #EDDFCC;
+    border-radius: 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    color: #9A8B78;
+    font-size: 14px;
+  }
+
+  .content-placeholder strong {
+    font-size: 16px;
+    color: #5C4E3D;
+    font-weight: 700;
+  }
+
+  /* ===== MOBILE MOCKUP ===== */
+  .mobile-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px 16px 32px;
+    flex-wrap: wrap;
+  }
+
+  .mobile-frame {
+    width: 320px;
+    background: white;
+    border-radius: 36px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.15);
+    border: 6px solid #2A1F14;
+    position: relative;
+  }
+
+  .mobile-notch {
+    width: 90px;
+    height: 22px;
+    background: #2A1F14;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mobile-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px 8px;
+    border-bottom: 1px solid #EDDFCC;
+  }
+
+  .mobile-logo {
+    font-size: 14px;
+    font-weight: 800;
+    color: #2A1F14;
+  }
+  .mobile-logo span { color: #D97706; }
+
+  .mobile-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D97706, #EA580C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .mobile-content {
+    height: 440px;
+    background: #F9F6F2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    color: #9A8B78;
+    font-size: 13px;
+    padding: 16px;
+    text-align: center;
+  }
+
+  .mobile-content strong {
+    font-size: 15px;
+    color: #5C4E3D;
+    font-weight: 700;
+  }
+
+  /* Bottom tab bar */
+  .bottom-tabs {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-top: 1px solid #EDDFCC;
+    padding: 6px 0 10px;
+  }
+
+  .bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  .bottom-tab-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C4B8AA;
+  }
+
+  .bottom-tab.active .bottom-tab-icon { color: #D97706; }
+
+  .bottom-tab-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #C4B8AA;
+    letter-spacing: 0.02em;
+  }
+
+  .bottom-tab.active .bottom-tab-label { color: #D97706; }
+
+  .bottom-tab.active .bottom-tab-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #D97706;
+    margin-top: -2px;
+  }
+
+  /* Section title */
+  .section-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    color: #2A1F14;
+    margin: 32px 0 4px;
+    font-family: Georgia, serif;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #9A8B78;
+    margin-bottom: 20px;
+  }
+
+  .divider {
+    height: 1px;
+    background: #EDDFCC;
+    margin: 8px 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- DESKTOP -->
+<div class="section-title">Desktop</div>
+<div class="section-sub">Single header bar — logo left · tabs center · account right</div>
+
+<div class="desktop-frame">
+  <div class="top-nav">
+    <!-- Logo -->
+    <div class="logo">Plan <span>B</span> to Z</div>
+
+    <!-- Center tabs -->
+    <div class="nav-tabs">
+      <div class="nav-tab active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Careers
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Community
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Jobs
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Wellbeing
+      </div>
+      <div class="nav-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Stories
+      </div>
+    </div>
+
+    <!-- Right side -->
+    <div class="nav-right">
+      <div class="settings-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </div>
+      <div class="avatar">A</div>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="page-content">
+      <div class="content-placeholder">
+        <strong>Dashboard</strong>
+        <span>Page content renders here</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- MOBILE -->
+<div class="section-title" style="margin-top:32px">Mobile</div>
+<div class="section-sub">Minimal top bar · content · bottom tab bar with 6 tabs</div>
+
+<div class="mobile-row">
+  <!-- Mobile: Community active -->
+  <div>
+    <div style="text-align:center;font-size:11px;font-weight:700;color:#9A8B78;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px">Community tab active</div>
+    <div class="mobile-frame">
+      <div class="mobile-notch"></div>
+      <div class="mobile-top-bar">
+        <div class="mobile-logo">Plan <span>B</span> to Z</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F5F0EA;display:flex;align-items:center;justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A8B78" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div class="mobile-avatar">A</div>
+        </div>
+      </div>
+      <div class="mobile-content">
+        <strong>Community</strong>
+        <span style="font-size:11px">Feed, groups, posts</span>
+      </div>
+      <div class="bottom-tabs">
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div class="bottom-tab-label">Home</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="bottom-tab-label">Careers</div>
+        </div>
+        <div class="bottom-tab active">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="bottom-tab-label">Community</div>
+          <div class="bottom-tab-dot"></div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          <div class="bottom-tab-label">Jobs</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="bottom-tab-label">Wellbeing</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="bottom-tab-label">Stories</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile: Dashboard active -->
+  <div>
+    <div style="text-align:center;font-size:11px;font-weight:700;color:#9A8B78;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:12px">Dashboard tab active</div>
+    <div class="mobile-frame">
+      <div class="mobile-notch"></div>
+      <div class="mobile-top-bar">
+        <div class="mobile-logo">Plan <span>B</span> to Z</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="width:28px;height:28px;border-radius:50%;background:#F5F0EA;display:flex;align-items:center;justify-content:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9A8B78" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div class="mobile-avatar">A</div>
+        </div>
+      </div>
+      <div class="mobile-content">
+        <strong>Dashboard</strong>
+        <span style="font-size:11px">Your progress overview</span>
+      </div>
+      <div class="bottom-tabs">
+        <div class="bottom-tab active">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+          <div class="bottom-tab-label">Home</div>
+          <div class="bottom-tab-dot"></div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+          <div class="bottom-tab-label">Careers</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="bottom-tab-label">Community</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          <div class="bottom-tab-label">Jobs</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="bottom-tab-label">Wellbeing</div>
+        </div>
+        <div class="bottom-tab">
+          <div class="bottom-tab-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="bottom-tab-label">Stories</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

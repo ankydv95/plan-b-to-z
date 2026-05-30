@@ -30,7 +30,7 @@ function CircularProgress({ percentage }: { percentage: number }) {
   const color = percentage >= 80 ? '#059669' : percentage >= 50 ? '#D97706' : '#EA580C'
   return (
     <svg width="80" height="80" viewBox="0 0 80 80" className="flex-shrink-0">
-      <circle cx="40" cy="40" r={r} fill="none" stroke="#EDDFCC" strokeWidth="7" />
+      <circle cx="40" cy="40" r={r} fill="none" stroke="#e2e8f0" strokeWidth="7" />
       <circle
         cx="40" cy="40" r={r}
         fill="none"
@@ -72,7 +72,7 @@ function SkillInput({ value, onChange }: { value: string[]; onChange: (v: string
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); add() } }}
           placeholder="Type a skill and press Enter"
-          className="flex-1 border-2 border-[#EDDFCC] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#D97706]"
+          className="flex-1 border-2 border-[#e2e8f0] rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#D97706]"
         />
         <button type="button" onClick={add} className="px-4 py-2 bg-[#D97706] text-white rounded-xl text-sm font-semibold">Add</button>
       </div>
@@ -94,7 +94,7 @@ function MultiSelect({ options, value, onChange }: { options: string[]; value: s
           className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold transition-colors border-2 ${
             value.includes(opt)
               ? 'bg-[#D97706] text-white border-[#D97706]'
-              : 'bg-white text-[#5C4E3D] border-[#EDDFCC] hover:border-[#D97706]'
+              : 'bg-white text-[#475569] border-[#e2e8f0] hover:border-[#D97706]'
           }`}
         >
           {value.includes(opt) && <Check size={11} />}
@@ -168,13 +168,13 @@ export default function ProfileCompletion(props: Props) {
   return (
     <>
       {/* Compact widget */}
-      <div className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-5 mb-8 flex items-center gap-5">
+      <div className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-5 mb-8 flex items-center gap-5">
         <CircularProgress percentage={percentage} />
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-lg leading-tight mb-0.5" style={{ fontFamily: 'var(--font-lora)' }}>
             Complete Your Profile
           </h2>
-          <p className="text-sm text-[#9A8B78]">
+          <p className="text-sm text-[#64748b]">
             {completedCount} of {steps.length} sections done · a complete profile gets better matches
           </p>
         </div>
@@ -191,34 +191,34 @@ export default function ProfileCompletion(props: Props) {
         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 backdrop-blur-sm p-4 overflow-y-auto">
           <div className="bg-white rounded-2xl w-full max-w-2xl my-8 shadow-2xl">
             {/* Modal header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-[#EDDFCC]">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-[#e2e8f0]">
               <h2 className="text-xl font-bold" style={{ fontFamily: 'var(--font-lora)' }}>Edit Profile</h2>
               <button onClick={() => setOpen(false)} className="p-2 rounded-xl hover:bg-[#F5EFE7] transition-colors">
-                <X size={20} className="text-[#9A8B78]" />
+                <X size={20} className="text-[#64748b]" />
               </button>
             </div>
 
             <div className="px-6 py-6 space-y-6">
               {/* Basic info */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">Basic Info</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">Basic Info</h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm font-semibold text-[#5C4E3D] mb-1.5 block">Full Name</label>
+                    <label className="text-sm font-semibold text-[#475569] mb-1.5 block">Full Name</label>
                     <input
                       type="text"
                       value={form.full_name}
                       onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))}
                       placeholder="Your full name"
-                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                      className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-semibold text-[#5C4E3D] mb-1.5 block">Highest Education</label>
+                    <label className="text-sm font-semibold text-[#475569] mb-1.5 block">Highest Education</label>
                     <select
                       value={form.education}
                       onChange={e => setForm(f => ({ ...f, education: e.target.value }))}
-                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706] bg-white"
+                      className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706] bg-white"
                     >
                       <option value="">Select qualification</option>
                       {EDUCATION_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
@@ -229,35 +229,35 @@ export default function ProfileCompletion(props: Props) {
 
               {/* UPSC background */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">UPSC Background</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">UPSC Background</h3>
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="text-sm font-semibold text-[#5C4E3D] mb-1.5 block">Optional Subject</label>
+                    <label className="text-sm font-semibold text-[#475569] mb-1.5 block">Optional Subject</label>
                     <input
                       type="text"
                       value={form.optional_subject}
                       onChange={e => setForm(f => ({ ...f, optional_subject: e.target.value }))}
                       placeholder="e.g. Economics"
-                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                      className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-semibold text-[#5C4E3D] mb-1.5 block">Attempts</label>
+                    <label className="text-sm font-semibold text-[#475569] mb-1.5 block">Attempts</label>
                     <input
                       type="number"
                       min={1} max={10}
                       value={form.attempts}
                       onChange={e => setForm(f => ({ ...f, attempts: e.target.value }))}
                       placeholder="e.g. 3"
-                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                      className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                     />
                   </div>
                   <div>
-                    <label className="text-sm font-semibold text-[#5C4E3D] mb-1.5 block">Highest Stage</label>
+                    <label className="text-sm font-semibold text-[#475569] mb-1.5 block">Highest Stage</label>
                     <select
                       value={form.stage_reached}
                       onChange={e => setForm(f => ({ ...f, stage_reached: e.target.value }))}
-                      className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706] bg-white"
+                      className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706] bg-white"
                     >
                       <option value="">Select stage</option>
                       {STAGE_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
@@ -268,7 +268,7 @@ export default function ProfileCompletion(props: Props) {
 
               {/* Interests */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">Work Interests</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">Work Interests</h3>
                 <MultiSelect
                   options={INTEREST_OPTIONS}
                   value={form.interests}
@@ -278,7 +278,7 @@ export default function ProfileCompletion(props: Props) {
 
               {/* Priorities */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">Career Priorities</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">Career Priorities</h3>
                 <MultiSelect
                   options={PRIORITY_OPTIONS}
                   value={form.priorities}
@@ -288,7 +288,7 @@ export default function ProfileCompletion(props: Props) {
 
               {/* Skills */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">Your Skills</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">Your Skills</h3>
                 <SkillInput
                   value={form.skills}
                   onChange={v => setForm(f => ({ ...f, skills: v }))}
@@ -297,26 +297,26 @@ export default function ProfileCompletion(props: Props) {
 
               {/* Resume */}
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-widest text-[#9A8B78] mb-3">Resume</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#64748b] mb-3">Resume</h3>
                 <input
                   type="url"
                   value={form.resume_url}
                   onChange={e => setForm(f => ({ ...f, resume_url: e.target.value }))}
                   placeholder="Paste link to your resume (Google Drive, Dropbox, etc.)"
-                  className="w-full border-2 border-[#EDDFCC] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
+                  className="w-full border-2 border-[#e2e8f0] rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-[#D97706]"
                 />
-                <p className="text-xs text-[#9A8B78] mt-1">Share a public link to your resume PDF.</p>
+                <p className="text-xs text-[#64748b] mt-1">Share a public link to your resume PDF.</p>
               </div>
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-[#EDDFCC] flex items-center justify-between">
+            <div className="px-6 py-4 border-t border-[#e2e8f0] flex items-center justify-between">
               {error && <p className="text-sm text-red-500">{error}</p>}
-              {!error && <p className="text-sm text-[#9A8B78]">Profile completion: <strong className="text-[#D97706]">{percentage}%</strong></p>}
+              {!error && <p className="text-sm text-[#64748b]">Profile completion: <strong className="text-[#D97706]">{percentage}%</strong></p>}
               <div className="flex gap-3 ml-auto">
                 <button
                   onClick={() => setOpen(false)}
-                  className="px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706] transition-colors"
+                  className="px-5 py-2.5 rounded-xl text-sm font-semibold border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706] transition-colors"
                 >
                   Cancel
                 </button>

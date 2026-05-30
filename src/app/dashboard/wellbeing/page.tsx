@@ -109,7 +109,7 @@ export default function WellbeingPage() {
         <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Wellbeing
         </h1>
-        <p className="text-[#9A8B78] max-w-xl leading-relaxed">
+        <p className="text-[#64748b] max-w-xl leading-relaxed">
           Verified therapists who understand exam stress, identity transitions, and what it takes
           to rebuild. Taking care of your mind is step one.
         </p>
@@ -121,8 +121,8 @@ export default function WellbeingPage() {
           <Phone size={18} className="text-white" />
         </div>
         <div>
-          <p className="font-bold text-[#2A1F14] text-sm">Need immediate support?</p>
-          <p className="text-sm text-[#5C4E3D]">
+          <p className="font-bold text-[#1e293b] text-sm">Need immediate support?</p>
+          <p className="text-sm text-[#475569]">
             iCall Helpline: <strong>9152987821</strong> · Vandrevala Foundation: <strong>1860-2662-345</strong> · Available 24/7
           </p>
         </div>
@@ -135,7 +135,7 @@ export default function WellbeingPage() {
         </h2>
         <div className="grid md:grid-cols-2 gap-5">
           {therapists.map((t) => (
-            <div key={t.name} className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-6 hover:border-[#7C3AED]/40 transition-colors">
+            <div key={t.name} className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-6 hover:border-[#7C3AED]/40 transition-colors">
               <div className="flex items-start gap-4 mb-4">
                 <img
                   src={t.photo}
@@ -143,12 +143,12 @@ export default function WellbeingPage() {
                   className="w-14 h-14 rounded-full object-cover flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-[#2A1F14]" style={{ fontFamily: 'var(--font-lora)' }}>{t.name}</h3>
-                  <p className="text-sm text-[#5C4E3D] leading-snug">{t.specialization}</p>
+                  <h3 className="font-bold text-[#1e293b]" style={{ fontFamily: 'var(--font-lora)' }}>{t.name}</h3>
+                  <p className="text-sm text-[#475569] leading-snug">{t.specialization}</p>
                   <div className="flex items-center gap-1 mt-1">
                     <Star size={12} fill="#D97706" className="text-[#D97706]" />
                     <span className="text-xs font-bold text-[#D97706]">{t.rating}</span>
-                    <span className="text-xs text-[#9A8B78]">({t.reviews} reviews)</span>
+                    <span className="text-xs text-[#64748b]">({t.reviews} reviews)</span>
                   </div>
                 </div>
               </div>
@@ -161,13 +161,13 @@ export default function WellbeingPage() {
                 ))}
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs text-[#9A8B78] mb-4">
+              <div className="grid grid-cols-2 gap-2 text-xs text-[#64748b] mb-4">
                 <span>🌐 {t.languages}</span>
                 <span>⏱ {t.experience} experience</span>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-[#EDDFCC]">
-                <span className="font-bold text-[#2A1F14]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>{t.price}</span>
+              <div className="flex items-center justify-between pt-4 border-t border-[#e2e8f0]">
+                <span className="font-bold text-[#1e293b]" style={{ fontFamily: 'var(--font-jetbrains-mono)' }}>{t.price}</span>
                 <button className="bg-[#7C3AED] text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-[#6D28D9] transition-colors">
                   Book Session
                 </button>
@@ -184,15 +184,15 @@ export default function WellbeingPage() {
         </h2>
         <div className="grid md:grid-cols-2 gap-4">
           {resources.map((r) => (
-            <div key={r.title} className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-5 hover:border-[#D97706] transition-colors cursor-pointer group">
+            <div key={r.title} className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-5 hover:border-[#D97706] transition-colors cursor-pointer group">
               <div className="flex items-start gap-4">
                 <div className="text-3xl flex-shrink-0">{r.emoji}</div>
                 <div>
-                  <p className="text-xs text-[#9A8B78] font-semibold mb-1">{r.type}</p>
-                  <h3 className="font-bold text-[#2A1F14] mb-1 group-hover:text-[#D97706] transition-colors" style={{ fontFamily: 'var(--font-lora)' }}>
+                  <p className="text-xs text-[#64748b] font-semibold mb-1">{r.type}</p>
+                  <h3 className="font-bold text-[#1e293b] mb-1 group-hover:text-[#D97706] transition-colors" style={{ fontFamily: 'var(--font-lora)' }}>
                     {r.title}
                   </h3>
-                  <p className="text-sm text-[#5C4E3D] leading-relaxed">{r.desc}</p>
+                  <p className="text-sm text-[#475569] leading-relaxed">{r.desc}</p>
                 </div>
               </div>
             </div>

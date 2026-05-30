@@ -1,0 +1,47 @@
+<h2>Community Section — 3 Approaches</h2>
+<p class="subtitle">Same features, different architecture and build complexity</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Single-table, flat posts</h3>
+      <p style="margin-bottom:8px">One <code>community_posts</code> table with a nullable <code>cohort_id</code> column. Posts with no cohort_id appear in the global feed. Posts with a cohort_id appear inside that group.</p>
+      <div class="pros-cons" style="margin-top:8px">
+        <div class="pros"><h4>Pros</h4><ul><li>Simplest DB schema</li><li>Easiest queries</li><li>Fastest to build</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Replies/threading needs a parent_id</li><li>Reactions need a separate table</li><li>Hard to add cohort-specific pinned resources later</li></ul></div>
+      </div>
+      <p style="margin-top:8px;font-size:13px;color:#6b7280"><strong>Build time:</strong> ~2–3 days</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Posts + Cohort Groups (recommended)</h3>
+      <p style="margin-bottom:8px">Two core tables: <code>community_posts</code> (global feed + cohort feed) and <code>community_groups</code> (one row per career path cohort). Users join groups via <code>community_group_members</code>. Resources pulled from existing <code>career_paths</code> data — no new table needed.</p>
+      <div class="pros-cons" style="margin-top:8px">
+        <div class="pros"><h4>Pros</h4><ul><li>Clean separation of global vs cohort</li><li>Groups table enables member directory easily</li><li>Resources reuse existing career path DB</li><li>Extensible for v2 features</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>More tables to set up with RLS</li><li>Slightly more complex queries</li></ul></div>
+      </div>
+      <p style="margin-top:8px;font-size:13px;color:#6b7280"><strong>Build time:</strong> ~4–5 days</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Full social graph</h3>
+      <p style="margin-bottom:8px">Posts, replies, reactions, follows, notifications, real-time via Supabase Realtime subscriptions, read receipts. Everything you'd expect from a proper social platform.</p>
+      <div class="pros-cons" style="margin-top:8px">
+        <div class="pros"><h4>Pros</h4><ul><li>Best long-term experience</li><li>Real engagement metrics</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>2–3 weeks to build properly</li><li>Complex RLS policies</li><li>Realtime adds infra complexity</li><li>Overkill for v1 — community needs content first</li></ul></div>
+      </div>
+      <p style="margin-top:8px;font-size:13px;color:#6b7280"><strong>Build time:</strong> ~2–3 weeks</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;padding:16px;background:#fffbeb;border:1px solid #d97706;border-radius:12px">
+  <p style="margin:0;font-size:14px"><strong>My recommendation: B.</strong> It's the right level of structure — not a hacky single table, not an over-engineered social graph. Groups map cleanly to career paths already in the DB. The member directory falls out naturally. Resources are free to add (reuse career_paths data). And the max-5-groups constraint is easy to enforce at the DB level.</p>
+</div>

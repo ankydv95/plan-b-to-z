@@ -31,7 +31,7 @@ export default async function AdminCareersPage() {
       <div className="flex items-start justify-between mb-8 gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>Career Paths</h1>
-          <p className="text-[#9A8B78]">
+          <p className="text-[#64748b]">
             {careers?.length ?? 0} total &nbsp;·&nbsp;
             <span className="text-[#059669] font-semibold">{published} published</span> &nbsp;·&nbsp;
             <span className="text-[#D97706] font-semibold">{drafts} draft</span>
@@ -45,26 +45,26 @@ export default async function AdminCareersPage() {
         </Link>
       </div>
 
-      <div className="bg-white border-2 border-[#EDDFCC] rounded-2xl overflow-hidden">
+      <div className="bg-white border-2 border-[#e2e8f0] rounded-2xl overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-[#EDDFCC] text-left">
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Title</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider hidden md:table-cell">Domain</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider hidden sm:table-cell">Difficulty</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-xs font-semibold text-[#9A8B78] uppercase tracking-wider">Actions</th>
+            <tr className="border-b border-[#e2e8f0] text-left">
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Title</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider hidden md:table-cell">Domain</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider hidden sm:table-cell">Difficulty</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Status</th>
+              <th className="px-6 py-4 text-xs font-semibold text-[#64748b] uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody>
             {(careers ?? []).map((career, i) => (
               <tr
                 key={career.id}
-                className={`border-b border-[#EDDFCC] last:border-0 hover:bg-[#FEFDFB] transition-colors ${i % 2 === 0 ? '' : 'bg-[#FEFDFB]'}`}
+                className={`border-b border-[#e2e8f0] last:border-0 hover:bg-[#ffffff] transition-colors ${i % 2 === 0 ? '' : 'bg-[#ffffff]'}`}
               >
                 <td className="px-6 py-4">
-                  <span className="font-semibold text-sm text-[#2A1F14]">{career.title}</span>
-                  <div className="text-xs text-[#9A8B78] mt-0.5 font-mono">{career.slug}</div>
+                  <span className="font-semibold text-sm text-[#1e293b]">{career.title}</span>
+                  <div className="text-xs text-[#64748b] mt-0.5 font-mono">{career.slug}</div>
                 </td>
                 <td className="px-6 py-4 hidden md:table-cell">
                   <span
@@ -81,7 +81,7 @@ export default async function AdminCareersPage() {
                         key={j}
                         size={11}
                         fill={j < (career.difficulty_rating ?? 0) ? '#D97706' : 'none'}
-                        stroke={j < (career.difficulty_rating ?? 0) ? '#D97706' : '#EDDFCC'}
+                        stroke={j < (career.difficulty_rating ?? 0) ? '#D97706' : '#e2e8f0'}
                       />
                     ))}
                   </div>
@@ -108,7 +108,7 @@ export default async function AdminCareersPage() {
                     <Link
                       href={`/dashboard/careers/${career.slug}`}
                       target="_blank"
-                      className="text-sm font-semibold text-[#9A8B78] hover:text-[#2A1F14]"
+                      className="text-sm font-semibold text-[#64748b] hover:text-[#1e293b]"
                     >
                       Preview
                     </Link>
@@ -119,7 +119,7 @@ export default async function AdminCareersPage() {
           </tbody>
         </table>
         {(!careers || careers.length === 0) && (
-          <div className="text-center py-16 text-[#9A8B78]">
+          <div className="text-center py-16 text-[#64748b]">
             No career paths yet.{' '}
             <Link href="/admin/careers/new" className="text-[#D97706] font-semibold hover:underline">
               Create the first one.

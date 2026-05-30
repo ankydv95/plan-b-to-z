@@ -170,10 +170,10 @@ export default function AssessmentPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b border-[#EDDFCC] px-6 py-4 bg-white flex items-center justify-between">
+      <div className="border-b border-[#e2e8f0] px-6 py-4 bg-white flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold" style={{ fontFamily: 'var(--font-lora)' }}>Career Assessment</h1>
-          <p className="text-xs text-[#9A8B78]">A conversation to discover your path</p>
+          <p className="text-xs text-[#64748b]">A conversation to discover your path</p>
         </div>
         {assessmentDone && (
           <div className="flex items-center gap-3">
@@ -188,7 +188,7 @@ export default function AssessmentPage() {
                 setAssessmentDone(false)
                 setCareerMatches([])
               }}
-              className="text-xs text-[#9A8B78] hover:text-[#D97706] underline transition-colors"
+              className="text-xs text-[#64748b] hover:text-[#D97706] underline transition-colors"
             >
               Retake
             </button>
@@ -209,13 +209,13 @@ export default function AssessmentPage() {
               className={`max-w-[85%] md:max-w-[65%] px-5 py-3.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === 'user'
                   ? 'bg-[#D97706] text-white rounded-tr-sm'
-                  : 'bg-white border-2 border-[#EDDFCC] text-[#2A1F14] rounded-tl-sm'
+                  : 'bg-white border-2 border-[#e2e8f0] text-[#1e293b] rounded-tl-sm'
               }`}
             >
               {msg.content}
             </div>
             {msg.role === 'user' && (
-              <div className="w-8 h-8 rounded-full bg-[#2A1F14] flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-1">
+              <div className="w-8 h-8 rounded-full bg-[#1e293b] flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-1">
                 You
               </div>
             )}
@@ -228,10 +228,10 @@ export default function AssessmentPage() {
             <div className="w-8 h-8 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
               AI
             </div>
-            <div className="bg-white border-2 border-[#EDDFCC] px-5 py-4 rounded-2xl rounded-tl-sm flex gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
-              <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
-              <div className="w-2 h-2 rounded-full bg-[#9A8B78] typing-dot" />
+            <div className="bg-white border-2 border-[#e2e8f0] px-5 py-4 rounded-2xl rounded-tl-sm flex gap-1.5">
+              <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
+              <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
+              <div className="w-2 h-2 rounded-full bg-[#64748b] typing-dot" />
             </div>
           </div>
         )}
@@ -242,14 +242,14 @@ export default function AssessmentPage() {
             <div className="w-8 h-8 rounded-full bg-[#D97706] flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-1">
               AI
             </div>
-            <div className="bg-white border-2 border-[#EDDFCC] px-5 py-4 rounded-2xl rounded-tl-sm">
+            <div className="bg-white border-2 border-[#e2e8f0] px-5 py-4 rounded-2xl rounded-tl-sm">
               <div className="flex items-center gap-3">
                 <div className="flex gap-1">
                   <div className="w-2 h-2 rounded-full bg-[#D97706] typing-dot" />
                   <div className="w-2 h-2 rounded-full bg-[#D97706] typing-dot" />
                   <div className="w-2 h-2 rounded-full bg-[#D97706] typing-dot" />
                 </div>
-                <span className="text-sm text-[#5C4E3D] font-semibold">Analyzing your profile...</span>
+                <span className="text-sm text-[#475569] font-semibold">Analyzing your profile...</span>
               </div>
             </div>
           </div>
@@ -258,14 +258,14 @@ export default function AssessmentPage() {
         {/* Career Matches Results */}
         {assessmentDone && careerMatches.length > 0 && (
           <div className="chat-ai">
-            <div className="ml-11 bg-white border-2 border-[#EDDFCC] rounded-2xl p-6">
+            <div className="ml-11 bg-white border-2 border-[#e2e8f0] rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <CheckCircle2 size={20} className="text-[#059669]" />
                 <h3 className="font-bold text-lg" style={{ fontFamily: 'var(--font-lora)' }}>
                   Your Top Career Matches
                 </h3>
               </div>
-              <p className="text-sm text-[#9A8B78] mb-5">
+              <p className="text-sm text-[#64748b] mb-5">
                 These paths value exactly what you&apos;ve built. They&apos;re now saved in your sidebar. Explore any to see the full picture.
               </p>
               <div className="space-y-3">
@@ -277,7 +277,7 @@ export default function AssessmentPage() {
                     <Link
                       key={i}
                       href={`/dashboard/careers/${career.slug}`}
-                      className="flex items-center justify-between p-4 rounded-xl border border-[#EDDFCC] hover:border-[#D97706] hover:bg-[#FEF3C7]/30 transition-all group"
+                      className="flex items-center justify-between p-4 rounded-xl border border-[#e2e8f0] hover:border-[#D97706] hover:bg-[#FEF3C7]/30 transition-all group"
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <span className="tag flex-shrink-0" style={{ background: bg, color }}>
@@ -291,19 +291,19 @@ export default function AssessmentPage() {
                         <span
                           className="text-sm font-bold"
                           style={{
-                            color: match.match_percentage >= 80 ? '#059669' : match.match_percentage >= 60 ? '#D97706' : '#9A8B78',
+                            color: match.match_percentage >= 80 ? '#059669' : match.match_percentage >= 60 ? '#D97706' : '#64748b',
                             fontFamily: 'var(--font-jetbrains-mono)',
                           }}
                         >
                           {match.match_percentage}%
                         </span>
-                        <ArrowRight size={14} className="text-[#9A8B78] group-hover:text-[#D97706]" />
+                        <ArrowRight size={14} className="text-[#64748b] group-hover:text-[#D97706]" />
                       </div>
                     </Link>
                   )
                 })}
               </div>
-              <div className="mt-5 pt-5 border-t border-[#EDDFCC] flex gap-3">
+              <div className="mt-5 pt-5 border-t border-[#e2e8f0] flex gap-3">
                 <Link href="/dashboard/careers" className="btn-primary text-sm py-2.5 px-5">
                   Browse All Careers
                   <ArrowRight size={14} />
@@ -319,7 +319,7 @@ export default function AssessmentPage() {
         {assessmentDone && careerMatches.length === 0 && (
           <div className="ml-11 bg-[#FEF3C7] border-2 border-[#D97706]/30 rounded-2xl p-6">
             <p className="font-semibold mb-2">Assessment complete!</p>
-            <p className="text-sm text-[#5C4E3D] mb-4">
+            <p className="text-sm text-[#475569] mb-4">
               We&apos;re loading career paths. Browse all 75+ paths to find your match.
             </p>
             <Link href="/dashboard/careers" className="btn-primary text-sm py-2.5 px-5 inline-flex">
@@ -333,7 +333,7 @@ export default function AssessmentPage() {
 
       {/* Input area */}
       {!assessmentDone && (
-        <div className="border-t border-[#EDDFCC] bg-white px-4 md:px-8 py-4">
+        <div className="border-t border-[#e2e8f0] bg-white px-4 md:px-8 py-4">
           <div className="flex items-center gap-3 max-w-3xl mx-auto">
             <div
               className="relative flex-1 cursor-not-allowed"
@@ -341,12 +341,12 @@ export default function AssessmentPage() {
             >
               <button
                 disabled
-                className="p-2.5 rounded-xl text-[#9A8B78] border-2 border-[#EDDFCC] cursor-not-allowed opacity-50"
+                className="p-2.5 rounded-xl text-[#64748b] border-2 border-[#e2e8f0] cursor-not-allowed opacity-50"
               >
                 <Paperclip size={18} />
               </button>
             </div>
-            <div className="flex-1 flex items-center gap-2 bg-[#FDF6EC] border-2 border-[#EDDFCC] rounded-2xl px-4 py-2.5 focus-within:border-[#D97706] transition-colors">
+            <div className="flex-1 flex items-center gap-2 bg-[#f8fafc] border-2 border-[#e2e8f0] rounded-2xl px-4 py-2.5 focus-within:border-[#D97706] transition-colors">
               <input
                 ref={inputRef}
                 type="text"
@@ -355,7 +355,7 @@ export default function AssessmentPage() {
                 onKeyDown={handleKeyDown}
                 placeholder="Type your answer..."
                 disabled={loading}
-                className="flex-1 bg-transparent outline-none text-sm text-[#2A1F14] placeholder:text-[#9A8B78]"
+                className="flex-1 bg-transparent outline-none text-sm text-[#1e293b] placeholder:text-[#64748b]"
               />
               <button
                 onClick={sendMessage}
@@ -366,7 +366,7 @@ export default function AssessmentPage() {
               </button>
             </div>
           </div>
-          <p className="text-center text-xs text-[#9A8B78] mt-2">
+          <p className="text-center text-xs text-[#64748b] mt-2">
             Press Enter to send · Resume upload coming soon
           </p>
         </div>

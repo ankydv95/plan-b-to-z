@@ -73,7 +73,7 @@ export default function StoriesPage() {
         <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Move On Success Stories
         </h1>
-        <p className="text-[#9A8B78] max-w-xl leading-relaxed">
+        <p className="text-[#64748b] max-w-xl leading-relaxed">
           Ex-aspirants who found their path. Unfiltered stories of what the transition actually looks like.
         </p>
       </div>
@@ -99,8 +99,8 @@ export default function StoriesPage() {
               onClick={() => setActiveFilter(type)}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-colors ${
                 activeFilter === type
-                  ? 'bg-[#2A1F14] text-white'
-                  : 'bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706]'
+                  ? 'bg-[#1e293b] text-white'
+                  : 'bg-white border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706]'
               }`}
             >
               {type === 'All' ? `All (${stories.length})` : type}
@@ -112,16 +112,16 @@ export default function StoriesPage() {
       {loading ? (
         <div className="grid md:grid-cols-2 gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl border-2 border-[#EDDFCC] h-80 animate-pulse" />
+            <div key={i} className="bg-white rounded-2xl border-2 border-[#e2e8f0] h-80 animate-pulse" />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-20 bg-white border-2 border-[#EDDFCC] rounded-2xl">
-          <BookOpen size={40} className="text-[#EDDFCC] mx-auto mb-4" />
+        <div className="text-center py-20 bg-white border-2 border-[#e2e8f0] rounded-2xl">
+          <BookOpen size={40} className="text-[#e2e8f0] mx-auto mb-4" />
           <p className="font-semibold text-lg mb-2">
             {activeFilter === 'Saved' ? 'No saved stories yet' : 'No stories yet'}
           </p>
-          <p className="text-[#9A8B78] text-sm">
+          <p className="text-[#64748b] text-sm">
             {activeFilter === 'Saved'
               ? 'Bookmark stories that inspire you.'
               : 'Be the first to share your transition story.'}
@@ -140,7 +140,7 @@ export default function StoriesPage() {
           {filtered.map((story) => (
             <div
               key={story.id}
-              className="bg-white border-2 border-[#EDDFCC] rounded-2xl overflow-hidden hover:border-[#D97706] transition-colors relative group"
+              className="bg-white border-2 border-[#e2e8f0] rounded-2xl overflow-hidden hover:border-[#D97706] transition-colors relative group"
             >
               {story.photo_url && (
                 <div className="h-52 overflow-hidden">
@@ -159,10 +159,10 @@ export default function StoriesPage() {
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-[#2A1F14] text-lg" style={{ fontFamily: 'var(--font-lora)' }}>
+                    <h3 className="font-bold text-[#1e293b] text-lg" style={{ fontFamily: 'var(--font-lora)' }}>
                       {story.is_anonymous ? 'Anonymous' : story.person_name}
                     </h3>
-                    <p className="text-sm text-[#9A8B78]">
+                    <p className="text-sm text-[#64748b]">
                       {story.current_role}{story.company && ` · ${story.company}`}
                     </p>
                   </div>
@@ -186,14 +186,14 @@ export default function StoriesPage() {
                   </span>
                 )}
 
-                <blockquote className="text-[#5C4E3D] leading-relaxed border-l-4 border-[#D97706] pl-4 italic">
+                <blockquote className="text-[#475569] leading-relaxed border-l-4 border-[#D97706] pl-4 italic">
                   &ldquo;{story.story_text}&rdquo;
                 </blockquote>
 
                 {(story.num_attempts || story.optional_subject) && (
-                  <div className="flex gap-4 mt-4 pt-4 border-t border-[#EDDFCC] text-xs text-[#9A8B78]">
-                    {story.optional_subject && <span>Optional: <strong className="text-[#5C4E3D]">{story.optional_subject}</strong></span>}
-                    {story.num_attempts && <span>Attempts: <strong className="text-[#5C4E3D]">{story.num_attempts}</strong></span>}
+                  <div className="flex gap-4 mt-4 pt-4 border-t border-[#e2e8f0] text-xs text-[#64748b]">
+                    {story.optional_subject && <span>Optional: <strong className="text-[#475569]">{story.optional_subject}</strong></span>}
+                    {story.num_attempts && <span>Attempts: <strong className="text-[#475569]">{story.num_attempts}</strong></span>}
                   </div>
                 )}
               </div>
@@ -207,7 +207,7 @@ export default function StoriesPage() {
         <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-lora)' }}>
           Have a story to share?
         </h3>
-        <p className="text-[#5C4E3D] mb-5 max-w-md mx-auto">
+        <p className="text-[#475569] mb-5 max-w-md mx-auto">
           Your transition story could be the turning point for someone still figuring it out.
         </p>
         <button className="bg-[#D97706] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#B45309] transition-colors">

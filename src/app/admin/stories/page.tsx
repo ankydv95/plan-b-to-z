@@ -58,7 +58,7 @@ export default function AdminStoriesPage() {
     <div className="p-6 md:p-10">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-lora)' }}>Stories</h1>
-        <p className="text-[#9A8B78]">Review and approve transition stories from users.</p>
+        <p className="text-[#64748b]">Review and approve transition stories from users.</p>
       </div>
 
       {/* Filter tabs */}
@@ -70,7 +70,7 @@ export default function AdminStoriesPage() {
             className={`px-4 py-2 rounded-xl text-sm font-semibold capitalize transition-colors ${
               filter === f
                 ? 'bg-[#D97706] text-white'
-                : 'bg-white border-2 border-[#EDDFCC] text-[#5C4E3D] hover:border-[#D97706]'
+                : 'bg-white border-2 border-[#e2e8f0] text-[#475569] hover:border-[#D97706]'
             }`}
           >
             {f}
@@ -81,21 +81,21 @@ export default function AdminStoriesPage() {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-32 bg-[#EDDFCC] rounded-2xl animate-pulse" />
+            <div key={i} className="h-32 bg-[#e2e8f0] rounded-2xl animate-pulse" />
           ))}
         </div>
       ) : stories.length === 0 ? (
-        <div className="text-center py-16 text-[#9A8B78] bg-white border-2 border-[#EDDFCC] rounded-2xl">
+        <div className="text-center py-16 text-[#64748b] bg-white border-2 border-[#e2e8f0] rounded-2xl">
           No {filter === 'all' ? '' : filter} stories.
         </div>
       ) : (
         <div className="space-y-4">
           {stories.map(story => (
-            <div key={story.id} className="bg-white border-2 border-[#EDDFCC] rounded-2xl p-6">
+            <div key={story.id} className="bg-white border-2 border-[#e2e8f0] rounded-2xl p-6">
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-[#2A1F14]">
+                    <span className="font-bold text-[#1e293b]">
                       {story.is_anonymous ? 'Anonymous' : story.person_name ?? 'Unknown'}
                     </span>
                     <span
@@ -108,11 +108,11 @@ export default function AdminStoriesPage() {
                       {story.is_approved ? 'Approved' : 'Pending'}
                     </span>
                   </div>
-                  <div className="text-sm text-[#9A8B78] mt-0.5">
+                  <div className="text-sm text-[#64748b] mt-0.5">
                     {story.current_role}{story.company && ` at ${story.company}`}
                     {story.career_paths?.title && <span className="ml-2">· {story.career_paths.title}</span>}
                   </div>
-                  <div className="text-xs text-[#9A8B78] mt-0.5">
+                  <div className="text-xs text-[#64748b] mt-0.5">
                     {new Date(story.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function AdminStoriesPage() {
                   </button>
                 </div>
               </div>
-              <p className="text-sm text-[#5C4E3D] leading-relaxed line-clamp-4">{story.story_text}</p>
+              <p className="text-sm text-[#475569] leading-relaxed line-clamp-4">{story.story_text}</p>
             </div>
           ))}
         </div>
