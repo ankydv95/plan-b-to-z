@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, Brain, Briefcase, MapPin, BookOpen, Heart, Users, Sparkles, Award } from 'lucide-react'
+import { ArrowRight, Brain, Sparkles, Award } from 'lucide-react'
 import ProfileCompletion from './ProfileCompletion'
 
 export default async function DashboardHome() {
@@ -32,14 +32,6 @@ export default async function DashboardHome() {
   const interests = profile?.interests as string[] | null
   const skills = profile?.skills as string[] | null
   const priorities = profile?.priorities as string[] | null
-
-  const quickActions = [
-    { href: '/dashboard/careers', icon: MapPin, label: 'Browse Careers', color: '#D97706', bg: '#FEF3C7' },
-    { href: '/dashboard/jobs', icon: Briefcase, label: 'Job Board', color: '#059669', bg: '#DCFCE7' },
-    { href: '/dashboard/wellbeing', icon: Heart, label: 'Well Being', color: '#7C3AED', bg: '#EDE9FE' },
-    { href: '/dashboard/stories', icon: BookOpen, label: 'Stories', color: '#E11D48', bg: '#FEE2E2' },
-    { href: '/dashboard/community', icon: Users, label: 'Community', color: '#0284C7', bg: '#E0F2FE' },
-  ]
 
   return (
     <div className="p-6 md:p-10 max-w-5xl mx-auto">
@@ -215,27 +207,6 @@ export default async function DashboardHome() {
           </div>
         </div>
       )}
-
-      {/* Quick Actions */}
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-lora)' }}>Quick Actions</h2>
-        <div className="grid grid-cols-5 gap-3">
-          {quickActions.map(({ href, icon: Icon, label, color, bg }) => (
-            <Link
-              key={href}
-              href={href}
-              className="flex flex-col items-center gap-2.5 p-4 bg-white border-2 border-[#e2e8f0] rounded-2xl hover:border-[#D97706] transition-colors group"
-            >
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: bg }}>
-                <Icon size={22} style={{ color }} />
-              </div>
-              <span className="text-xs font-semibold text-[#475569] text-center group-hover:text-[#D97706] transition-colors leading-tight">
-                {label}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </div>
 
       {/* Move On Success Stories */}
       {stories && stories.length > 0 && (

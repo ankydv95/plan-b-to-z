@@ -48,12 +48,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           setUserInitial(profile.full_name[0]?.toUpperCase() ?? 'U')
         }
 
-        // First visit → dashboard, return visits → community
+        // First visit → dashboard, return visits → community (once per session)
         if (pathname === '/dashboard') {
           const visited = localStorage.getItem('pb2z_visited')
-          if (visited) {
+          const redirectedThisSession = sessionStorage.getItem('pb2z_redirected')
+          if (visited && !redirectedThisSession) {
+            sessionStorage.setItem('pb2z_redirected', '1')
             router.replace('/dashboard/community')
-          } else {
+          } else if (!visited) {
             localStorage.setItem('pb2z_visited', '1')
           }
         }
